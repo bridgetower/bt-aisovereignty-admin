@@ -6,7 +6,7 @@ export const CREATE_DOC_REFERENCE = gql`
     $websiteName: String!
     $websiteUrl: String!
     $depth: Int
-    $file: RefFileInput
+    $file: FileInput
   ) {
     AddRefToKnowledgeBase(
       input: {
@@ -52,18 +52,17 @@ export const FETCH_DOC_REFERENCES = gql`
   }
 `;
 export const DELETE_DOC_REFERENCE = gql`
-  query MyQuery($pageNo: Int!, $limit: Int!) {
-    ListReference(input: { pageNo: $pageNo, limit: $limit }) {
+  mutation Mymutation($refId: String!) {
+    DeleteRefToKnowledgeBase(input: { refId: $refId }) {
       data {
-        total
-        totalPages
-        refs {
-          createdat
-          id
-          name
-          reftype
-          url
-        }
+        createdat
+        depth
+        id
+        ingested
+        name
+        reftype
+        size
+        url
       }
       error
       status

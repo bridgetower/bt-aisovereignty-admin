@@ -121,11 +121,11 @@ const DataTable: React.FC<Props> = ({
                 />
               </th>
             )}
-            {columns.map((column) => (
+            {columns.map((column, i) => (
               <>
-                {column.key !== 'Sr' && (
+                {column.key !== 'Id' && (
                   <th
-                    key={column.key}
+                    key={column.key + i}
                     className=" p-2 cursor-pointer dark:bg-[#333]  text-start text-xs"
                     onClick={() => sortData(column.key)}
                   >
@@ -144,9 +144,9 @@ const DataTable: React.FC<Props> = ({
           </tr>
         </thead>
         <tbody className="overflow-auto">
-          {filteredData.map((item) => (
+          {filteredData.map((item, i) => (
             <tr
-              key={item[columns[0]?.key]}
+              key={item[columns[0]?.key] + i}
               className={`${
                 selectedRows.includes(item[columns[0]?.key])
                   ? 'bg-black/50'
@@ -188,16 +188,16 @@ const DataTable: React.FC<Props> = ({
                   </div> */}
                 </td>
               )}
-              {columns.map((column) => (
+              {columns.map((column, i) => (
                 <>
-                  {column.key !== 'Sr' && (
+                  {column.key !== 'Id' && (
                     <td
+                      key={i}
                       onClick={() => {
                         if (rowSelection) {
                           handleSelectRow(item[columns[0]?.key]);
                         }
                       }}
-                      key={column.key}
                       title={item[column.key]}
                       className={`border-t text-xs border-black p-2 max-w-[450px] truncate ${rowSelection && 'cursor-pointer'}`}
                     >

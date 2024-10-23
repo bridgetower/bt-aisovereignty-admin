@@ -8,7 +8,10 @@ export const Loader: React.FC<LoaderWrapperProps> = ({ show }) => {
   return (
     <>
       {show ? (
-        <div className="fixed inset-0 flex items-center justify-center bg-white/30 z-50">
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-white/30 "
+          style={{ zIndex: 100 }}
+        >
           <div className="relative flex items-center justify-center w-64 h-64">
             <img
               src="/logo512.png"

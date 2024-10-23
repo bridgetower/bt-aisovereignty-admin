@@ -28,7 +28,7 @@ const OrgChartComponent: React.FC = () => {
         .childrenMargin((d: any) => 40)
         .compactMarginBetween((d: any) => 15)
         .compactMarginPair((d: any) => 80)
-        .layout('left') // This changes the layout to expand left to right
+        // .layout('left') // This changes the layout to expand left to right
         .buttonContent(({ node }: any) => {
           return `<div style="border-radius:3px;padding:0 3px;margin:auto auto;background-color:#000; border: 1px solid lightgray; font-weight:600;font-size:14px"> <span >${
             node.children ? `-` : `+`
@@ -36,8 +36,8 @@ const OrgChartComponent: React.FC = () => {
         })
         .nodeContent((d: any) => {
           return `
-          <div class="bg-none overflow-visible ml-1" style="height:${d.height}px;">
-            <div class="bg-white pt-0 border border-gray-400 rounded-3xl" style="height:${d.height}px;">
+          <div class="bg-none overflow-visible ml-1 mt-8" style="height:${d.height}px;">
+            <div class="bg-white pt-0 border border-gray-400 rounded-3xl" style="height:${d.height - 30}px;">
             <img  src="${'https://raw.githubusercontent.com/bumbeishvili/Assets/master/Projects/D3/Organization%20Chart/general.jpg'}" style="margin-top:-30px;margin-left:${d.width / 2 - 35}px;border-radius:100px;width:60px;height:60px;" />
             <div class="flex justify-center items-center text-black">${d.data.id}</div>
             <div class="h-[calc(100%-40px)] flex justify-center items-center flex-col">

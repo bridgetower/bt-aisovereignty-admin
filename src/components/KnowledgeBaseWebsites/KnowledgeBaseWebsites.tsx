@@ -16,14 +16,15 @@ export const KnowledgeBaseWebsites: React.FC = () => {
   const [knowledgeBaseList, setKnowledgeBaseList] = useState<any[]>([]); // Add this
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [deleteDescription, setDeleteDescription] = useState('');
-
+  const [selectedToDelete, setSelectedTodelete] = useState<string | null>(null);
+  const { deleteDoc, setLoading, loading } = useDocKnowledgeBase();
   useEffect(() => {
     if (docs.length) {
       const newData = docs
         .filter((e) => e.reftype === 'WEBSITE')
         .map((item: any, i) => {
           return {
-            Sr: item.id,
+            Id: item.id,
             URL: item.url,
             ['Depth']: item.depth,
             Ingested: item.ingested ? 'Yes' : 'No',
@@ -45,6 +46,7 @@ export const KnowledgeBaseWebsites: React.FC = () => {
         item ? item['URL'] : ' all selected items'
       }?`,
     );
+    setSelectedTodelete(item ? item.Id : null);
     setShowConfirmationDialog(true);
   };
   const handlePageChange = (page: number) => {
@@ -54,7 +56,19 @@ export const KnowledgeBaseWebsites: React.FC = () => {
     setShowConfirmationDialog(false);
     setDeleteDescription('');
   };
-  const proceedToDelete = () => {};
+  const proceedToDelete = () => {
+    if (selectedToDelete) {
+      setLoading(true);
+      deleteDoc(selectedToDelete)
+        .then(() => {
+          // refetchDocs();
+        })
+        .finally(() => {
+          setShowConfirmationDialog(false);
+          setLoading(false);
+        });
+    }
+  };
   return (
     <>
       <Toaster />
@@ -63,6 +77,7 @@ export const KnowledgeBaseWebsites: React.FC = () => {
         onCancel={onConfirmationDialogClose}
         description={deleteDescription}
         onConfirm={proceedToDelete}
+        loading={loading}
       />
       <div className=" dark:bg-[#222222] min-h-full p-4 rounded-2xl">
         <div className="flex justify-between items-center">
@@ -97,7 +112,7 @@ export const KnowledgeBaseWebsites: React.FC = () => {
           actions={{ edit: false, delete: true }}
           onDelete={handleDelete}
           onEdit={() => null}
-          rowSelection={true}
+          rowSelection={false}
         />
         {/* <hr className="border-t border-neutral-200 my-2" /> */}
         <div className="">

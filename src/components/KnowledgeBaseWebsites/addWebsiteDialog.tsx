@@ -35,7 +35,7 @@ type FormInputs = z.infer<typeof formSchema>;
 const AddWebsiteDialog: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [saving, setSaving] = useState(false);
-  const { createDoc } = useDocKnowledgeBase();
+  const { createDoc, refetchDocs } = useDocKnowledgeBase();
   const form = useForm<FormInputs>({
     resolver: zodResolver(formSchema),
   });
@@ -57,7 +57,8 @@ const AddWebsiteDialog: React.FC = () => {
       })
         .then(() => {
           toast.success('File uploaded successfully');
-          toggleModal();
+          setIsOpen(false);
+          refetchDocs();
         })
         .catch((error: any) => {
           toast.error('Failed to save!');

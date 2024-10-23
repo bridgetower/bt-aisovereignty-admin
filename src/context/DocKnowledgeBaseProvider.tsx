@@ -9,6 +9,7 @@ import React, {
 
 import {
   CREATE_DOC_REFERENCE,
+  DELETE_DOC_REFERENCE,
   FETCH_DOC_REFERENCES,
 } from '@/apollo/schemas/knowledgeBaseSchemas';
 
@@ -30,11 +31,12 @@ type DocKnowledgeBaseContextType = {
   loading: boolean;
   error?: ApolloError;
   createDoc: (content: any) => Promise<void>;
-  // deleteDoc: (id: string) => Promise<void>;
+  deleteDoc: (id: string) => Promise<void>;
   refetchDocs: (variables?: Record<string, any>) => Promise<any>;
   totalPages: number;
   docType: string;
   setDocType: (docType: string) => void;
+  setLoading: (loading: boolean) => void;
 };
 
 // Create context with initial empty values
@@ -99,7 +101,7 @@ export const DocKnowledgeBaseProvider: React.FC<{ children: ReactNode }> = ({
   }, [page, limit, idToken]);
 
   const [createDocMutation] = useMutation(CREATE_DOC_REFERENCE);
-  // const [deleteDocMutation] = useMutation(DELETE_DOC_REFERENCE);
+  const [deleteDocMutation] = useMutation(DELETE_DOC_REFERENCE);
 
   const createDoc = async (content: any): Promise<void> => {
     try {
@@ -119,25 +121,31 @@ export const DocKnowledgeBaseProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  // const deleteDoc = async (id: string): Promise<void> => {
-  //   try {
-  //     await deleteDocMutation({
-  //       variables: { id },
-  //     });
-  //     setDocs((prev) => prev.filter((doc) => doc.id !== id));
-  //   } catch (err) {
-  //     console.error('Error deleting document:', err);
-  //   }
-  // };
+  const deleteDoc = async (id: string): Promise<void> => {
+    try {
+      await deleteDocMutation({
+        variables: { refId: id },
+        context: {
+          headers: {
+            identity: idToken,
+          },
+        },
+      });
+      setDocs((prev) => prev.filter((doc) => doc.id !== id));
+    } catch (err) {
+      console.error('Error deleting document:', err);
+    }
+  };
 
   return (
     <DocKnowledgeBaseContext.Provider
       value={{
         docs,
         loading,
+        setLoading,
         error,
         createDoc,
-        // deleteDoc,
+        deleteDoc,
         refetchDocs: handleRefetch,
         page,
         limit,
