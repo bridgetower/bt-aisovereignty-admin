@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import { useDocKnowledgeBase } from '@/context/DocKnowledgeBaseProvider';
+import { useLoader } from '@/context/LoaderProvider';
 
 import { ConfirmationDialog } from '../common/confirmationDialog';
 import DataTable from '../common/dataTable';
@@ -15,7 +16,8 @@ export const KnowledgeBase: React.FC = () => {
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [deleteDescription, setDeleteDescription] = useState('');
   const [selectedToDelete, setSelectedTodelete] = useState<string | null>(null);
-  const { deleteDoc, setLoading, loading } = useDocKnowledgeBase();
+  const { deleteDoc } = useDocKnowledgeBase();
+  const { showLoader, hideLoader } = useLoader();
   useEffect(() => {
     if (docs.length) {
       const newData = docs
@@ -75,14 +77,14 @@ export const KnowledgeBase: React.FC = () => {
   };
   const proceedToDelete = () => {
     if (selectedToDelete) {
-      setLoading(true);
+      showLoader();
       deleteDoc(selectedToDelete)
         .then(() => {
           // refetchDocs();
         })
         .finally(() => {
           setShowConfirmationDialog(false);
-          setLoading(false);
+          hideLoader();
         });
     }
   };
@@ -94,9 +96,8 @@ export const KnowledgeBase: React.FC = () => {
         onCancel={onConfirmationDialogClose}
         description={deleteDescription}
         onConfirm={proceedToDelete}
-        loading={loading}
       />
-      <div className=" dark:bg-[#222222] min-h-full p-4 rounded-2xl">
+      <div className=" bg-background min-h-full p-4 rounded-2xl">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-semibold">Documents</h1>
           <div className="flex">

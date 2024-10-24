@@ -13,6 +13,8 @@ import {
   FETCH_DOC_REFERENCES,
 } from '@/apollo/schemas/knowledgeBaseSchemas';
 
+import { useLoader } from './LoaderProvider';
+
 // Define types for the context state
 export interface IDocumentKnowledgeBase {
   createdat: string;
@@ -28,7 +30,6 @@ type DocKnowledgeBaseContextType = {
   setPage: (page: number) => void;
   setLimit: (limit: number) => void;
   docs: IDocumentKnowledgeBase[];
-  loading: boolean;
   error?: ApolloError;
   createDoc: (content: any) => Promise<void>;
   deleteDoc: (id: string) => Promise<void>;
@@ -36,7 +37,6 @@ type DocKnowledgeBaseContextType = {
   totalPages: number;
   docType: string;
   setDocType: (docType: string) => void;
-  setLoading: (loading: boolean) => void;
 };
 
 // Create context with initial empty values
@@ -52,9 +52,9 @@ export const DocKnowledgeBaseProvider: React.FC<{ children: ReactNode }> = ({
   const [page, setPage] = useState(1); // State for page number
   const [limit, setLimit] = useState(10); // State for limit
   const [totalPages, setTotalPages] = useState(0); // State for total pages
-  const [loading, setLoading] = useState(false);
   const [docType, setDocType] = useState('DOCUMENT');
 
+  const { isLoading, showLoader, hideLoader } = useLoader();
   const idToken = localStorage.getItem('idToken');
   useEffect(() => {
     console.log(docs);
@@ -75,7 +75,11 @@ export const DocKnowledgeBaseProvider: React.FC<{ children: ReactNode }> = ({
   });
 
   useEffect(() => {
-    setLoading(initialLoding);
+    if (initialLoding) {
+      showLoader();
+    } else {
+      hideLoader();
+    }
   }, [initialLoding]);
   useEffect(() => {
     if (data && data.ListReference?.data) {
@@ -86,12 +90,12 @@ export const DocKnowledgeBaseProvider: React.FC<{ children: ReactNode }> = ({
   // Function to handle refetch and update loading status
   const handleRefetch = async () => {
     try {
-      setLoading(true);
+      showLoader(); // Show loader
       await refetch({ pageNo: page, limit, refType: docType }); // Await the refetch call to complete
     } catch (err) {
       console.error('Error refetching data:', err);
     } finally {
-      setLoading(false); // Ensure loading state is reset
+      hideLoader(); // Hide loader
     }
   };
   useEffect(() => {
@@ -141,8 +145,6 @@ export const DocKnowledgeBaseProvider: React.FC<{ children: ReactNode }> = ({
     <DocKnowledgeBaseContext.Provider
       value={{
         docs,
-        loading,
-        setLoading,
         error,
         createDoc,
         deleteDoc,

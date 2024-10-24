@@ -44,6 +44,14 @@ export const FETCH_DOC_REFERENCES = gql`
           reftype
           size
           url
+          datasourceid
+          ingestionjobid
+          s3prestorehash
+          s3prestoretxhash
+          s3poststorehash
+          s3poststoretxhash
+          chaintype
+          chainid
         }
       }
       error

@@ -3,9 +3,16 @@ export const favorites = ['Overview', 'Projects'];
 
 export const mainNavigationList: TNavItem[] = [
   {
+    icon: 'layout-list',
+    label: 'Projects',
+    path: '/projects',
+    defaultOpen: false,
+    subItems: [],
+  },
+  {
     icon: 'book-open',
     label: 'Knowledge base',
-    path: '/',
+    path: '/knowledgebase',
     defaultOpen: false,
     subItems: [
       { label: 'Documents', path: '/knowledgebase/documents' },

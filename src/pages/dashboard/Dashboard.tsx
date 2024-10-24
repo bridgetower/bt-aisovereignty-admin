@@ -12,6 +12,8 @@ import OrgChart from '@/components/common/orgChart';
 import { KnowledgeBaseContainer } from '@/pages/knowledgeBase/KnowledgeBase';
 import { KnowledgeBaseWebsitesContainer } from '@/pages/knowledgeBase/KnowledgeBaseWebsites';
 
+import { ProjectList } from '../Projects/Projects';
+
 const stepData = [
   {
     completed: true,
@@ -65,7 +67,7 @@ const Dashboard = () => {
           </div>
         );
       case 'open':
-        return <div>Open Section Content</div>;
+        return <ProjectList />;
       case 'idea':
         return <div>Idea Section Content</div>;
       case 'complete':

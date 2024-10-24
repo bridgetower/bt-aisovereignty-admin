@@ -1,6 +1,8 @@
 import { Loader2 } from 'lucide-react';
 import React from 'react';
 
+import { useLoader } from '@/context/LoaderProvider';
+
 import { Button } from '../ui/button';
 import {
   Dialog,
@@ -14,12 +16,12 @@ type ConfirmationDialogProps = {
   description: string;
   onConfirm: () => void;
   onCancel: () => void;
-  loading: boolean;
 };
 export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = (
   props,
 ) => {
-  const { open, description, onConfirm, onCancel, loading } = props;
+  const { isLoading } = useLoader();
+  const { open, description, onConfirm, onCancel } = props;
   return (
     <Dialog open={open} onOpenChange={() => onCancel()} modal>
       <DialogContent>
@@ -29,9 +31,9 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = (
           <Button size={'sm'} variant={'secondary'} onClick={() => onCancel()}>
             Cancel
           </Button>
-          <Button size={'sm'} onClick={() => onConfirm()} disabled={loading}>
+          <Button size={'sm'} onClick={() => onConfirm()} disabled={isLoading}>
             Confirm{' '}
-            {loading && <Loader2 size={16} className="ml-2 animate-spin" />}
+            {isLoading && <Loader2 size={16} className="ml-2 animate-spin" />}
           </Button>
         </DialogFooter>
       </DialogContent>

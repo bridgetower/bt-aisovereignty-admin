@@ -21,7 +21,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = new HttpLink({
-  uri: 'https://etjvxhmjmjagtbsyhtf5lt5azm.appsync-api.us-east-1.amazonaws.com/graphql',
+  uri: 'https://g2n4ivs5jbcirgsy5kkal7puea.appsync-api.us-east-1.amazonaws.com/graphql',
   headers: {
     Authorization: process.env.REACT_APP_TANENT_API_KEY || '',
     identity: localStorage.getItem('idToken') || '',

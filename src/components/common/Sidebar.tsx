@@ -47,7 +47,7 @@ const Sidebar = () => {
       aria-label="Sidebar"
       className="fixed h-full flex flex-col px-5 py-6 overflow-y-auto text-white "
     >
-      <h5 className="text-sm">BridgeTower</h5>
+      <h5 className="text-sm mb-8">BridgeTower</h5>
 
       {/* <<<<<<<<<<<Recent favorite items section>>>>>> */}
       {/* <Tabs className="mt-4" defaultValue="favorite">
@@ -105,7 +105,7 @@ const Sidebar = () => {
 
       {/* <<<<<<<<<<<Main Dashboard links>>>>>> */}
 
-      <span className="text-white/40 text-sm mt-5 px-3 pb-2">Dashboards</span>
+      {/* <span className="text-white/40 text-sm mt-5 px-3 pb-2">Dashboards</span> */}
 
       <NavList data={mainNavigationList} />
 

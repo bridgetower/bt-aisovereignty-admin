@@ -98,7 +98,7 @@ const ModalWithDragDrop: React.FC = () => {
       {/* Modal */}
       {isOpen && (
         <Dialog open={isOpen} onOpenChange={toggleModal}>
-          <DialogContent className="dark:bg-[#222222]">
+          <DialogContent className="bg-background">
             <DialogHeader className="text-primary">Upload File</DialogHeader>
 
             {/* Drag and Drop Area */}

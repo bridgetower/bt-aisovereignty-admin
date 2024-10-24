@@ -5,7 +5,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
 import { z } from 'zod';
 
-import { useDocKnowledgeBase } from '@/context/DocKnowledgeBaseProvider';
+import { useProject } from '@/context/ProjectProvider';
+import { ProjectType } from '@/types/ProjectData';
 
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogHeader } from '../ui/dialog';
@@ -17,25 +18,37 @@ import {
   FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
 
 interface FileData {
-  websiteUrl: string;
-  websiteName: string;
-  depth: string;
+  name: string;
+  description: string;
+  projectType: string;
 }
 const formSchema = z.object({
-  websiteUrl: z.string().min(1, { message: 'URL is required' }),
-  depth: z.string().min(1, { message: 'Depth is required' }),
-  websiteName: z.string().min(1, { message: 'Website name is required' }),
+  name: z.string().min(1, { message: 'URL is required' }),
+  projectType: z.string().min(1, { message: 'Project Type is required' }),
+  description: z.string().min(1, { message: 'Website name is required' }),
 });
 
 // TypeScript type inferred from Zod schema
 type FormInputs = z.infer<typeof formSchema>;
 
-const AddWebsiteDialog: React.FC = () => {
+const CreateNewProject: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [saving, setSaving] = useState(false);
-  const { createDoc, refetchDocs } = useDocKnowledgeBase();
+  const { createNewProject, refetchProjects } = useProject();
+
+  const ProjectTypeArray: { key: string; value: string }[] = Object.entries(
+    ProjectType,
+  ).map(([key, value]) => ({ key, value }));
+
   const form = useForm<FormInputs>({
     resolver: zodResolver(formSchema),
   });
@@ -44,24 +57,19 @@ const AddWebsiteDialog: React.FC = () => {
   const onSubmit: SubmitHandler<FormInputs> = (data: FileData) => {
     if (!saving) {
       setSaving(true);
-      createDoc({
-        refType: 'WEBSITE',
-        websiteName: data.websiteName,
-        websiteUrl: data.websiteUrl,
-        depth: data.depth,
-        file: {
-          fileContent: '',
-          fileName: '',
-          contentType: '',
-        },
+      createNewProject({
+        name: data.description,
+        description: data.name,
+        projectType: data.projectType,
+        organizationId: process.env.REACT_APP_ORGANIZATION_ID || '',
       })
-        .then(() => {
-          toast.success('File uploaded successfully');
-          setIsOpen(false);
-          refetchDocs();
+        .then((res: any) => {
+          refetchProjects();
+          toast.success('Project created successfully!');
+          toggleModal();
         })
         .catch((error: any) => {
-          toast.error('Failed to save!');
+          toast.error('Failed to create!');
         })
         .finally(() => {
           setSaving(false);
@@ -79,20 +87,17 @@ const AddWebsiteDialog: React.FC = () => {
   return (
     <Form {...form}>
       <Toaster />
-      <Button
-        variant={'default'}
-        className=""
-        onClick={toggleModal}
-        title="Add new website"
-      >
+      <Button variant={'default'} size={'sm'} onClick={toggleModal}>
         <Plus size={20} />
-        Add new
+        Create Project
       </Button>
 
       {/* Modal */}
       <Dialog open={isOpen} onOpenChange={toggleModal}>
         <DialogContent className="bg-background">
-          <DialogHeader className="text-primary">Add new website</DialogHeader>
+          <DialogHeader className="text-primary">
+            Create new project
+          </DialogHeader>
 
           <div>
             <form
@@ -101,7 +106,7 @@ const AddWebsiteDialog: React.FC = () => {
             >
               <FormField
                 control={form.control}
-                name="websiteName"
+                name="description"
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormControl>
@@ -110,7 +115,7 @@ const AddWebsiteDialog: React.FC = () => {
                         className="rounded-xl
                   border-white/10 bg-white/5 placeholder:text-white/20 dark:text-white
                   focus:outline-none"
-                        placeholder="Website name"
+                        placeholder="Project name"
                         {...field}
                       />
                     </FormControl>
@@ -120,7 +125,7 @@ const AddWebsiteDialog: React.FC = () => {
               />
               <FormField
                 control={form.control}
-                name="websiteUrl"
+                name="name"
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormControl>
@@ -129,7 +134,7 @@ const AddWebsiteDialog: React.FC = () => {
                         className="rounded-xl
                   border-white/10 bg-white/5 placeholder:text-white/20 dark:text-white
                   focus:outline-none"
-                        placeholder="Website url"
+                        placeholder="Project description"
                         {...field}
                       />
                     </FormControl>
@@ -139,18 +144,34 @@ const AddWebsiteDialog: React.FC = () => {
               />
               <FormField
                 control={form.control}
-                name="depth"
+                name="projectType"
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormControl>
-                      <Input
+                      <Select
+                        {...field}
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="">
+                          <SelectValue placeholder="Select project type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {ProjectTypeArray.map((type, i) => (
+                            <SelectItem value={type.value} key={i}>
+                              {type.key}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {/* <Input
                         type="number"
                         className="rounded-xl
                   border-white/10 bg-white/5 placeholder:text-white/20 dark:text-white
                   focus:outline-none"
-                        placeholder="Depth"
+                        placeholder="projectType"
                         {...field}
-                      />
+                      /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -174,4 +195,4 @@ const AddWebsiteDialog: React.FC = () => {
   );
 };
 
-export default AddWebsiteDialog;
+export default CreateNewProject;

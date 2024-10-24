@@ -1,13 +1,19 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from 'react-router-dom';
 
 import { AuthLayout } from '@/layout/AuthLayout';
 import { DashboardLayout } from '@/layout/DashboardLayout';
 import KnowledgeBaseWrapper from '@/layout/KnowledgeBaseWpper';
 import { MainLayout } from '@/layout/MainLayout';
+import ProjectComponentWrapper from '@/layout/ProjectComponentWrapper';
 import Dashboard from '@/pages/dashboard/Dashboard';
 import ForgotPassword from '@/pages/forgotPassword';
 import { KnowledgeBaseContainer } from '@/pages/knowledgeBase/KnowledgeBase';
 import { KnowledgeBaseWebsitesContainer } from '@/pages/knowledgeBase/KnowledgeBaseWebsites';
+import { ProjectList } from '@/pages/Projects/Projects';
 import ResetPassword from '@/pages/resetPassword';
 import SignIn from '@/pages/signIn';
 
@@ -37,13 +43,9 @@ const AppRouter = () => {
           element: <DashboardLayout />,
           children: [
             {
-              path: '/',
+              path: '/knowledgebase',
               element: <KnowledgeBaseWrapper />,
               children: [
-                {
-                  path: '/',
-                  element: <Dashboard />,
-                },
                 {
                   path: '/knowledgebase/documents',
                   element: <KnowledgeBaseContainer />,
@@ -54,7 +56,20 @@ const AppRouter = () => {
                 },
               ],
             },
-
+            {
+              path: '/',
+              element: <ProjectComponentWrapper />,
+              children: [
+                {
+                  path: '/',
+                  element: <Navigate to={'/projects'} />,
+                },
+                {
+                  path: '/projects',
+                  element: <ProjectList />,
+                },
+              ],
+            },
             {
               path: '/dashboard',
               element: <Dashboard />,

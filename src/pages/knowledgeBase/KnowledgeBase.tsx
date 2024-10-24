@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
 
-import { Loader } from '@/components/common/Loader';
 import { KnowledgeBase } from '@/components/KnowledgeBase/KnowledgeBase';
 import { useDocKnowledgeBase } from '@/context/DocKnowledgeBaseProvider';
 
 export const KnowledgeBaseContainer = () => {
   // const [knowledgeBaseList, setKnowledgeBaseList] = useState<any[]>([]); // Add this line
   // const [loading, setLoading] = useState(false);
-  const { loading, setDocType } = useDocKnowledgeBase();
+  const { setDocType } = useDocKnowledgeBase();
   useEffect(() => {
     setDocType('DOCUMENT');
   }, []);
@@ -47,7 +46,6 @@ export const KnowledgeBaseContainer = () => {
   // }, []);
   return (
     <>
-      <Loader show={loading} />
       <KnowledgeBase />
     </>
   );
