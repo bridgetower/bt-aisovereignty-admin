@@ -89,8 +89,8 @@ const SignInForm = () => {
         onClose={onCloseConfirmationPopup}
         username={username}
       />
-      <div className="w-full max-w-[680px] py-[104px] px-[148px] rounded-3xl bg-background mx-auto">
-        <h2 className="text-2xl font-semibold text-white text-center">
+      <div className="w-full max-w-[680px] py-[104px] px-[148px] rounded-3xl bg-card mx-auto">
+        <h2 className="text-2xl font-semibold text-foreground text-center">
           Sign In
         </h2>
         <form
@@ -105,7 +105,7 @@ const SignInForm = () => {
                 <FormControl>
                   <Input
                     className="rounded-xl
-                  border-white/10 bg-white/5 placeholder:text-white/20 dark:text-white
+                  border-muted-foreground bg-muted placeholder:text-muted-foreground
                   focus:outline-none"
                     placeholder="Email"
                     {...field}
@@ -124,7 +124,8 @@ const SignInForm = () => {
                   <Input
                     type="password"
                     className="rounded-xl
-                  border-white/10 bg-white/5 placeholder:text-white/20 dark:text-white
+                  
+                  border-muted-foreground bg-muted placeholder:text-muted-foreground
                   focus:outline-none"
                     placeholder="password"
                     {...field}

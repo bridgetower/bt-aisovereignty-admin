@@ -19,6 +19,7 @@ export default {
       fontFamily: {
         inter: 'Inter", sans-serif',
         firaSans: 'Fira Sans", sans-serif',
+        roboto: ['Roboto', 'sans-serif'],
       },
       fontSize: {
         h1: ['65px', '62px'],
@@ -44,6 +45,7 @@ export default {
         foreground: 'hsl(var(--foreground))',
         navbackground: 'hsl(var(--nav-background))',
         navforeground: 'hsl(var(--nav-foregraound))',
+        info: 'hsl(var(--info))',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
@@ -63,6 +65,10 @@ export default {
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
+        },
+        warning: {
+          DEFAULT: 'hsl(var(--warning))',
+          foreground: 'hsl(var(--warning-foreground))',
         },
         popover: {
           DEFAULT: 'hsl(var(--popover))',
@@ -107,4 +113,10 @@ export default {
     },
   },
   plugins: [require('tailwindcss-animate')],
+  safelist: [
+    {
+      pattern:
+        /bg-(red|blue|green|purple|pink|yellow|indigo)-(50|100|200|300|400|500|600|700|800|900)/,
+    },
+  ],
 };

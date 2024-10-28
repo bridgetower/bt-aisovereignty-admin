@@ -14,7 +14,7 @@ interface DrawerProps {
 const RightDrawer: React.FC<DrawerProps> = ({
   isOpen,
   onClose,
-  width = 'w-1/3',
+  width = 'w-2/5',
   children,
   title,
 }) => {
@@ -22,7 +22,7 @@ const RightDrawer: React.FC<DrawerProps> = ({
     <div className="relative">
       {/* Side Panel */}
       <div
-        className={`z-50 fixed top-0 right-0 ${width} h-screen rounded-tl-2xl bg-card text-card-foreground shadow-lg transform transition-transform duration-500 ease-in-out ${
+        className={`z-50 fixed top-0 right-0 ${width} h-screen rounded-tl-[10px] bg-card text-card-foreground shadow-lg transform transition-transform duration-500 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -34,10 +34,10 @@ const RightDrawer: React.FC<DrawerProps> = ({
               variant={'ghost'}
               size={'icon'}
             >
-              <ArrowLeft size={20} className="text-primary" />
+              <ArrowLeft size={20} className="text-foreground" />
             </Button>
           </div>
-          <h1 className="text-xl text-primary font-bold w-full">{title}</h1>
+          <h1 className="text-xl text-foreground font-bold w-full">{title}</h1>
           <div className="w-6">
             <Button
               onClick={() => onClose()}

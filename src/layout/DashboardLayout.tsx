@@ -46,12 +46,12 @@ export function DashboardLayout({ children }: { children?: React.ReactNode }) {
   return (
     <main
       className={clsx(
-        'relative w-screen max-w-screen min-h-screen overflow-hidden flex bg-black text-white transition-all duration-300',
+        'relative w-screen max-w-screen min-h-screen overflow-hidden flex bg-background text-foreground transition-all duration-300',
       )}
     >
       <div
         className={clsx(
-          'h-screen w-[212px] min-w-[212px] -ml-[212px] border-r border-white/10 transition-all duration-300 z-20',
+          'h-screen w-[212px] min-w-[212px] -ml-[212px] border-r border-muted transition-all duration-300 z-20 bg-navbackground shadow-',
           {
             '!ml-0': navOpen,
           },

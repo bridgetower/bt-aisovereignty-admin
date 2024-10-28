@@ -30,17 +30,6 @@ const knoledgeBaseColums: ColumnDef<any>[] = [
   },
 ];
 
-const hashItemColumns: ColumnDef<any>[] = [
-  {
-    accessorKey: 'name',
-    header: 'File name',
-  },
-  {
-    accessorKey: 'updatedon',
-    header: 'Last updated on',
-  },
-];
-
 const dummyData = [
   {
     id: '728ed523f',
@@ -54,22 +43,11 @@ const dummyData = [
     updatedon: 'Jan 4, 2024',
   },
 ];
-const dummyData1 = [
-  {
-    id: '728ed52f',
-    name: 'Data Source Hash',
-    updatedon: 'Jan 4, 2024',
-  },
-  {
-    id: '728ed5f',
-    name: 'Data Source Hash',
-    updatedon: 'Jan 4, 2024',
-  },
-];
+
 type Props = {
   project: IProjectAttributes | null;
 };
-const ProjectDetails: React.FC<Props> = (props) => {
+export const UpdateProject: React.FC<Props> = (props) => {
   const { project } = props;
 
   return (
@@ -97,7 +75,7 @@ const ProjectDetails: React.FC<Props> = (props) => {
             <div className="flex items-center gap-2">
               <span className="font-bold ">Type:</span>{' '}
               <span>
-                <CircleHelp size={15} absoluteStrokeWidth />
+                <CircleHelp size={16} />
               </span>
               <span>
                 <Select>
@@ -121,8 +99,8 @@ const ProjectDetails: React.FC<Props> = (props) => {
             </span>
           </div>
           <div className="bg-[#C6F7E9] p-6 flex justify-between items-center rounded-md mt-4">
-            <div className={`text-info`}>Time Spent on this project</div>
-            <div className="text-info font-semibold text-xl">12:45:56</div>
+            <div className={`text-accent`}>Time Spent on this project</div>
+            <div className="text-accent font-semibold text-xl">12:45:56</div>
           </div>
           <div className="bg-warning p-6 flex justify-between items-center rounded-md mt-4">
             <div className={`text-white`}>Time Spent on this project</div>
@@ -156,23 +134,8 @@ const ProjectDetails: React.FC<Props> = (props) => {
               />
             </div>
           </div>
-          <div className="text-sm text-foreground mt-4 font-roboto ">
-            <div className="font-semibold ">
-              Hash ({dummyData.length} items)
-            </div>{' '}
-            <div className="mt-2">
-              <DataTable
-                columns={hashItemColumns}
-                data={dummyData1}
-                actionMenu={true}
-                onActionMenuClick={() => {}}
-              />
-            </div>
-          </div>
         </>
       ) : null}
     </div>
   );
 };
-
-export default ProjectDetails;

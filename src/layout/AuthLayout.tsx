@@ -10,7 +10,7 @@ export function AuthLayout({ children }: { children?: React.ReactNode }) {
     return <Navigate to="/" />;
   }
   return (
-    <main className="w-screen min-h-screen dark:bg-[#2A2A2A]">
+    <main className="w-screen min-h-screen bg-background">
       <AuthNavbar />
 
       {children ?? <Outlet />}

@@ -5,7 +5,7 @@ import { useDocKnowledgeBase } from '@/context/DocKnowledgeBaseProvider';
 import { useLoader } from '@/context/LoaderProvider';
 
 import { ConfirmationDialog } from '../common/confirmationDialog';
-import DataTable from '../common/dataTable';
+import DataTable from '../common/dataTableKB';
 import Pagination from '../common/pagination';
 import ModalWithDragDrop from './uploadFiles';
 
@@ -119,23 +119,25 @@ export const KnowledgeBase: React.FC = () => {
           </div>
         </div>
         <hr className="border-t border-neutral-200 my-4" />
-        <DataTable
-          data={knowledgeBaseList}
-          columns={columns}
-          actions={{ edit: false, delete: true }}
-          onDelete={handleDelete}
-          onSelect={onSelectionChange}
-          onEdit={() => null}
-          rowSelection={false}
-        />
-        {/* <hr className="border-t border-neutral-200 my-2" /> */}
-        <div className="">
-          <div className="flex justify-end px-4">
-            <Pagination
-              totalItems={totalPages}
-              itemsPerPage={limit}
-              onPageChange={handlePageChange}
-            />
+        <div className="bg-card p-4 rounded-lg">
+          <DataTable
+            data={knowledgeBaseList}
+            columns={columns}
+            actions={{ edit: false, delete: true }}
+            onDelete={handleDelete}
+            onSelect={onSelectionChange}
+            onEdit={() => null}
+            rowSelection={false}
+          />
+          {/* <hr className="border-t border-neutral-200 my-2" /> */}
+          <div className="">
+            <div className="flex justify-end px-4">
+              <Pagination
+                totalItems={totalPages}
+                itemsPerPage={limit}
+                onPageChange={handlePageChange}
+              />
+            </div>
           </div>
         </div>
       </div>

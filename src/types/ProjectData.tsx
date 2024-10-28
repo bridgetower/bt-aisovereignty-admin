@@ -10,6 +10,7 @@ export interface IProjectAttributes {
   createdby: string;
   createdat: Date;
   isactive: boolean;
+  hashRecorded: any[];
 }
 export enum ProjectType {
   'ON PREM' = 'ON_PREM',
@@ -33,7 +34,7 @@ export const getProjectStageEnumValue = (key: string): string => {
   return ProjectStageEnum[key as keyof typeof ProjectStageEnum];
 };
 export const ProjectStageLabel = {
-  DATA_SELECTION: 'Data Selection',
+  DATA_SELECTION: 'Source Data',
   DATA_INGESTION: 'Data Ingestion',
   DATA_STORAGE: 'Data Storage',
   DATA_PREPARATION: 'Data Preparation',
@@ -55,3 +56,24 @@ export const ProjectStatusKeyValueArray: { key: string; value: string }[] =
     key: key.replace('_', ' '),
     value,
   }));
+
+export const projectColors = [
+  'red',
+  'yellow',
+  'green',
+  'blue',
+  'indigo',
+  'purple',
+  'pink',
+  // 'slate',
+  // 'zinc',
+  // 'stone',
+  // 'orange',
+  // 'amber',
+  // 'lime',
+  // 'emerald',
+  // 'cyan',
+  // 'sky',
+  // 'violet',
+  // 'fuchsia',
+];

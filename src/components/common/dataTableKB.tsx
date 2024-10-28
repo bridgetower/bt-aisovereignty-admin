@@ -2,6 +2,7 @@ import { EditIcon, Trash2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 import { Button } from '../ui/button';
+import { Checkbox } from '../ui/checkbox';
 
 type Props = {
   data: any[];
@@ -12,7 +13,8 @@ type Props = {
     edit: boolean;
     delete: boolean;
   };
-  onSelect: (id: string, action?: string) => void;
+  onSelect?: (id: string, action?: string) => void;
+  rowSelection?: boolean;
 };
 
 interface SortConfig {
@@ -26,12 +28,15 @@ const DataTable: React.FC<Props> = ({
   onEdit,
   actions,
   onSelect,
+  rowSelection = false,
 }) => {
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState<any[]>(data);
   const [selectedRows, setSelectedRows] = useState<any>([]);
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
   const [filterText, setFilterText] = useState('');
-
+  useEffect(() => {
+    console.log(filteredData);
+  }, [filteredData]);
   // Sorting Logic
   const sortData = (key: string) => {
     let direction = 'ascending';
@@ -56,7 +61,7 @@ const DataTable: React.FC<Props> = ({
         }
         return 0;
       });
-      setFilteredData(sortedData);
+      setFilteredData((pre) => [...sortedData]);
     }
   }, [sortConfig]);
 
@@ -78,49 +83,50 @@ const DataTable: React.FC<Props> = ({
         ? prevSelectedRows.filter((rowId: string) => rowId !== id)
         : [...prevSelectedRows, id],
     );
-    onSelect(id);
+    if (onSelect) onSelect(id);
   };
 
   return (
-    <div className="container mx-auto p-4 rounded-xl">
+    <>
       <div className="mb-4 flex justify-end">
         <input
           type="text"
           placeholder="Filter by any field..."
           value={filterText}
           onChange={(e) => setFilterText(e.target.value)}
-          className="border p-2 rounded w-full lg:w-1/3 dark:bg-[#333] "
+          className="border p-2 rounded w-full lg:w-1/3 bg-muted "
         />
       </div>
-      <table className="table-auto w-full border-collapse border rounded-xl  border-black h-7 ">
+      <table className="table-auto w-full border-collapse border  bg-muted h-7 ">
         <thead>
           <tr>
-            <th className="p-2 dark:bg-[#333] text-start ">
-              <input
-                type="checkbox"
-                className="h-4 w-4 flex items-center justify-start"
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    setSelectedRows(
-                      filteredData.map((item) => item[columns[0].key]),
-                    );
-                    for (const data of filteredData) {
-                      onSelect(data[columns[0].key]);
+            {rowSelection && (
+              <th className="p-2 bg-muted-foreground text-start text-white/90">
+                <Checkbox
+                  className="h-4 w-4 flex items-center justify-start"
+                  onCheckedChange={(checked) => {
+                    if (checked) {
+                      setSelectedRows(
+                        filteredData.map((item) => item[columns[0]?.key]),
+                      );
+                      for (const data of filteredData) {
+                        if (onSelect) onSelect(data[columns[0].key]);
+                      }
+                    } else {
+                      setSelectedRows([]);
+                      if (onSelect) onSelect('', 'clear');
                     }
-                  } else {
-                    setSelectedRows([]);
-                    onSelect('', 'clear');
-                  }
-                }}
-                checked={selectedRows.length === filteredData.length}
-              />
-            </th>
-            {columns.map((column) => (
+                  }}
+                  checked={selectedRows.length === filteredData.length}
+                />
+              </th>
+            )}
+            {columns.map((column, i) => (
               <>
-                {column.key !== 'Sr' && (
+                {column.key !== 'Id' && (
                   <th
-                    key={column.key}
-                    className=" p-2 cursor-pointer dark:bg-[#333]  text-start text-xs"
+                    key={column.key + i}
+                    className=" p-2 cursor-pointer bg-muted-foreground text-white/90 text-start text-xs"
                     onClick={() => sortData(column.key)}
                   >
                     {column.label}{' '}
@@ -131,54 +137,69 @@ const DataTable: React.FC<Props> = ({
               </>
             ))}
             {actions && (
-              <th className="p-2 dark:bg-[#333]  text-start text-sm">
+              <th className="p-2 bg-muted-foreground text-white/90 text-start text-sm">
                 Actions
               </th>
             )}
           </tr>
         </thead>
         <tbody className="overflow-auto">
-          {filteredData.map((item) => (
+          {filteredData.map((item, i) => (
             <tr
-              key={item[columns[0].key]}
+              key={item[columns[0]?.key] + i}
               className={`${
-                selectedRows.includes(item[columns[0].key]) ? 'bg-black' : ''
+                selectedRows.includes(item[columns[0]?.key])
+                  ? 'bg-background'
+                  : ''
               }`}
             >
-              <td className="border-t border-black p-2">
-                <input id="checkbox1" className="hidden peer" type="checkbox" />
-                <div
-                  onClick={() => handleSelectRow(item[columns[0].key])}
-                  className="w-4 h-4 bg-black/80 rounded-sm flex items-center justify-center peer-checked:border-transparent peer-checked:text-white  "
-                >
-                  <svg
-                    className={`${
-                      selectedRows.includes(item[columns[0].key])
-                        ? ''
-                        : 'hidden'
-                    } peer-checked:block w-3 h-3 font-semibold`}
-                    fill="none"
-                    stroke="#223f86"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
+              {rowSelection && (
+                <td className="border-t border-muted p-2">
+                  <Checkbox
+                    id="checkbox1"
+                    // className="hidden peer"
+                    checked={selectedRows.includes(item[columns[0]?.key])}
+                    onCheckedChange={() =>
+                      handleSelectRow(item[columns[0]?.key])
+                    }
+                  />
+                  {/* <div
+                    onClick={() => handleSelectRow(item[columns[0]?.key])}
+                    className="w-4 h-4 bg-black/80 rounded-sm flex items-center justify-center peer-checked:border-transparent peer-checked:text-white  "
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                </div>
-              </td>
-              {columns.map((column) => (
+                    <svg
+                      className={`${
+                        selectedRows.includes(item[columns[0]?.key])
+                          ? ''
+                          : 'hidden'
+                      } peer-checked:block w-3 h-3 font-semibold`}
+                      fill="none"
+                      stroke="#223f86"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M5 13l4 4L19 7"
+                      ></path>
+                    </svg>
+                  </div> */}
+                </td>
+              )}
+              {columns.map((column, i) => (
                 <>
-                  {column.key !== 'Sr' && (
+                  {column.key !== 'Id' && (
                     <td
-                      onClick={() => handleSelectRow(item[columns[0].key])}
-                      key={column.key}
+                      key={i}
+                      onClick={() => {
+                        if (rowSelection) {
+                          handleSelectRow(item[columns[0]?.key]);
+                        }
+                      }}
                       title={item[column.key]}
-                      className={`border-t text-xs border-black p-2 max-w-[450px] truncate cursor-pointer`}
+                      className={`border-t text-xs border-muted p-2 max-w-[450px] truncate ${rowSelection && 'cursor-pointer'}`}
                     >
                       {item[column.key]}
                     </td>
@@ -187,7 +208,7 @@ const DataTable: React.FC<Props> = ({
               ))}
               {/* Actions Column */}
               {actions && (
-                <td className="border-t border-black p-2">
+                <td className="border-t border-muted p-2">
                   {actions.edit && (
                     <Button
                       variant={'default'}
@@ -216,12 +237,19 @@ const DataTable: React.FC<Props> = ({
               )}
             </tr>
           ))}
+          {filteredData.length === 0 && (
+            <tr>
+              <td colSpan={columns.length + 2} className="text-center p-5">
+                No data to show
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
       {/* <div className="mt-4">
         <p>Selected Rows: {JSON.stringify(selectedRows)}</p>
       </div> */}
-    </div>
+    </>
   );
 };
 

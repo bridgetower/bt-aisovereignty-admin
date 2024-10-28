@@ -52,7 +52,7 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className="flex justify-center items-center my-2 text-sm text-gray-800">
+    <div className="flex justify-center items-center my-2 text-sm text-foreground">
       <Button
         size={'sm'}
         className={`mr-2 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -70,7 +70,7 @@ const Pagination: React.FC<PaginationProps> = ({
       >
         Next
       </Button>
-      <div className="text-sm ml-4 text-white/90">
+      <div className="text-sm ml-4 text-foreground">
         Showing {currentPage * itemsPerPage - itemsPerPage}-
         {totalPages === currentPage ? totalItems : itemsPerPage * currentPage}{' '}
         of {totalItems}

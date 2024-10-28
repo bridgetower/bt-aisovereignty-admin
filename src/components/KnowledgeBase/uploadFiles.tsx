@@ -61,6 +61,7 @@ const ModalWithDragDrop: React.FC = () => {
       if (base64Files.length > 0) {
         setUploading(true);
         createDoc({
+          projectId: '00a1ee91-b2f1-41e6-94f5-0201fd127a01',
           refType: 'DOCUMENT',
           websiteName: '',
           websiteUrl: '',
@@ -71,7 +72,7 @@ const ModalWithDragDrop: React.FC = () => {
           },
         })
           .then(() => {
-            toast.success('File uploaded successfully');
+            // toast.success('File uploaded successfully');
             toggleModal();
           })
           .catch((error) => {
@@ -98,16 +99,16 @@ const ModalWithDragDrop: React.FC = () => {
       {/* Modal */}
       {isOpen && (
         <Dialog open={isOpen} onOpenChange={toggleModal}>
-          <DialogContent className="bg-background">
+          <DialogContent className="">
             <DialogHeader className="text-primary">Upload File</DialogHeader>
 
             {/* Drag and Drop Area */}
             <div
               {...getRootProps()}
-              className="border-2 border-dashed border-black p-10 mt-5 text-center cursor-pointer"
+              className="border-2 border-dashed border-muted-foreground bg-muted p-10 mt-5 text-center cursor-pointer"
             >
               <input {...getInputProps()} />
-              <p className="text-white/80 hover:text-white/90 ">
+              <p className="text-muted-foreground hover:opacity-80 ho ">
                 Drag & Drop files here, or click to select files
               </p>
             </div>

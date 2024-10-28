@@ -1,4 +1,9 @@
-import { ApolloError, useMutation, useQuery } from '@apollo/client';
+import {
+  ApolloError,
+  useLazyQuery,
+  useMutation,
+  useQuery,
+} from '@apollo/client';
 import React, {
   createContext,
   ReactNode,
@@ -10,6 +15,7 @@ import toast from 'react-hot-toast';
 
 import {
   CREATE_NEW_PROJECT,
+  FETCH_PROJECT_BY_ID,
   FETCH_PROJECT_LIST,
 } from '@/apollo/schemas/projectSchemas';
 import { IProjectAttributes } from '@/types/ProjectData';
@@ -18,11 +24,17 @@ import { useLoader } from './LoaderProvider';
 
 // Define types for the context state
 
+export interface IFileContent {
+  fileName: string;
+  fileContent: string;
+  contentType: string;
+}
 export interface ICreateProjectPayload {
   name: string;
   description: string;
   projectType: string;
   organizationId: string;
+  files: IFileContent[];
 }
 type ProjectContextType = {
   page: number;
@@ -36,6 +48,9 @@ type ProjectContextType = {
   totalPages: number;
   organizationId: string;
   setOrganizationId: (organizationId: string) => void;
+  selectedProject: IProjectAttributes | null;
+  setSelectedProject: (project: IProjectAttributes | null) => void;
+  getProjectDetails: (content: { projectId: string }) => Promise<any>;
 };
 
 // Create context with initial empty values
@@ -46,8 +61,10 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [projects, setProject] = useState<IProjectAttributes[]>([]); // State for projects;
   const [page, setPage] = useState(1); // State for page number
-  const [limit, setLimit] = useState(10); // State for limit
+  const [limit, setLimit] = useState(1000); // State for limit
   const [totalPages, setTotalPages] = useState(0); // State for total pages
+  const [selectedProject, setSelectedProject] =
+    useState<IProjectAttributes | null>(null);
   const [organizationId, setOrganizationId] = useState(
     process.env.REACT_APP_ORGANIZATION_ID || '',
   ); // State for organization ID
@@ -112,6 +129,7 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
   }, [page, limit, idToken]);
 
   const [createProjectMutation] = useMutation(CREATE_NEW_PROJECT);
+  const [getProjectById] = useLazyQuery(FETCH_PROJECT_BY_ID);
 
   const createNewProject = async (
     content: ICreateProjectPayload,
@@ -134,7 +152,18 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
       console.error('Error creating document:', err);
     }
   };
-
+  const getProjectDetails = async (content: {
+    projectId: string;
+  }): Promise<any> => {
+    return getProjectById({
+      variables: { ...content, limit: 1, pageNo: 1 },
+      context: {
+        headers: {
+          identity: idToken,
+        },
+      },
+    });
+  };
   return (
     <ProjectContext.Provider
       value={{
@@ -149,6 +178,11 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
         totalPages,
         organizationId,
         setOrganizationId,
+
+        selectedProject,
+        setSelectedProject,
+
+        getProjectDetails,
       }}
     >
       {children}
@@ -156,7 +190,6 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-// Custom hook to use the context
 export const useProject = () => {
   const context = useContext(ProjectContext);
   if (context === undefined) {

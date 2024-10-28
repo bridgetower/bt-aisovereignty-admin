@@ -6,13 +6,15 @@ export const CREATE_NEW_PROJECT = gql`
     $description: String
     $projectType: String!
     $organizationId: String!
+    $files: [FileInput]!
   ) {
-    CreateProject(
+    AddProjectAndReference(
       input: {
         projectType: $projectType
         name: $name
         description: $description
         organizationId: $organizationId
+        files: $files
       }
     ) {
       data {
@@ -20,12 +22,12 @@ export const CREATE_NEW_PROJECT = gql`
         createdby
         description
         id
-        projecttype
-        projectstatus
-        projectstage
-        organizationid
-        name
         isactive
+        name
+        organizationid
+        projectstage
+        projectstatus
+        projecttype
       }
       error
       status
@@ -51,6 +53,51 @@ export const FETCH_PROJECT_LIST = gql`
           organizationid
           name
           isactive
+        }
+      }
+      error
+      status
+    }
+  }
+`;
+export const FETCH_PROJECT_BY_ID = gql`
+  query MyQuery($pageNo: Int!, $limit: Int!, $projectId: String) {
+    GetProjectById(
+      input: { pageNo: $pageNo, limit: $limit, projectId: $projectId }
+    ) {
+      data {
+        total
+        totalPages
+        project {
+          createdat
+          createdby
+          description
+          id
+          projecttype
+          projectstatus
+          projectstage
+          organizationid
+          name
+          isactive
+        }
+        refs {
+          createdat
+          depth
+          id
+          ingested
+          name
+          reftype
+          size
+          url
+          referencestage
+          datasourceid
+          ingestionjobid
+          s3prestorehash
+          s3prestoretxhash
+          s3poststorehash
+          s3poststoretxhash
+          chaintype
+          chainid
         }
       }
       error

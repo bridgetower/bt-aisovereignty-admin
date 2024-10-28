@@ -44,10 +44,10 @@ const ForgotPasswordForm = () => {
   return (
     <Form {...form}>
       <div className="w-full max-w-[680px] py-[104px] px-[148px]  rounded-3xl bg-background mx-auto">
-        <h2 className="text-2xl font-semibold text-white text-center">
+        <h2 className="text-2xl font-semibold text-foreground text-center">
           Forgot Password ?
         </h2>
-        <p className="text-sm text-white/40 text-center mt-2">
+        <p className="text-sm text-muted-foreground text-center mt-2">
           Enter your email to reset your password.
         </p>
         <form
@@ -62,7 +62,7 @@ const ForgotPasswordForm = () => {
                 <FormControl>
                   <Input
                     className="rounded-xl
-                  border-white/10 bg-white/5 placeholder:text-white/20 dark:text-white
+                  border-muted-foreground bg-muted placeholder:text-muted-foreground
                   focus:outline-none"
                     placeholder="Please enter your email address"
                     {...field}

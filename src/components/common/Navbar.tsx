@@ -1,7 +1,7 @@
 import {
   Bell,
   ClockArrowDown,
-  PanelLeftDashed,
+  IndentDecrease,
   PanelRightDashed,
 } from 'lucide-react';
 import React from 'react';
@@ -17,6 +17,7 @@ import { mainNavigationList, secondaryNavigationList } from '@/utils/data/nav';
 import { SearchInput } from '../ui/searchInput';
 import { NotificationDrawer } from './NotificationDrawer';
 import { SidebarDrawer } from './SidebarDrawer';
+import ThemeSwitcher from './ThemeSwitcher';
 
 interface NavbarProps {
   setSideOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -86,15 +87,15 @@ const Navbar = ({ setNavOpen, setSideOpen }: NavbarProps) => {
 
   return (
     <div className="flex w-full flex-col">
-      <header className="flex  flex-row  justify-between items-center border-b border-b-white/10 bg-background py-5 px-7 h-16 w-full ">
+      <header className="flex  flex-row text-foreground justify-between items-center shadow-md bg-navbackground py-5 px-7 h-16 w-full ">
         <div className="flex items-center gap-6">
           {matches ? (
-            <PanelLeftDashed
+            <IndentDecrease
               className="cursor-pointer"
               onClick={() => {
                 setNavOpen((v) => !v);
               }}
-              size={14}
+              size={20}
             />
           ) : (
             <SidebarDrawer />
@@ -106,12 +107,12 @@ const Navbar = ({ setNavOpen, setSideOpen }: NavbarProps) => {
             size={14}
           /> */}
           <div className="flex items-center gap-x-2">
-            <Link to="/" className="text-sm text-white/40">
+            <Link to="/" className="text-sm text-muted-foreground">
               {findMenuItemByPath(allNavList, location.pathname)
                 ?.primaryPathname ?? 'Dashboard'}
             </Link>
-            <p className="text-white/20">/</p>
-            <Link to="/" className="text-sm text-white">
+            <p className="text-muted-foreground">/</p>
+            <Link to="/" className="text-sm text-foreground">
               {findMenuItemByPath(allNavList, location.pathname)
                 ?.secondaryPathname ?? 'Default'}
             </Link>
@@ -120,6 +121,7 @@ const Navbar = ({ setNavOpen, setSideOpen }: NavbarProps) => {
 
         <div className="flex items-center gap-6">
           <SearchInput />
+          <ThemeSwitcher />
           <ClockArrowDown size={20} />
           <Bell size={20} />
           {matches ? (

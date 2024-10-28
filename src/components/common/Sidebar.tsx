@@ -1,13 +1,13 @@
 import { useAuth } from '@/context/CoginitoAuthProvider';
 import {
+  admintNavigationList,
   mainNavigationList,
-  secondaryNavigationList,
+  projectNavigationList,
   TNavItem,
 } from '@/utils/data/nav';
 
 import { Accordion } from '../ui/accordion';
 import { Button } from '../ui/button';
-import NavListAccordion from './NavListAccordion';
 import SidebarCollapsible from './SidebarCollapsible';
 
 const Sidebar = () => {
@@ -45,75 +45,24 @@ const Sidebar = () => {
     <aside
       id="sidebar"
       aria-label="Sidebar"
-      className="fixed h-full flex flex-col px-5 py-6 overflow-y-auto text-white "
+      className="fixed h-full  w-[212px] flex flex-col pl-5 py-6 overflow-y-auto text-foreground "
     >
-      <h5 className="text-sm mb-8">BridgeTower</h5>
+      <h5 className="text-xl font-semibold mb-6">LLM Admin</h5>
 
-      {/* <<<<<<<<<<<Recent favorite items section>>>>>> */}
-      {/* <Tabs className="mt-4" defaultValue="favorite">
-        <TabsList className="bg-transparent space-x-2 p-0 h-fit">
-          <TabsTrigger
-            className="text-white/20 data-[state=active]:text-white/40 px-2 py-1"
-            value="favorite"
-          >
-            Favorite
-          </TabsTrigger>
-          <TabsTrigger
-            className="text-white/20 data-[state=active]:text-white/40 px-2 py-1"
-            value="recently"
-          >
-            Recently
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent className="m-0" value="favorite">
-          {favoritePages?.length ? (
-            favoritePages.reverse().map((v, i) => (
-              <Link
-                to={v.path}
-                key={i}
-                className="flex items-center py-1 px-3  gap-x-2 "
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-white/20"></span>
-                <p className="text-sm truncate w-36">
-                  {findMenuItemByPath(allNavList, v.path)?.label}
-                </p>
-              </Link>
-            ))
-          ) : (
-            <p className="text-center text-sm mt-2">No favorite items</p>
-          )}
-        </TabsContent>
-        <TabsContent className="m-0" value="recently">
-          {recentPages?.length ? (
-            recentPages.reverse().map((recentPath, i) => (
-              <Link
-                to={recentPath}
-                key={i}
-                className="flex items-center py-1 px-3  gap-x-2 "
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-white/20"></span>
-                <p className="text-sm truncate w-36">
-                  {findMenuItemByPath(allNavList, recentPath)?.label}
-                </p>
-              </Link>
-            ))
-          ) : (
-            <p className="text-center text-sm mt-2">No favorite items</p>
-          )}
-        </TabsContent>
-      </Tabs> */}
-
-      {/* <<<<<<<<<<<Main Dashboard links>>>>>> */}
-
-      {/* <span className="text-white/40 text-sm mt-5 px-3 pb-2">Dashboards</span> */}
-
+      <span className="text-foreground text-xs p-4 pb-3">MAIN MENU</span>
       <NavList data={mainNavigationList} />
 
-      <Accordion type="single" collapsible className="w-full my-4 px-3">
+      <span className="text-foreground text-xs p-4 pb-3">PROJECTS</span>
+      <NavList data={projectNavigationList} />
+
+      <span className="text-foreground text-xs p-4 pb-3">ADMIN MENU</span>
+      <NavList data={admintNavigationList} />
+
+      {/* <Accordion type="single" collapsible className="w-full my-4 px-3">
         {secondaryNavigationList.map((data, i) => (
           <NavListAccordion data={data} key={i} />
         ))}
-      </Accordion>
+      </Accordion> */}
 
       <div className="mt-auto flex flex-col gap-2">
         {/* <Button variant="outline">Settings</Button> */}
@@ -133,7 +82,7 @@ function NavList({ data }: TNavList) {
       type="single"
       defaultValue={data.find((v) => v.path === location.pathname)?.path}
       collapsible
-      className="w-full px-3"
+      className="pr-2 py-2"
     >
       {data.map((v, i) => (
         <SidebarCollapsible data={v} key={i} />

@@ -6,6 +6,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import toast from 'react-hot-toast';
 
 import {
   CREATE_DOC_REFERENCE,
@@ -66,7 +67,12 @@ export const DocKnowledgeBaseProvider: React.FC<{ children: ReactNode }> = ({
     refetch,
     data,
   } = useQuery(FETCH_DOC_REFERENCES, {
-    variables: { pageNo: page, limit, refType: docType },
+    variables: {
+      pageNo: page,
+      limit,
+      refType: docType,
+      projectId: '00a1ee91-b2f1-41e6-94f5-0201fd127a01',
+    },
     context: {
       headers: {
         identity: idToken,
@@ -117,17 +123,20 @@ export const DocKnowledgeBaseProvider: React.FC<{ children: ReactNode }> = ({
           },
         },
       });
-      if (data) {
+      if (data?.AddRefToKnowledgeBase?.status === 200) {
+        toast.success('File uploaded successfully');
         handleRefetch();
+      } else {
+        toast.error(data?.AddRefToKnowledgeBase?.error);
       }
-    } catch (err) {
-      console.error('Error creating document:', err);
+    } catch (err: any) {
+      toast.error(err?.message || 'Error in creating document:');
     }
   };
 
   const deleteDoc = async (id: string): Promise<void> => {
     try {
-      await deleteDocMutation({
+      const resp = await deleteDocMutation({
         variables: { refId: id },
         context: {
           headers: {
@@ -135,9 +144,13 @@ export const DocKnowledgeBaseProvider: React.FC<{ children: ReactNode }> = ({
           },
         },
       });
-      setDocs((prev) => prev.filter((doc) => doc.id !== id));
-    } catch (err) {
-      console.error('Error deleting document:', err);
+      if (resp.data?.DeleteRefToKnowledgeBase?.status === 200) {
+        setDocs((prev) => prev.filter((doc) => doc.id !== id));
+      } else {
+        toast.error(resp.data?.DeleteRefToKnowledgeBase?.error);
+      }
+    } catch (err: any) {
+      toast.error(err?.message || 'Error in deleting document:');
     }
   };
 

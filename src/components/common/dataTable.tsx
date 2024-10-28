@@ -1,256 +1,192 @@
-import { EditIcon, Trash2 } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+'use client';
+
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+import { MoreVertical } from 'lucide-react';
+import dynamicIconImports from 'lucide-react/dynamicIconImports';
+import { useEffect, useMemo, useState } from 'react';
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 import { Button } from '../ui/button';
 import { Checkbox } from '../ui/checkbox';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
 
-type Props = {
-  data: any[];
-  columns: any[];
-  onDelete: (item: any) => void;
-  onEdit: (item: any) => void;
-  actions: {
-    edit: boolean;
-    delete: boolean;
-  };
-  onSelect?: (id: string, action?: string) => void;
-  rowSelection?: boolean;
-};
-
-interface SortConfig {
-  key: string;
-  direction: string;
+interface DataTableProps<
+  TData extends { icon?: keyof typeof dynamicIconImports; doctype?: string },
+  TValue,
+> {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  rowSeletable?: boolean;
+  actionMenu?: boolean;
+  onActionMenuClick?: (data: TData, action: string) => void;
 }
-const DataTable: React.FC<Props> = ({
+
+export function DataTable<
+  TData extends { icon?: keyof typeof dynamicIconImports; doctype?: string },
+  TValue,
+>({
+  columns = [],
   data,
-  columns,
-  onDelete,
-  onEdit,
-  actions,
-  onSelect,
-  rowSelection = false,
-}) => {
-  const [filteredData, setFilteredData] = useState<any[]>(data);
-  const [selectedRows, setSelectedRows] = useState<any>([]);
-  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
-  const [filterText, setFilterText] = useState('');
+  rowSeletable,
+  actionMenu,
+  onActionMenuClick,
+}: DataTableProps<TData, TValue>) {
+  const [columnsState, setColumnsState] =
+    useState<ColumnDef<TData, TValue>[]>(columns);
+  const [rowSelection, setRowSelection] = useState({});
+  const memoizedData = useMemo(() => data, [data]);
   useEffect(() => {
-    console.log(filteredData);
-  }, [filteredData]);
-  // Sorting Logic
-  const sortData = (key: string) => {
-    let direction = 'ascending';
-    if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === 'ascending'
-    ) {
-      direction = 'descending';
+    if (columns.length > 0) {
+      let updatedColumns: any[] = [...columns];
+      if (rowSeletable) {
+        updatedColumns = [rowSelectorColDef, ...updatedColumns];
+      }
+      if (actionMenu) {
+        updatedColumns = [...updatedColumns, actionMenuColDef];
+      }
+      setColumnsState(
+        updatedColumns.length ? (updatedColumns as any) : columns,
+      );
+    } else {
+      setColumnsState(columns);
     }
-    setSortConfig({ key, direction });
+  }, [rowSeletable, columns, actionMenu, memoizedData]);
+
+  const actionMenuColDef = {
+    id: 'actions',
+    onActionMenuClick,
+    cell: ({ row }: any) => {
+      const dataSet = row.original;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreVertical className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() =>
+                onActionMenuClick && onActionMenuClick(dataSet, 'edit')
+              }
+            >
+              Edit
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
   };
 
-  useEffect(() => {
-    if (sortConfig) {
-      const sortedData = [...filteredData].sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? -1 : 1;
-        }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? 1 : -1;
-        }
-        return 0;
-      });
-      setFilteredData((pre) => [...sortedData]);
-    }
-  }, [sortConfig]);
-
-  // Filter Logic
-  useEffect(() => {
-    const lowercasedFilter = filterText.toLowerCase();
-    const filtered = data.filter((item) =>
-      columns.some((column) =>
-        item[column.key]?.toString().toLowerCase().includes(lowercasedFilter),
-      ),
-    );
-    setFilteredData(filtered);
-  }, [filterText, data, columns]);
-
-  // Handle Selection
-  const handleSelectRow = (id: string) => {
-    setSelectedRows((prevSelectedRows: any) =>
-      prevSelectedRows.includes(id)
-        ? prevSelectedRows.filter((rowId: string) => rowId !== id)
-        : [...prevSelectedRows, id],
-    );
-    if (onSelect) onSelect(id);
-  };
+  const table = useReactTable({
+    data: memoizedData,
+    columns: columnsState,
+    getCoreRowModel: getCoreRowModel(),
+    onRowSelectionChange: setRowSelection,
+    state: {
+      rowSelection,
+    },
+  });
 
   return (
-    <>
-      <div className="mb-4 flex justify-end">
-        <input
-          type="text"
-          placeholder="Filter by any field..."
-          value={filterText}
-          onChange={(e) => setFilterText(e.target.value)}
-          className="border p-2 rounded w-full lg:w-1/3 dark:bg-[#333] "
-        />
-      </div>
-      <table className="table-auto w-full border-collapse border rounded-xl  border-black h-7 ">
-        <thead>
-          <tr>
-            {rowSelection && (
-              <th className="p-2 dark:bg-[#333] text-start ">
-                <Checkbox
-                  className="h-4 w-4 flex items-center justify-start"
-                  onCheckedChange={(checked) => {
-                    if (checked) {
-                      setSelectedRows(
-                        filteredData.map((item) => item[columns[0]?.key]),
-                      );
-                      for (const data of filteredData) {
-                        if (onSelect) onSelect(data[columns[0].key]);
-                      }
-                    } else {
-                      setSelectedRows([]);
-                      if (onSelect) onSelect('', 'clear');
-                    }
-                  }}
-                  checked={selectedRows.length === filteredData.length}
-                />
-              </th>
-            )}
-            {columns.map((column, i) => (
-              <>
-                {column.key !== 'Id' && (
-                  <th
-                    key={column.key + i}
-                    className=" p-2 cursor-pointer dark:bg-[#333]  text-start text-xs"
-                    onClick={() => sortData(column.key)}
-                  >
-                    {column.label}{' '}
-                    {sortConfig?.key === column.key &&
-                      (sortConfig?.direction === 'ascending' ? '↑' : '↓')}
-                  </th>
-                )}
-              </>
-            ))}
-            {actions && (
-              <th className="p-2 dark:bg-[#333]  text-start text-sm">
-                Actions
-              </th>
-            )}
-          </tr>
-        </thead>
-        <tbody className="overflow-auto">
-          {filteredData.map((item, i) => (
-            <tr
-              key={item[columns[0]?.key] + i}
-              className={`${
-                selectedRows.includes(item[columns[0]?.key])
-                  ? 'bg-black/50'
-                  : ''
-              }`}
-            >
-              {rowSelection && (
-                <td className="border-t border-black p-2">
-                  <Checkbox
-                    id="checkbox1"
-                    // className="hidden peer"
-                    checked={selectedRows.includes(item[columns[0]?.key])}
-                    onCheckedChange={() =>
-                      handleSelectRow(item[columns[0]?.key])
-                    }
-                  />
-                  {/* <div
-                    onClick={() => handleSelectRow(item[columns[0]?.key])}
-                    className="w-4 h-4 bg-black/80 rounded-sm flex items-center justify-center peer-checked:border-transparent peer-checked:text-white  "
-                  >
-                    <svg
-                      className={`${
-                        selectedRows.includes(item[columns[0]?.key])
-                          ? ''
-                          : 'hidden'
-                      } peer-checked:block w-3 h-3 font-semibold`}
-                      fill="none"
-                      stroke="#223f86"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M5 13l4 4L19 7"
-                      ></path>
-                    </svg>
-                  </div> */}
-                </td>
-              )}
-              {columns.map((column, i) => (
-                <>
-                  {column.key !== 'Id' && (
-                    <td
-                      key={i}
-                      onClick={() => {
-                        if (rowSelection) {
-                          handleSelectRow(item[columns[0]?.key]);
-                        }
-                      }}
-                      title={item[column.key]}
-                      className={`border-t text-xs border-black p-2 max-w-[450px] truncate ${rowSelection && 'cursor-pointer'}`}
-                    >
-                      {item[column.key]}
-                    </td>
-                  )}
-                </>
-              ))}
-              {/* Actions Column */}
-              {actions && (
-                <td className="border-t border-black p-2">
-                  {actions.edit && (
-                    <Button
-                      variant={'default'}
-                      onClick={() => onEdit(item)}
-                      className="  px-2 py-1 mr-2"
-                    >
-                      <EditIcon size={24} />
-                    </Button>
-                  )}
-                  {actions.delete && (
-                    <Button
-                      variant={'destructive'}
-                      onClick={() => {
-                        if (selectedRows.length === 0) onDelete(item);
-                      }}
-                      className={`px-2 py-1 ${
-                        selectedRows.length > 0
-                          ? 'cursor-not-allowed opacity-50'
-                          : ''
-                      }`}
-                    >
-                      <Trash2 size={20} />
-                    </Button>
-                  )}
-                </td>
-              )}
-            </tr>
+    <div className="rounded-md border">
+      <Table key={JSON.stringify(data)}>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                return (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                  </TableHead>
+                );
+              })}
+            </TableRow>
           ))}
-          {filteredData.length === 0 && (
-            <tr>
-              <td colSpan={columns.length + 2} className="text-center p-5">
-                No data to show
-              </td>
-            </tr>
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && 'selected'}
+              >
+                {row.getVisibleCells().map((cell, index) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {index === (rowSeletable ? 1 : 0) &&
+                      row.original.doctype && (
+                        <div className="text-muted-foreground flex items-center gap-1">
+                          File{' '}
+                          {index === (rowSeletable ? 1 : 0) &&
+                            row.original.icon}
+                        </div>
+                      )}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                No results.
+              </TableCell>
+            </TableRow>
           )}
-        </tbody>
-      </table>
-      {/* <div className="mt-4">
-        <p>Selected Rows: {JSON.stringify(selectedRows)}</p>
-      </div> */}
-    </>
+        </TableBody>
+      </Table>
+    </div>
   );
-};
+}
 
-export default DataTable;
+const rowSelectorColDef: ColumnDef<any, any> = {
+  id: 'select',
+  header: ({ table }) => (
+    <Checkbox
+      checked={
+        table.getIsAllPageRowsSelected() ||
+        (table.getIsSomePageRowsSelected() && 'indeterminate')
+      }
+      onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+      aria-label="Select all"
+    />
+  ),
+  cell: ({ row }) => (
+    <Checkbox
+      checked={row.getIsSelected()}
+      onCheckedChange={(value) => row.toggleSelected(!!value)}
+      aria-label="Select row"
+    />
+  ),
+  enableSorting: false,
+  enableHiding: false,
+};

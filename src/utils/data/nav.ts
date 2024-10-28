@@ -3,59 +3,55 @@ export const favorites = ['Overview', 'Projects'];
 
 export const mainNavigationList: TNavItem[] = [
   {
-    icon: 'layout-list',
+    icon: 'warehouse',
+    label: 'Dashboard',
+    path: '#',
+    defaultOpen: false,
+    subItems: [],
+  },
+  {
+    icon: 'file-text',
+    label: 'Transactions',
+    path: '#',
+    defaultOpen: false,
+    subItems: [],
+  },
+];
+export const projectNavigationList: TNavItem[] = [
+  {
+    icon: 'circle-plus',
+    label: 'Add project',
+    path: '/projects/create',
+    defaultOpen: false,
+    subItems: [],
+  },
+  {
+    icon: 'package',
     label: 'Projects',
     path: '/projects',
     defaultOpen: false,
     subItems: [],
   },
-  {
-    icon: 'book-open',
-    label: 'Knowledge base',
-    path: '/knowledgebase',
-    defaultOpen: false,
-    subItems: [
-      { label: 'Documents', path: '/knowledgebase/documents' },
-      { label: 'Websites', path: '/knowledgebase/websites' },
-    ],
-  },
-  // {
-  //   icon: 'shopping-bag',
-  //   label: 'eCommerce',
-  //   path: '/ecommerce',
-  //   defaultOpen: false,
-  //   subItems: [
-  //     { label: 'Products', path: '/ecommerce/products' },
-  //     { label: 'Sales', path: '/ecommerce/sales' },
-  //     { label: 'Expense', path: '/ecommerce/expense' },
-  //   ],
-  // },
-  // {
-  //   icon: 'folder-closed',
-  //   label: 'NFTS',
-  //   path: '/nfts',
-  //   defaultOpen: false,
-  //   subItems: [
-  //     { label: 'In Progress', path: '/nfts/in-progress' },
-  //     { label: 'Completed', path: '/nfts/completed' },
-  //     { label: 'Pending', path: '/nfts/pending' },
-  //     { label: 'Collaborators', path: '/nfts/collaborators' },
-  //   ],
-  // },
   // {
   //   icon: 'book-open',
-  //   label: 'Educational',
-  //   path: '/educational',
+  //   label: 'Knowledge base',
+  //   path: '/knowledgebase',
   //   defaultOpen: false,
   //   subItems: [
-  //     { label: 'All', path: '/educational/all' },
-  //     { label: 'Featured', path: '/educational/featured' },
-  //     { label: 'Categories', path: '/educational/categories' },
-  //     { label: 'My Courses', path: '/educational/my-courses' },
+  //     { label: 'Documents', path: '/knowledgebase/documents' },
+  //     { label: 'Websites', path: '/knowledgebase/websites' },
   //   ],
   // },
 ];
-
+export const admintNavigationList: TNavItem[] = [
+  {
+    icon: 'settings',
+    label: 'Settings',
+    path: '#',
+    defaultOpen: false,
+    subItems: [],
+  },
+];
 export const secondaryNavigationList: TSecondaryNavList[] = [
   // {
   //   label: 'Inventory',
@@ -67,62 +63,6 @@ export const secondaryNavigationList: TSecondaryNavList[] = [
   //     { label: 'Campaigns', path: '/product/campaigns' },
   //     { label: 'Documents', path: '/product/documents' },
   //     { label: 'Followers', path: '/product/followers' },
-  //   ],
-  // },
-  // {
-  //   label: 'NFT Management',
-  //   path: '/nft-management',
-  //   defaultOpen: false,
-  //   subItems: [
-  //     { label: 'Overview', path: '/nft-management/overview' },
-  //     { label: 'Collections', path: '/nft-management/collections' },
-  //     { label: 'Minting', path: '/nft-management/minting' },
-  //     { label: 'Transfers', path: '/nft-management/transfers' },
-  //     { label: 'Activity', path: '/nft-management/activity' },
-  //   ],
-  // },
-  // {
-  //   label: 'User Management',
-  //   path: '/user-management',
-  //   defaultOpen: false,
-  //   subItems: [
-  //     { label: 'Users', path: '/user-management/users' },
-  //     { label: 'Roles', path: '/user-management/roles' },
-  //     { label: 'Permissions', path: '/user-management/permissions' },
-  //     { label: 'Teams', path: '/user-management/teams' },
-  //   ],
-  // },
-  // {
-  //   label: 'Community',
-  //   path: '/community',
-  //   defaultOpen: false,
-  //   subItems: [
-  //     { label: 'Discussions', path: '/community/discussions' },
-  //     { label: 'Spotlight', path: '/community/spotlight' },
-  //     { label: 'Events', path: '/community/events' },
-  //     { label: 'Groups', path: '/community/groups' },
-  //   ],
-  // },
-  // {
-  //   label: 'Order/Transaction',
-  //   path: '/order-transaction',
-  //   defaultOpen: false,
-  //   subItems: [
-  //     { label: 'Order History', path: '/order-transaction/order-history' },
-  //     { label: 'Transactions', path: '/order-transaction/transactions' },
-  //     { label: 'Invoices', path: '/order-transaction/invoices' },
-  //     { label: 'Refunds', path: '/order-transaction/refunds' },
-  //   ],
-  // },
-  // {
-  //   label: 'Site Content',
-  //   path: '/site-content',
-  //   defaultOpen: false,
-  //   subItems: [
-  //     { label: 'Blog Posts', path: '/site-content/blog-posts' },
-  //     { label: 'News', path: '/site-content/news' },
-  //     { label: 'FAQs', path: '/site-content/faqs' },
-  //     { label: 'Media', path: '/site-content/media' },
   //   ],
   // },
 ];

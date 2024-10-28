@@ -45,6 +45,7 @@ const AddWebsiteDialog: React.FC = () => {
     if (!saving) {
       setSaving(true);
       createDoc({
+        projectId: '00a1ee91-b2f1-41e6-94f5-0201fd127a01',
         refType: 'WEBSITE',
         websiteName: data.websiteName,
         websiteUrl: data.websiteUrl,
@@ -91,7 +92,7 @@ const AddWebsiteDialog: React.FC = () => {
 
       {/* Modal */}
       <Dialog open={isOpen} onOpenChange={toggleModal}>
-        <DialogContent className="bg-background">
+        <DialogContent className="">
           <DialogHeader className="text-primary">Add new website</DialogHeader>
 
           <div>

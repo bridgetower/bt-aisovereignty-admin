@@ -2,6 +2,7 @@ import { gql } from '@apollo/client';
 
 export const CREATE_DOC_REFERENCE = gql`
   mutation Mymutation(
+    $projectId: String!
     $refType: String!
     $websiteName: String!
     $websiteUrl: String!
@@ -10,6 +11,7 @@ export const CREATE_DOC_REFERENCE = gql`
   ) {
     AddRefToKnowledgeBase(
       input: {
+        projectId: $projectId
         refType: $refType
         websiteName: $websiteName
         websiteUrl: $websiteUrl
@@ -28,9 +30,19 @@ export const CREATE_DOC_REFERENCE = gql`
 `;
 
 export const FETCH_DOC_REFERENCES = gql`
-  query MyQuery($pageNo: Int!, $limit: Int!, $refType: String!) {
+  query MyQuery(
+    $pageNo: Int!
+    $limit: Int!
+    $refType: String
+    $projectId: String!
+  ) {
     ListReference(
-      input: { pageNo: $pageNo, limit: $limit, refType: $refType }
+      input: {
+        projectId: $projectId
+        pageNo: $pageNo
+        limit: $limit
+        refType: $refType
+      }
     ) {
       data {
         total

@@ -6,7 +6,7 @@ import { useDocKnowledgeBase } from '@/context/DocKnowledgeBaseProvider';
 import { useLoader } from '@/context/LoaderProvider';
 
 import { ConfirmationDialog } from '../common/confirmationDialog';
-import DataTable from '../common/dataTable';
+import DataTable from '../common/dataTableKB';
 import Pagination from '../common/pagination';
 import { Button } from '../ui/button';
 import AddWebsiteDialog from './addWebsiteDialog';
@@ -80,7 +80,7 @@ export const KnowledgeBaseWebsites: React.FC = () => {
         description={deleteDescription}
         onConfirm={proceedToDelete}
       />
-      <div className="bg-background min-h-full p-4 rounded-2xl">
+      <div className="bg-muted min-h-full p-4 rounded-2xl">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-semibold">Websites</h1>
           <div className="flex">
@@ -106,23 +106,25 @@ export const KnowledgeBaseWebsites: React.FC = () => {
             </Button> */}
           </div>
         </div>
-        <hr className="border-t border-neutral-200 my-4" />
-        <DataTable
-          data={knowledgeBaseList}
-          columns={columns}
-          actions={{ edit: false, delete: true }}
-          onDelete={handleDelete}
-          onEdit={() => null}
-          rowSelection={false}
-        />
-        {/* <hr className="border-t border-neutral-200 my-2" /> */}
-        <div className="">
-          <div className="flex justify-end px-4">
-            <Pagination
-              totalItems={totalPages}
-              itemsPerPage={limit}
-              onPageChange={handlePageChange}
-            />
+        <hr className="border-t border-neutral-200  my-4" />
+        <div className="bg-card p-4 rounded-lg">
+          <DataTable
+            data={knowledgeBaseList}
+            columns={columns}
+            actions={{ edit: false, delete: true }}
+            onDelete={handleDelete}
+            onEdit={() => null}
+            rowSelection={true}
+          />
+          {/* <hr className="border-t border-neutral-200 my-2" /> */}
+          <div className="">
+            <div className="flex justify-end px-4">
+              <Pagination
+                totalItems={totalPages}
+                itemsPerPage={limit}
+                onPageChange={handlePageChange}
+              />
+            </div>
           </div>
         </div>
       </div>

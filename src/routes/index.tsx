@@ -68,6 +68,10 @@ const AppRouter = () => {
                   path: '/projects',
                   element: <ProjectList />,
                 },
+                {
+                  path: '/projects/:action/:id?',
+                  element: <ProjectList />,
+                },
               ],
             },
             {

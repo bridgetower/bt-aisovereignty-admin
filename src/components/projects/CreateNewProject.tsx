@@ -62,6 +62,7 @@ const CreateNewProject: React.FC = () => {
         description: data.name,
         projectType: data.projectType,
         organizationId: process.env.REACT_APP_ORGANIZATION_ID || '',
+        files: [],
       })
         .then((res: any) => {
           refetchProjects();
@@ -94,8 +95,8 @@ const CreateNewProject: React.FC = () => {
 
       {/* Modal */}
       <Dialog open={isOpen} onOpenChange={toggleModal}>
-        <DialogContent className="bg-background">
-          <DialogHeader className="text-primary">
+        <DialogContent className="">
+          <DialogHeader className="text-foreground">
             Create new project
           </DialogHeader>
 
@@ -112,8 +113,8 @@ const CreateNewProject: React.FC = () => {
                     <FormControl>
                       <Input
                         type="text"
-                        className="rounded-xl
-                  border-white/10 bg-white/5 placeholder:text-white/20 dark:text-white
+                        className="rounded-md
+                  border-muted-foreground bg-muted placeholder:text-muted-foreground
                   focus:outline-none"
                         placeholder="Project name"
                         {...field}
@@ -131,8 +132,8 @@ const CreateNewProject: React.FC = () => {
                     <FormControl>
                       <Input
                         type="text"
-                        className="rounded-xl
-                  border-white/10 bg-white/5 placeholder:text-white/20 dark:text-white
+                        className="rounded-md
+                  border-muted-foreground bg-muted placeholder:text-muted-foreground
                   focus:outline-none"
                         placeholder="Project description"
                         {...field}
@@ -167,7 +168,7 @@ const CreateNewProject: React.FC = () => {
                       {/* <Input
                         type="number"
                         className="rounded-xl
-                  border-white/10 bg-white/5 placeholder:text-white/20 dark:text-white
+                  border-muted-foreground bg-muted placeholder:text-muted-foreground
                   focus:outline-none"
                         placeholder="projectType"
                         {...field}

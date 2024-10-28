@@ -21,10 +21,10 @@ const NavListAccordion = ({ data }: { data: TSecondaryNavList }) => {
             role="button"
             onClick={() => navigate(subItem.path)}
             tabIndex={0}
-            className={`pl-5 p-2 rounded-lg cursor-pointer gap-1 animate-fadeIn transition-opacity duration-500 `}
+            className={`pl-5 p-2 rounded-lg cursor-pointer gap-1 animate-fadeIn transition-opacity duration-500`}
             key={i}
           >
-            <p className="text-sm text-white  transition-all duration-300">
+            <p className="text-sm text-foreground  transition-all duration-300">
               {subItem.label}
             </p>
           </div>
