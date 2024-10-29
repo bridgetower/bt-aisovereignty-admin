@@ -9,7 +9,7 @@ export const Loader: React.FC<LoaderWrapperProps> = ({ show }) => {
     <>
       {show ? (
         <div
-          className="fixed inset-0 flex items-center justify-center bg-white/30 "
+          className="fixed inset-0 flex items-center justify-center bg-black/30 "
           style={{ zIndex: 100 }}
         >
           <div className="relative flex items-center justify-center w-64 h-64">

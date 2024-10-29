@@ -161,7 +161,7 @@ const Board: React.FC = () => {
           Projects states
         </div>
         <div className="bg-card p-4 rounded-md">
-          <ProjectListView projects={selectedProject.data} />
+          <ProjectListView projects={selectedProject.data} isLoading={false} />
         </div>
       </div>
     </>

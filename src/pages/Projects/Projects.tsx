@@ -6,6 +6,7 @@ import RightDrawer from '@/components/common/rightDrawer';
 import Board from '@/components/projects/Board';
 import { CreateProject } from '@/components/projects/CreateProject';
 import ProjectDetails from '@/components/projects/ProjectDetails';
+import { UpdateProject } from '@/components/projects/UpdateProject';
 import { useProject } from '@/context/ProjectProvider';
 
 export const ProjectList: React.FC = () => {
@@ -20,15 +21,18 @@ export const ProjectList: React.FC = () => {
     setActiveRightPanel(action);
   }, [action]);
   const closePanel = () => {
-    navigate('/projects', { replace: true });
+    // navigate('/projects', { replace: true });
+    window.history.back();
   };
   return (
     <>
       <RightDrawer onClose={closePanel} isOpen={!!activeRightPanel} title="">
         {action === 'create' ? (
           <CreateProject />
+        ) : action === 'edit' ? (
+          <UpdateProject id={id || ''} />
         ) : (
-          <ProjectDetails project={selectedProject} />
+          <ProjectDetails id={id || ''} />
         )}
       </RightDrawer>
 

@@ -1,9 +1,4 @@
-import {
-  Bell,
-  ClockArrowDown,
-  IndentDecrease,
-  PanelRightDashed,
-} from 'lucide-react';
+import { Bell, IndentDecrease, PanelRightDashed } from 'lucide-react';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -12,8 +7,16 @@ import {
   useReadLocalStorage,
 } from 'usehooks-ts';
 
+import { notificationData } from '@/utils/data/dummyData';
 import { mainNavigationList, secondaryNavigationList } from '@/utils/data/nav';
 
+import { Badge } from '../ui/badge';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
 import { SearchInput } from '../ui/searchInput';
 import { NotificationDrawer } from './NotificationDrawer';
 import { SidebarDrawer } from './SidebarDrawer';
@@ -122,8 +125,31 @@ const Navbar = ({ setNavOpen, setSideOpen }: NavbarProps) => {
         <div className="flex items-center gap-6">
           <SearchInput />
           <ThemeSwitcher />
-          <ClockArrowDown size={20} />
-          <Bell size={20} />
+          {/* <ClockArrowDown size={20} /> */}
+
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <div className="relative">
+                <Bell size={20} className="cursor-pointer" />
+                <Badge
+                  variant={'destructive'}
+                  className="absolute -top-2 -right-1 text-xs p-1 w-4 h-4 rounded-full hover:bg-destructive"
+                >
+                  3
+                </Badge>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {notificationData.map((alert, i) => (
+                <DropdownMenuItem
+                  key={i}
+                  className={`${alert.type === 'alert' ? 'text-destructive' : 'text-foreground'}`}
+                >
+                  {alert.title}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
           {matches ? (
             <PanelRightDashed
               className="cursor-pointer"

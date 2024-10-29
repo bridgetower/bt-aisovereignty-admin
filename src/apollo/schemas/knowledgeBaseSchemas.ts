@@ -7,7 +7,7 @@ export const CREATE_DOC_REFERENCE = gql`
     $websiteName: String!
     $websiteUrl: String!
     $depth: Int
-    $file: FileInput
+    $file: [FileInput]!
   ) {
     AddRefToKnowledgeBase(
       input: {
@@ -20,8 +20,16 @@ export const CREATE_DOC_REFERENCE = gql`
       }
     ) {
       data {
+        createdat
+        createdby
+        description
+        id
+        isactive
         name
-        reftype
+        organizationid
+        projectstage
+        projectstatus
+        projecttype
       }
       error
       status

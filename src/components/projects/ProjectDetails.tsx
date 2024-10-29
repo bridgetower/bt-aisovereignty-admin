@@ -6,8 +6,12 @@ import {
   MoreVertical,
   Share2,
 } from 'lucide-react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
+import { useLoader } from '@/context/LoaderProvider';
+import { IFileContent, useProject } from '@/context/ProjectProvider';
 import {
   IProjectAttributes,
   ProjectStageEnum,
@@ -46,7 +50,14 @@ const dummyData = [
     id: '728ed523f',
     name: 'data/datafile.csv',
     updatedon: 'Jan 4, 2024',
-    icon: <AlertCircle className="text-warning" type="solid" size={15} />,
+    icon: (
+      <AlertCircle
+        className="text-warning"
+        size={15}
+        // fill="currentColor"
+        // stroke="none"
+      />
+    ),
   },
   {
     id: '728ed25f',
@@ -66,12 +77,48 @@ const dummyData1 = [
     updatedon: 'Jan 4, 2024',
   },
 ];
-type Props = {
-  project: IProjectAttributes | null;
-};
-const ProjectDetails: React.FC<Props> = (props) => {
-  const { project } = props;
 
+const ProjectDetails: React.FC<{ id: string }> = (props) => {
+  const { id } = props;
+  const navigate = useNavigate();
+  const [filesData, setFilesData] = useState<IFileContent[]>([]);
+  const [hashData, setHashData] = useState<any[]>([]);
+  const [project, setProject] = useState<IProjectAttributes | null>(null);
+  const memoizedFilesData = React.useMemo(() => filesData, [filesData]);
+  const { showLoader, hideLoader } = useLoader();
+  const { getProjectDetails } = useProject();
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+    showLoader();
+    getProjectDetails({ projectId: id })
+      .then((res: any) => {
+        if (res.data?.GetProjectById?.data) {
+          setProject(res.data.GetProjectById.data?.project);
+          const files = res.data?.GetProjectById?.data?.references?.refs.map(
+            (file: any) => ({
+              id: file.id,
+              name: file.name,
+              updatedon: new Date().toDateString(),
+              isLocal: false,
+            }),
+          );
+          if (files.length) {
+            setFilesData(files);
+          }
+        } else {
+          toast.error(res?.error?.message);
+        }
+      })
+      .catch((error: any) => {
+        toast.error(error?.message || 'Failed to fetch project details!');
+      })
+      .finally(() => {
+        hideLoader();
+      });
+  }, [id]);
   return (
     <div className="px-6 ">
       {project ? (
@@ -82,7 +129,13 @@ const ProjectDetails: React.FC<Props> = (props) => {
               {ProjectStageLabel[project.projectstage as ProjectStageEnum]}
             </div>
             <div className="flex items-center gap-4">
-              <Edit3 size={20} className="cursor-pointer" />
+              <Edit3
+                size={20}
+                className="cursor-pointer"
+                onClick={() =>
+                  navigate('/projects/edit/' + project.id, { replace: true })
+                }
+              />
               <Share2 size={20} className="cursor-pointer" />
               <MoreVertical size={20} className="cursor-pointer" />
             </div>
@@ -91,7 +144,7 @@ const ProjectDetails: React.FC<Props> = (props) => {
             <div className="text-2xl font-bold text-foreground font-roboto">
               {project.name}
             </div>
-            <AlertCircle className="text-warning mt-1" />
+            {project.hasAlert && <AlertCircle className="text-warning mt-1" />}
           </div>
           <div className="text-sm text-foreground mt-4">
             <div className="flex items-center gap-2">
@@ -101,7 +154,7 @@ const ProjectDetails: React.FC<Props> = (props) => {
               </span>
               <span>
                 <Select>
-                  <SelectTrigger className="bg-card h-6">
+                  <SelectTrigger className="bg-card h-6 cursor-default pointer-events-none">
                     {' '}
                     {project.projecttype.replace('_', ' ')}
                   </SelectTrigger>
@@ -114,10 +167,10 @@ const ProjectDetails: React.FC<Props> = (props) => {
               High Priority
             </span>
             <span className="text-xs bg-muted rounded py-1 px-2 ">
-              Start Date: 10/23/2024
+              Start Date: {new Date(project.createdat).toLocaleDateString()}
             </span>
             <span className="text-xs bg-muted rounded py-1 px-2 ">
-              Est. End Date: 10/31/2024
+              Est. End Date: NA
             </span>
           </div>
           <div className="bg-[#C6F7E9] p-6 flex justify-between items-center rounded-md mt-4">
@@ -132,15 +185,7 @@ const ProjectDetails: React.FC<Props> = (props) => {
           </div>
           <div className="text-sm text-foreground mt-4 font-roboto ">
             <div className="font-semibold ">Description</div>{' '}
-            <p className="text-sm font-normal">
-              This project aims to develop and train a state-of-the-art Large
-              Language Model (LLM) capable of understanding and generating
-              human-like text across a wide range of tasks and domains. The
-              ultimate goal is to create a model that can perform at a high
-              level on various natural language processing (NLP) tasks,
-              including text generation, summarization, translation, question
-              answering, and more.
-            </p>
+            <p className="text-sm font-normal">{project.description}</p>
           </div>
           <div className="text-sm text-foreground mt-4 font-roboto ">
             <div className="font-semibold ">
@@ -149,7 +194,7 @@ const ProjectDetails: React.FC<Props> = (props) => {
             <div className="mt-2">
               <DataTable
                 columns={knoledgeBaseColums}
-                data={dummyData}
+                data={memoizedFilesData}
                 rowSeletable={true}
                 actionMenu={true}
                 onActionMenuClick={() => {}}

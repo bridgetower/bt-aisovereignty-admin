@@ -1,6 +1,6 @@
 // src/types.ts
 export interface IProjectAttributes {
-  id: number;
+  id: string;
   name: string;
   description: string;
   projecttype: string;
@@ -11,6 +11,7 @@ export interface IProjectAttributes {
   createdat: Date;
   isactive: boolean;
   hashRecorded: any[];
+  hasAlert?: boolean;
 }
 export enum ProjectType {
   'ON PREM' = 'ON_PREM',

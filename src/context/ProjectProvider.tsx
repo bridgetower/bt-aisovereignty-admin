@@ -1,5 +1,6 @@
 import {
   ApolloError,
+  FetchResult,
   useLazyQuery,
   useMutation,
   useQuery,
@@ -11,8 +12,11 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import toast from 'react-hot-toast';
 
+import {
+  CREATE_DOC_REFERENCE,
+  DELETE_DOC_REFERENCE,
+} from '@/apollo/schemas/knowledgeBaseSchemas';
 import {
   CREATE_NEW_PROJECT,
   FETCH_PROJECT_BY_ID,
@@ -28,6 +32,8 @@ export interface IFileContent {
   fileName: string;
   fileContent: string;
   contentType: string;
+  isLocal?: boolean;
+  id?: string;
 }
 export interface ICreateProjectPayload {
   name: string;
@@ -43,14 +49,23 @@ type ProjectContextType = {
   setLimit: (limit: number) => void;
   projects: IProjectAttributes[];
   error?: ApolloError;
-  createNewProject: (content: ICreateProjectPayload) => Promise<void>;
+  createNewProject: (
+    content: ICreateProjectPayload,
+  ) => Promise<FetchResult<any>>;
   refetchProjects: (variables?: Record<string, any>) => Promise<any>;
   totalPages: number;
   organizationId: string;
   setOrganizationId: (organizationId: string) => void;
   selectedProject: IProjectAttributes | null;
   setSelectedProject: (project: IProjectAttributes | null) => void;
-  getProjectDetails: (content: { projectId: string }) => Promise<any>;
+  getProjectDetails: (content: {
+    projectId: string;
+  }) => Promise<FetchResult<FetchResult<any>>>;
+  deleteDocReference: (id: string) => Promise<void>;
+  updateKnowledgebase: (content: {
+    projectId: string;
+    files: IFileContent[];
+  }) => Promise<FetchResult<any>>;
 };
 
 // Create context with initial empty values
@@ -95,22 +110,30 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     if (initialLoding) {
-      // showLoader();
+      showLoader();
     } else {
       hideLoader();
     }
   }, [initialLoding]);
 
   useEffect(() => {
-    if (data && data.ListProject?.data?.projects) {
-      setProject(data.ListProject?.data?.projects || []);
+    if (data && data.ListProject?.data?.projects?.length) {
+      const list = data.ListProject.data.projects.map(
+        (project: IProjectAttributes, i: number) => {
+          return {
+            ...project,
+            hasAlert: i === 0 ? true : false,
+          };
+        },
+      );
+      setProject(list);
       setTotalPages(data.ListProject?.data.total);
     }
   }, [data]);
   // Function to handle refetch and update loading status
   const handleRefetch = async () => {
     try {
-      // showLoader(); // Show loader
+      showLoader(); // Show loader
       await refetch({
         pageNo: page,
         limit,
@@ -130,27 +153,19 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const [createProjectMutation] = useMutation(CREATE_NEW_PROJECT);
   const [getProjectById] = useLazyQuery(FETCH_PROJECT_BY_ID);
-
+  const [addDocToknowledgebase] = useMutation(CREATE_DOC_REFERENCE);
+  const [deleteDocMutation] = useMutation(DELETE_DOC_REFERENCE);
   const createNewProject = async (
     content: ICreateProjectPayload,
-  ): Promise<void> => {
-    try {
-      const { data } = await createProjectMutation({
-        variables: { ...content },
-        context: {
-          headers: {
-            identity: idToken,
-          },
+  ): Promise<FetchResult<any>> => {
+    return createProjectMutation({
+      variables: { ...content },
+      context: {
+        headers: {
+          identity: idToken,
         },
-      });
-      if (data.CreateProject?.status === 200) {
-        handleRefetch();
-      } else {
-        toast.error(data.CreateProject?.error);
-      }
-    } catch (err) {
-      console.error('Error creating document:', err);
-    }
+      },
+    });
   };
   const getProjectDetails = async (content: {
     projectId: string;
@@ -164,6 +179,30 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
       },
     });
   };
+  const updateKnowledgebase = async (content: {
+    files: IFileContent[];
+    projectId: string;
+  }): Promise<FetchResult<any>> => {
+    return addDocToknowledgebase({
+      variables: { file: content.files, projectId: content.projectId },
+      context: {
+        headers: {
+          identity: idToken,
+        },
+      },
+    });
+  };
+  const deleteDocReference = async (id: string): Promise<void> => {
+    await deleteDocMutation({
+      variables: { refId: id },
+      context: {
+        headers: {
+          identity: idToken,
+        },
+      },
+    });
+  };
+
   return (
     <ProjectContext.Provider
       value={{
@@ -183,6 +222,8 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
         setSelectedProject,
 
         getProjectDetails,
+        deleteDocReference,
+        updateKnowledgebase,
       }}
     >
       {children}

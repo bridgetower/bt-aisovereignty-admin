@@ -28,6 +28,7 @@ export const CREATE_NEW_PROJECT = gql`
         projectstage
         projectstatus
         projecttype
+        files
       }
       error
       status
@@ -61,13 +62,11 @@ export const FETCH_PROJECT_LIST = gql`
   }
 `;
 export const FETCH_PROJECT_BY_ID = gql`
-  query MyQuery($pageNo: Int!, $limit: Int!, $projectId: String) {
+  query MyQuery($pageNo: Int!, $limit: Int!, $projectId: String!) {
     GetProjectById(
       input: { pageNo: $pageNo, limit: $limit, projectId: $projectId }
     ) {
       data {
-        total
-        totalPages
         project {
           createdat
           createdby
@@ -80,24 +79,28 @@ export const FETCH_PROJECT_BY_ID = gql`
           name
           isactive
         }
-        refs {
-          createdat
-          depth
-          id
-          ingested
-          name
-          reftype
-          size
-          url
-          referencestage
-          datasourceid
-          ingestionjobid
-          s3prestorehash
-          s3prestoretxhash
-          s3poststorehash
-          s3poststoretxhash
-          chaintype
-          chainid
+        references {
+          refs {
+            chainid
+            chaintype
+            createdat
+            datasourceid
+            depth
+            id
+            ingested
+            ingestionjobid
+            name
+            referencestage
+            reftype
+            s3poststorehash
+            url
+            size
+            s3prestoretxhash
+            s3prestorehash
+            s3poststoretxhash
+          }
+          total
+          totalPages
         }
       }
       error

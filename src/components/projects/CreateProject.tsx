@@ -1,10 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ColumnDef } from '@tanstack/react-table';
-import { CircleHelp, MoreVertical } from 'lucide-react';
+import { CircleHelp, Loader2, MoreVertical } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 import { IFileContent, useProject } from '@/context/ProjectProvider';
@@ -58,56 +59,44 @@ const emptyData = [
     fileContent: '',
     contentType: '',
   },
-  {
-    id: '03',
-    name: '',
-    updatedon: '',
-    fileName: '',
-    fileContent: '',
-    contentType: '',
-  },
-  {
-    id: '04',
-    name: '',
-    updatedon: '',
-    fileName: '',
-    fileContent: '',
-    contentType: '',
-  },
 ];
 
-interface FileData {
+interface FormData {
   name: string;
   description: string;
-  projectType: string;
+  projecttype: string;
 }
 const formSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
-  projectType: z.string().min(1, { message: 'Project Type is required' }),
+  projecttype: z.string().min(1, { message: 'Project Type is required' }),
   description: z.string().min(1, { message: 'Description is required' }),
 });
 type FormInputs = z.infer<typeof formSchema>;
 
 export const CreateProject: React.FC = () => {
+  const navigate = useNavigate();
   const { createNewProject, refetchProjects } = useProject();
   const [saving, setSaving] = useState(false);
   const [base64Files, setBase64Files] = useState<IFileContent[]>([]);
-  const [filesData, setFilesData] = useState<any>(emptyData);
-
+  const [filesData, setFilesData] = useState<any>([]);
+  const memoizedFilesData = React.useMemo(() => filesData, [filesData]);
   useEffect(() => {
-    base64Files.forEach((file, i) => {
-      const oldFiles = filesData;
-      oldFiles.unshift({
+    if (base64Files.length > 0) {
+      const newFiles = base64Files.map((file, i) => ({
         id: file.fileName + i,
         name: file.fileName,
+        doctype: 'File',
         updatedon: new Date().toDateString(),
-      });
-      // if (oldFiles.length > 4) {
-      //   oldFiles.pop();
-      // }
-      setFilesData(oldFiles);
-    });
+      }));
+
+      setFilesData((prevFiles: any) =>
+        [...newFiles, ...prevFiles].length > 4
+          ? [...newFiles, ...prevFiles].filter((e) => e.name)
+          : [...newFiles, ...prevFiles],
+      );
+    }
   }, [base64Files]);
+
   const ProjectTypeArray: { key: string; value: string }[] = Object.entries(
     ProjectType,
   ).map(([key, value]) => ({ key, value }));
@@ -121,21 +110,24 @@ export const CreateProject: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = form;
-  const onSubmit: SubmitHandler<FormInputs> = (data: FileData) => {
+  const onSubmit: SubmitHandler<FormInputs> = (data: FormData) => {
     if (!saving) {
       setSaving(true);
       createNewProject({
         name: data.name,
         description: data.description,
-        projectType: data.projectType,
+        projectType: data.projecttype,
         organizationId: process.env.REACT_APP_ORGANIZATION_ID || '',
-        files: filesData.map((file: any) => ({
-          fileName: file.name,
+        files: base64Files.map((file) => ({
+          fileName: file.fileName,
           fileContent: file.fileContent,
           contentType: file.contentType,
         })),
       })
         .then((res: any) => {
+          console.log(res);
+          form.reset();
+          setFilesData([]);
           refetchProjects();
           toast.success('Project created successfully!');
         })
@@ -169,7 +161,7 @@ export const CreateProject: React.FC = () => {
     });
 
     Promise.all(promises).then((base64Files) => {
-      setBase64Files(base64Files as IFileContent[]);
+      setBase64Files(() => [...(base64Files as IFileContent[])]);
     });
   };
 
@@ -178,7 +170,10 @@ export const CreateProject: React.FC = () => {
     return newstr;
   };
   // Dropzone settings
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+  });
+
   return (
     <Form {...form}>
       <Toaster />
@@ -228,7 +223,7 @@ export const CreateProject: React.FC = () => {
               <span>
                 <FormField
                   control={form.control}
-                  name="projectType"
+                  name="projecttype"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormControl>
@@ -289,33 +284,49 @@ export const CreateProject: React.FC = () => {
               )}
             />
           </div>
-          <div {...getRootProps()}>
-            <input {...getInputProps()} />
-            <div className="text-sm text-foreground mt-4 font-roboto ">
-              <div className="font-semibold flex justify-between items-center">
-                <div>Attachments ({filesData.length} items)</div>
+          <div className="text-sm text-foreground mt-4 font-roboto relative">
+            <div className="font-semibold flex justify-between items-center">
+              <div>
+                Attachments ({filesData.filter((e: any) => e.name).length}{' '}
+                items)
+              </div>
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
                 <Button type="button" variant={'link'}>
                   Add Item
                 </Button>
-              </div>{' '}
-              <div className="">
-                <DataTable
-                  columns={knoledgeBaseColums}
-                  data={filesData}
-                  rowSeletable={true}
-                  actionMenu={true}
-                  onActionMenuClick={() => {}}
-                  // key={Date.now()}
-                />
+                <div
+                  className={`${memoizedFilesData?.length ? 'opacity-0' : 'opacity-100'} absolute top-20 left-1/2 -translate-x-1/2 translate-y-4 border-2 border-dashed rounded-lg border-muted-foreground bg-background p-10 mt-3 text-center cursor-pointer z-10 w-2/3`}
+                >
+                  <p className="text-muted-foreground hover:opacity-80 ">
+                    Drag & Drop files here, or click to select files
+                  </p>
+                </div>
               </div>
             </div>
+          </div>{' '}
+          <div className="">
+            <DataTable
+              key={filesData.length}
+              columns={knoledgeBaseColums}
+              data={memoizedFilesData}
+              rowSeletable={true}
+              actionMenu={true}
+              onActionMenuClick={() => {}}
+              // key={Date.now()}
+            />
           </div>
-
-          <div className="flex justify-end items-center gap-2 mt-4">
-            <Button type="button" variant={'outline'} size={'sm'}>
+          <div className="flex justify-end items-center gap-2 mt-12">
+            <Button
+              type="button"
+              variant={'outline'}
+              size={'sm'}
+              onClick={() => navigate('/projects', { replace: true })}
+            >
               Cancel
             </Button>
             <Button
+              disabled={saving || Object.keys(errors).length > 0}
               size={'sm'}
               className={
                 Object.keys(errors).length > 0
@@ -323,7 +334,14 @@ export const CreateProject: React.FC = () => {
                   : ''
               }
             >
-              Next
+              {saving ? (
+                <div className="flex items-center gap-1">
+                  <Loader2 size={16} className="animate-spin" />
+                  <span>Saving...</span>
+                </div>
+              ) : (
+                'Next'
+              )}
             </Button>
           </div>
         </form>

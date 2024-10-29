@@ -1,10 +1,9 @@
 // src/components/Card.tsx
-import { MoreVertical } from 'lucide-react';
+import { AlertCircle, MoreVertical } from 'lucide-react';
 import React from 'react';
 
-import { projectColors } from '@/types/ProjectData';
+import { IProjectAttributes, projectColors } from '@/types/ProjectData';
 
-import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { Card, CardContent } from '../ui/card';
 
@@ -27,10 +26,10 @@ export const ProjectCard: React.FC<CardProps> = ({
   };
   return (
     <Card
-      className={`shadow rounded-xl cursor-pointer w-56 relative ${isSelectd ? 'border-primary border-4 bg-blue-200' : 'bg-card border-4 border-card'}`}
+      className={`shadow rounded-xl cursor-pointer w-56 relative hover:border-[#D9E2EC] border-4 hover:bg-[#1677FF1A] ${isSelectd ? 'border-[#D9E2EC] border-4 bg-[#1677FF1A]' : 'bg-card border-4 border-card'}`}
       onClick={() => onClick()}
     >
-      <CardContent className="p-0 pt-4 pb-10">
+      <CardContent className="p-0 pt-4">
         <div className="flex justify-between">
           <div
             className={`ml-4 h-20 rounded-md w-1 bg-${getRandomColor()}-300`}
@@ -40,26 +39,16 @@ export const ProjectCard: React.FC<CardProps> = ({
               <div className="p-0 text-[#243B53] text-md font-semibold">
                 {title}
               </div>
-              {data.length ? (
+              {/* {data.length ? (
                 <Badge variant="outline" className="ml-3">
                   {data.length}
                 </Badge>
-              ) : null}
+              ) : null} */}
             </div>
-            {data && data.length ? (
-              data.map((project, i) => (
-                <div
-                  className={`text-xs p-1 mt-1 px-2 rounded-md w-fit text-info bg-${getRandomColor()}-200`}
-                  key={i}
-                >
-                  {project.name}
-                </div>
-              ))
-            ) : (
-              <div className="text-[#486581] text-sm mt-4">
-                No projects currently
-              </div>
-            )}
+            <div className="flex items-baseline gap-1">
+              <div className="text-4xl text-[#486581]">{data.length}</div>
+              <div>Project</div>
+            </div>
           </div>
           <div className="-mt-3">
             <Button
@@ -71,7 +60,33 @@ export const ProjectCard: React.FC<CardProps> = ({
             </Button>
           </div>
         </div>
-        <div className="h-9 w-full mt-2 border-t border-muted absolute bottom-0" />
+        <div className="w-full mt-2 border-t border-neutral-300  pl-6">
+          {/* {data.map((project, i) => (
+            <div
+              className={`text-xs p-1 mt-1 px-2 rounded-md w-fit text-info bg-${getRandomColor()}-200`}
+              key={i}
+            >
+              {project.name}
+            </div>
+          ))} */}
+          {data.length
+            ? data.map(
+                (project: IProjectAttributes, i) =>
+                  project.hasAlert && (
+                    <div className="flex items-center gap-1" key={i}>
+                      <div
+                        className={`text-xs p-1 my-2 px-2 rounded-md w-fit text-info bg-${getRandomColor()}-200`}
+                      >
+                        {project.name}
+                      </div>
+                      <span>
+                        <AlertCircle size={20} className="text-warning" />
+                      </span>
+                    </div>
+                  ),
+              )
+            : null}
+        </div>
       </CardContent>
     </Card>
   );
