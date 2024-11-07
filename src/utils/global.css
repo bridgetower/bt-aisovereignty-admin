@@ -34,7 +34,7 @@
     --card-foreground: 220, 10%, 15%;
     /* Darker text color on cards */
 
-    --primary: 240, 60%, 55%;
+    --primary: 220, 10%,20%;;
     /* Slightly muted blue for primary actions */
     --primary-foreground: 0, 0%, 100%;
     /* White text on primary buttons */

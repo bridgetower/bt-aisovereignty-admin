@@ -60,12 +60,16 @@ type ProjectContextType = {
   setSelectedProject: (project: IProjectAttributes | null) => void;
   getProjectDetails: (content: {
     projectId: string;
+    page: number;
+    limit: number;
   }) => Promise<FetchResult<FetchResult<any>>>;
-  deleteDocReference: (id: string) => Promise<void>;
+  deleteDocReference: (id: string) => Promise<FetchResult<any>>;
   updateKnowledgebase: (content: {
     projectId: string;
     files: IFileContent[];
   }) => Promise<FetchResult<any>>;
+  setNotificationPanel: (value: boolean) => void;
+  notificationPanel: boolean;
 };
 
 // Create context with initial empty values
@@ -78,6 +82,7 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
   const [page, setPage] = useState(1); // State for page number
   const [limit, setLimit] = useState(1000); // State for limit
   const [totalPages, setTotalPages] = useState(0); // State for total pages
+  const [notificationPanel, setNotificationPanel] = useState<boolean>(true);
   const [selectedProject, setSelectedProject] =
     useState<IProjectAttributes | null>(null);
   const [organizationId, setOrganizationId] = useState(
@@ -152,7 +157,9 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
   }, [page, limit, idToken]);
 
   const [createProjectMutation] = useMutation(CREATE_NEW_PROJECT);
-  const [getProjectById] = useLazyQuery(FETCH_PROJECT_BY_ID);
+  const [getProjectById] = useLazyQuery(FETCH_PROJECT_BY_ID, {
+    fetchPolicy: 'network-only',
+  });
   const [addDocToknowledgebase] = useMutation(CREATE_DOC_REFERENCE);
   const [deleteDocMutation] = useMutation(DELETE_DOC_REFERENCE);
   const createNewProject = async (
@@ -169,9 +176,15 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
   };
   const getProjectDetails = async (content: {
     projectId: string;
+    page: number;
+    limit: number;
   }): Promise<any> => {
     return getProjectById({
-      variables: { ...content, limit: 1, pageNo: 1 },
+      variables: {
+        projectId: content.projectId,
+        limit: content.limit,
+        pageNo: content.page,
+      },
       context: {
         headers: {
           identity: idToken,
@@ -184,7 +197,11 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
     projectId: string;
   }): Promise<FetchResult<any>> => {
     return addDocToknowledgebase({
-      variables: { file: content.files, projectId: content.projectId },
+      variables: {
+        files: content.files,
+        projectId: content.projectId,
+        refType: 'DOCUMENT',
+      },
       context: {
         headers: {
           identity: idToken,
@@ -192,8 +209,8 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
       },
     });
   };
-  const deleteDocReference = async (id: string): Promise<void> => {
-    await deleteDocMutation({
+  const deleteDocReference = async (id: string): Promise<FetchResult<any>> => {
+    return deleteDocMutation({
       variables: { refId: id },
       context: {
         headers: {
@@ -224,6 +241,9 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
         getProjectDetails,
         deleteDocReference,
         updateKnowledgebase,
+
+        setNotificationPanel,
+        notificationPanel,
       }}
     >
       {children}

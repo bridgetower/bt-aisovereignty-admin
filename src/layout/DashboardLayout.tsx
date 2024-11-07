@@ -7,6 +7,7 @@ import Navbar from '@/components/common/Navbar';
 import Sidebar from '@/components/common/Sidebar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '@/context/CoginitoAuthProvider';
+import { DashboardProvider } from '@/context/DashboardProvider';
 
 export function DashboardLayout({ children }: { children?: React.ReactNode }) {
   const { dbUser } = useAuth();
@@ -44,30 +45,31 @@ export function DashboardLayout({ children }: { children?: React.ReactNode }) {
   }
 
   return (
-    <main
-      className={clsx(
-        'relative w-screen max-w-screen min-h-screen overflow-hidden flex bg-background text-foreground transition-all duration-300',
-      )}
-    >
-      <div
+    <DashboardProvider>
+      <main
         className={clsx(
-          'h-screen w-[212px] min-w-[212px] -ml-[212px] border-r border-muted transition-all duration-300 z-20 bg-navbackground shadow-',
-          {
-            '!ml-0': navOpen,
-          },
+          'relative w-screen max-w-screen min-h-screen overflow-hidden flex bg-background text-foreground transition-all duration-300',
         )}
       >
-        <Sidebar />
-      </div>
+        <div
+          className={clsx(
+            'h-screen w-[212px] min-w-[212px] -ml-[212px] border-r border-muted transition-all duration-300 z-20 bg-navbackground shadow-',
+            {
+              '!ml-0': navOpen,
+            },
+          )}
+        >
+          <Sidebar />
+        </div>
 
-      <div className="relative flex-1 min-w-[416px] flex flex-col min-h-screen">
-        <Navbar setSideOpen={setSideOpen} setNavOpen={setNavOpen} />
-        <ScrollArea className="h-[calc(100vh-64px)] p-4">
-          {children ?? <Outlet />}
-        </ScrollArea>
-      </div>
+        <div className="relative flex-1 min-w-[416px] flex flex-col min-h-screen">
+          <Navbar setSideOpen={setSideOpen} setNavOpen={setNavOpen} />
+          <ScrollArea className="h-[calc(100vh-64px)] p-4">
+            {children ?? <Outlet />}
+          </ScrollArea>
+        </div>
 
-      {/* <ScrollArea
+        {/* <ScrollArea
         className={clsx(
           'w-[280px] min-w-[280px] h-screen p-4 -mr-[280px] border-l border-white/10 transition-all duration-300 ease-out z-30',
           {
@@ -80,6 +82,7 @@ export function DashboardLayout({ children }: { children?: React.ReactNode }) {
           activitiesData={activitiesData}
         />
       </ScrollArea> */}
-    </main>
+      </main>
+    </DashboardProvider>
   );
 }

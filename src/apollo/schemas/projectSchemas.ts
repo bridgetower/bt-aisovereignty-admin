@@ -28,7 +28,6 @@ export const CREATE_NEW_PROJECT = gql`
         projectstage
         projectstatus
         projecttype
-        files
       }
       error
       status

@@ -5,8 +5,10 @@ import {
   Edit3,
   MoreVertical,
   Share2,
+  Trash2,
 } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import Dropzone, { useDropzone } from 'react-dropzone';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,11 +21,22 @@ import {
 } from '@/types/ProjectData';
 
 import { DataTable } from '../common/dataTable';
+import { MiniPagination } from '../common/MiniPagination';
+import { SidepanelSkeleton } from '../common/SidepanelSkeleton';
 import { Button } from '../ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
 import { Select, SelectTrigger } from '../ui/select';
+import { convertFilesToBase64 } from './sharedFunction';
 
 // Dummy data for the transaction (can also be passed as props)
-const knoledgeBaseColums: ColumnDef<any>[] = [
+const tableColumnDef: ColumnDef<any>[] = [
   {
     accessorKey: 'name',
     header: 'File name',
@@ -47,26 +60,6 @@ const hashItemColumns: ColumnDef<any>[] = [
 
 const dummyData = [
   {
-    id: '728ed523f',
-    name: 'data/datafile.csv',
-    updatedon: 'Jan 4, 2024',
-    icon: (
-      <AlertCircle
-        className="text-warning"
-        size={15}
-        // fill="currentColor"
-        // stroke="none"
-      />
-    ),
-  },
-  {
-    id: '728ed25f',
-    name: 'https://github.com/mlabonne/llm-course',
-    updatedon: 'Jan 4, 2024',
-  },
-];
-const dummyData1 = [
-  {
     id: '728ed52f',
     name: 'Data Source Hash',
     updatedon: 'Jan 4, 2024',
@@ -79,21 +72,39 @@ const dummyData1 = [
 ];
 
 const ProjectDetails: React.FC<{ id: string }> = (props) => {
+  const rowLimit: number = 4;
+  const topRef = useRef<HTMLDivElement | null>(null);
   const { id } = props;
   const navigate = useNavigate();
   const [filesData, setFilesData] = useState<IFileContent[]>([]);
-  const [hashData, setHashData] = useState<any[]>([]);
+  // const [hashData, setHashData] = useState<any[]>([]);
   const [project, setProject] = useState<IProjectAttributes | null>(null);
   const memoizedFilesData = React.useMemo(() => filesData, [filesData]);
+  const [saving, setSaving] = useState(false);
+  const [docPage, setDocPage] = useState(1);
+  const [totalPages, setTotalPages] = useState({ refs: 1, hash: 1 });
   const { showLoader, hideLoader } = useLoader();
-  const { getProjectDetails } = useProject();
+  const {
+    getProjectDetails,
+    refetchProjects,
+    deleteDocReference,
+    updateKnowledgebase,
+  } = useProject();
+  useEffect(() => {
+    topRef.current?.scrollIntoView({ behavior: 'smooth' });
+    console.log('ProjectId-', id);
+  }, [id]);
 
   useEffect(() => {
     if (!id) {
       return;
     }
+    getProjectDetailsById();
+  }, [id, docPage]);
+
+  const getProjectDetailsById = () => {
     showLoader();
-    getProjectDetails({ projectId: id })
+    getProjectDetails({ projectId: id, page: docPage, limit: rowLimit })
       .then((res: any) => {
         if (res.data?.GetProjectById?.data) {
           setProject(res.data.GetProjectById.data?.project);
@@ -103,11 +114,14 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
               name: file.name,
               updatedon: new Date().toDateString(),
               isLocal: false,
+              ...file,
             }),
           );
-          if (files.length) {
-            setFilesData(files);
-          }
+          setTotalPages((prev) => ({
+            ...prev,
+            refs: res.data?.GetProjectById?.data?.references?.totalPages,
+          }));
+          setFilesData(files || []);
         } else {
           toast.error(res?.error?.message);
         }
@@ -118,9 +132,130 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
       .finally(() => {
         hideLoader();
       });
-  }, [id]);
+  };
+  const onDrop = async (acceptedFiles: File[]) => {
+    const base64Files = await convertFilesToBase64(acceptedFiles);
+    if (base64Files.length > 0) {
+      const newFiles = base64Files.map((file, i) => ({
+        id: file.fileName + i,
+        name: file.fileName,
+        updatedon: new Date().toDateString(),
+        reftype: 'DOCUMENT',
+        isLocal: true,
+      }));
+
+      setFilesData((prevFiles: any) =>
+        [...newFiles, ...prevFiles].length > 4
+          ? [...newFiles, ...prevFiles].filter((e) => e.name)
+          : [...newFiles, ...prevFiles],
+      );
+    }
+    saveFiles(base64Files);
+  };
+  const saveFiles = (base64Files: IFileContent[]) => {
+    if (!saving) {
+      setSaving(true);
+      showLoader();
+      const files = base64Files.map((file) => ({
+        fileName: file.fileName,
+        fileContent: file.fileContent,
+        contentType: file.contentType,
+      }));
+      updateKnowledgebase({ projectId: id, files })
+        .then((res: any) => {
+          if (res.data?.AddRefToKnowledgeBase?.status === 200) {
+            refetchProjects();
+            getProjectDetails({
+              projectId: id,
+              page: docPage,
+              limit: rowLimit,
+            });
+            toast.success('Reference doc addes!');
+          }
+        })
+        .catch((error: any) => {
+          toast.error(error?.message || 'Failed to add!');
+        })
+        .finally(() => {
+          setSaving(false);
+          hideLoader();
+        });
+    }
+  };
+  const { getRootProps: getRootProps, getInputProps: getInputProps } =
+    useDropzone({
+      onDrop,
+    });
+  const onActionMenuClick = (dataSet: any, action: string) => {
+    if (action === 'remove') {
+      if (dataSet.isLocal) {
+        setFilesData((prevFiles: any) =>
+          prevFiles.filter((file: any) => file.name !== dataSet.name),
+        );
+      } else {
+        removeDocs(dataSet.id);
+      }
+    }
+  };
+  const removeDocs = (refId: string) => {
+    if (!saving) {
+      setSaving(true);
+      showLoader();
+      deleteDocReference(refId)
+        .then((res: any) => {
+          if (res.data?.DeleteRefToKnowledgeBase?.status === 200) {
+            refetchProjects();
+            getProjectDetailsById();
+            toast.success('Reference doc removed!');
+          }
+        })
+        .catch((error: any) => {
+          toast.error(error?.message || 'Failed to remove!');
+        })
+        .finally(() => {
+          setSaving(false);
+          hideLoader();
+        });
+    }
+  };
+  const paginationChangeHandler = (page: number) => {
+    setDocPage(page);
+  };
+  const actionMenuColDef = {
+    id: 'actions',
+    cell: ({ row }: any) => {
+      const dataSet = row.original;
+
+      return (
+        <>
+          {dataSet.name ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="flex gap-1"
+                  onClick={() => onActionMenuClick(dataSet, 'remove')}
+                >
+                  <Trash2 className="text-destructive" size={20} /> Remove
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <></>
+          )}
+        </>
+      );
+    },
+  };
   return (
-    <div className="px-6 ">
+    <div className="px-6 " ref={topRef}>
       {project ? (
         <>
           <div className="flex justify-between">
@@ -144,7 +279,14 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
             <div className="text-2xl font-bold text-foreground font-roboto">
               {project.name}
             </div>
-            {project.hasAlert && <AlertCircle className="text-warning mt-1" />}
+            {project.hasAlert && (
+              <AlertCircle
+                size={20}
+                stroke="white"
+                fill="#fa8b14"
+                className="mt-0.5"
+              />
+            )}
           </div>
           <div className="text-sm text-foreground mt-4">
             <div className="flex items-center gap-2">
@@ -178,7 +320,9 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
             <div className="text-info font-semibold text-xl">12:45:56</div>
           </div>
           <div className="bg-warning p-6 flex justify-between items-center rounded-md mt-4">
-            <div className={`text-white`}>Time Spent on this project</div>
+            <div className={`text-white`}>
+              File upload issue, please upload again.
+            </div>
             <Button className="uppercase " variant={'secondary'} size={'sm'}>
               Take action
             </Button>
@@ -188,16 +332,40 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
             <p className="text-sm font-normal">{project.description}</p>
           </div>
           <div className="text-sm text-foreground mt-4 font-roboto ">
-            <div className="font-semibold ">
-              Attachments ({dummyData.length} items)
-            </div>{' '}
+            <div className="font-semibold flex justify-between items-center">
+              <div>Attachments ({filesData.length} items)</div>
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <Button type="button" variant={'link'}>
+                  Add Item
+                </Button>
+              </div>
+            </div>
             <div className="mt-2">
-              <DataTable
-                columns={knoledgeBaseColums}
-                data={memoizedFilesData}
-                rowSeletable={true}
-                actionMenu={true}
-                onActionMenuClick={() => {}}
+              <Dropzone
+                onDrop={(acceptedFiles) => onDrop(acceptedFiles)}
+                noClick
+              >
+                {({ getRootProps, getInputProps }) => (
+                  <section>
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <DataTable
+                        columns={[...tableColumnDef, actionMenuColDef]}
+                        data={memoizedFilesData}
+                        rowSeletable={true}
+                        actionMenu={true}
+                        onActionMenuClick={() => {}}
+                        noDataText=" Drag & Drop files here"
+                      />
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
+              <MiniPagination
+                currentPage={docPage}
+                totalPages={totalPages.refs}
+                onPageChange={paginationChangeHandler} // Custom page change function
               />
             </div>
           </div>
@@ -208,14 +376,16 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
             <div className="mt-2">
               <DataTable
                 columns={hashItemColumns}
-                data={dummyData1}
+                data={dummyData}
                 actionMenu={true}
                 onActionMenuClick={() => {}}
               />
             </div>
           </div>
         </>
-      ) : null}
+      ) : (
+        <SidepanelSkeleton />
+      )}
     </div>
   );
 };

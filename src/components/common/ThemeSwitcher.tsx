@@ -17,12 +17,12 @@ const ThemeSwitcher = () => {
 
   const renderIcon = () => {
     if (theme === 'light') {
-      return <Sun size={16} />;
+      return <Sun size={20} />;
     }
     if (theme === 'dark') {
-      return <Moon size={16} />;
+      return <Moon size={20} />;
     }
-    return <Monitor size={16} />;
+    return <Monitor size={20} />;
   };
 
   return (

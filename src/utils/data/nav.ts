@@ -45,6 +45,20 @@ export const projectNavigationList: TNavItem[] = [
 ];
 export const admintNavigationList: TNavItem[] = [
   {
+    icon: 'list-todo',
+    label: 'Stage Types',
+    path: '/stage-types',
+    defaultOpen: false,
+    subItems: [],
+  },
+  {
+    icon: 'list-check',
+    label: 'Status Types',
+    path: '/status-types',
+    defaultOpen: false,
+    subItems: [],
+  },
+  {
     icon: 'settings',
     label: 'Settings',
     path: '#',

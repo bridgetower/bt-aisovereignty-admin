@@ -1,4 +1,3 @@
-import { useAuth } from '@/context/CoginitoAuthProvider';
 import {
   admintNavigationList,
   mainNavigationList,
@@ -7,11 +6,9 @@ import {
 } from '@/utils/data/nav';
 
 import { Accordion } from '../ui/accordion';
-import { Button } from '../ui/button';
 import SidebarCollapsible from './SidebarCollapsible';
 
 const Sidebar = () => {
-  const { logout } = useAuth();
   // const favoritePages = useReadLocalStorage('favourite-pages') as {
   //   name: string;
   //   path: string;
@@ -64,12 +61,16 @@ const Sidebar = () => {
         ))}
       </Accordion> */}
 
-      <div className="mt-auto flex flex-col gap-2">
-        {/* <Button variant="outline">Settings</Button> */}
-        <Button onClick={logout} variant="outline">
-          Logout
+      {/* <div className="mt-auto w-full pr-2">
+        <Button
+          onClick={logout}
+          variant="outline"
+          className="flex justify-start gap-1 w-full"
+        >
+          <Power size={14} />
+          <div>Logout</div>
         </Button>
-      </div>
+      </div> */}
     </aside>
   );
 };

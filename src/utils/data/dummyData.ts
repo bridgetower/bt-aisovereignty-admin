@@ -1,3 +1,6 @@
+import { ProjectStageLabel } from '@/types/ProjectData';
+import { IStageType } from '@/types/StageTypes';
+
 export const orgData = {
   id: '1',
   name: 'Amy Elsner',
@@ -30,37 +33,90 @@ export const orgData = {
     },
   ],
 };
-export const notificationData = [
+// export const notificationData = [
+//   {
+//     name: 'Proejct',
+//     title: 'Project Name 2 moved to next stage',
+//     icon: 'User',
+//     link: '/projects',
+//     read: false,
+//     type: 'info',
+//   },
+//   {
+//     name: 'Proejct',
+//     title: 'Project Name 2 moved to next stage',
+//     icon: 'User',
+//     link: '/projects',
+//     read: false,
+//     type: 'info',
+//   },
+//   {
+//     name: 'Proejct',
+//     title: 'Test project moved to next stage',
+//     icon: 'User',
+//     link: '/projects',
+//     read: false,
+//     type: 'info',
+//   },
+//   {
+//     name: 'Proejct',
+//     title: 'Project Name 1 file error',
+//     icon: 'User',
+//     link: '/projects',
+//     read: false,
+//     type: 'alert',
+//   },
+// ];
+
+// Assuming ProjectStage enum is defined as follows:
+
+export const stages: IStageType[] = [
   {
-    name: 'Proejct',
-    title: 'Project Name 2 moved to next stage',
-    icon: 'User',
-    link: '/projects',
-    read: false,
-    type: 'info',
+    id: '1',
+    name: ProjectStageLabel.DATA_SELECTION,
+    description:
+      'This stage involves selecting the data sources for the project.',
   },
   {
-    name: 'Proejct',
-    title: 'Project Name 2 moved to next stage',
-    icon: 'User',
-    link: '/projects',
-    read: false,
-    type: 'info',
+    id: '2',
+    name: ProjectStageLabel.DATA_INGESTION,
+    description:
+      'This stage focuses on ingesting data from various sources into the system.',
   },
   {
-    name: 'Proejct',
-    title: 'Test project moved to next stage',
-    icon: 'User',
-    link: '/projects',
-    read: false,
-    type: 'info',
+    id: '3',
+    name: ProjectStageLabel.DATA_STORAGE,
+    description:
+      'In this stage, the ingested data is stored securely and made accessible.',
   },
   {
-    name: 'Proejct',
-    title: 'Project Name 1 file error',
-    icon: 'User',
-    link: '/projects',
-    read: false,
-    type: 'alert',
+    id: '4',
+    name: ProjectStageLabel.DATA_PREPARATION,
+    description:
+      'This stage prepares the data for training, including cleaning and formatting.',
+  },
+  {
+    id: '5',
+    name: ProjectStageLabel.LLM_FINE_TUNING,
+    description:
+      'In this stage, the data is used for fine-tuning large language models.',
+  },
+  {
+    id: '6',
+    name: ProjectStageLabel.VERSIONING,
+    description:
+      'This stage handles versioning to manage updates and track changes.',
+  },
+  {
+    id: '7',
+    name: ProjectStageLabel.RAG,
+    description:
+      'In this stage, Retrieval-Augmented Generation (RAG) is implemented.',
+  },
+  {
+    id: '8',
+    name: ProjectStageLabel.PUBLISHED,
+    description:
+      'This stage marks the project as published and available for use.',
   },
 ];

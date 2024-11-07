@@ -45,9 +45,9 @@ export const ProjectListView: React.FC<Props> = (props) => {
             {[...Array(7)].map((_, idx) => (
               <div className="" key={idx}>
                 <div className="flex justify-between mt-2 gap-3">
-                  <Skeleton className="h-10 w-1/3" />
-                  <Skeleton className="h-10 w-1/3" />
-                  <Skeleton className="h-10 w-1/3" />
+                  <Skeleton className="h-10 w-1/2" />
+                  <Skeleton className="h-10 w-1/4" />
+                  <Skeleton className="h-10 w-1/4" />
                 </div>
               </div>
             ))}
@@ -71,14 +71,14 @@ export const ProjectListView: React.FC<Props> = (props) => {
                   onClick={() => onProjectSelect(project)}
                 >
                   <TableCell className="">
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 max-w-2xl">
                       <div
                         className={`text-xs p-1 mt-1 px-2 rounded-md w-fit text-[#004440] bg-${getRandomColor()}-200`}
                       >
                         {project.name}
                       </div>
-                      {i === 0 && (
-                        <AlertCircle size={20} className="text-warning" />
+                      {project.hasAlert && (
+                        <AlertCircle size={20} stroke="white" fill="#fa8b14" />
                       )}
                     </div>
                   </TableCell>

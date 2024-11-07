@@ -1,8 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ColumnDef } from '@tanstack/react-table';
-import { CircleHelp, Loader2, MoreVertical, Trash2 } from 'lucide-react';
+import {
+  CircleHelp,
+  Loader2,
+  MoreVertical,
+  Save,
+  Share2,
+  Trash2,
+} from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import Dropzone, { useDropzone } from 'react-dropzone';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -101,36 +108,11 @@ export const UpdateProject: React.FC<{ id: string }> = (props) => {
   const [project, setProject] = useState<IProjectAttributes | null>(null);
   const [saving, setSaving] = useState(false);
   const [base64Files, setBase64Files] = useState<IFileContent[]>([]);
-  const [filesData, setFilesData] = useState<IFileContent[]>([]);
+  const [filesData, setFilesData] = useState<IFileContent[]>(emptyData);
   const memoizedFilesData = React.useMemo(() => filesData, [filesData]);
   useEffect(() => {
-    showLoader();
-    getProjectDetails({ projectId: id })
-      .then((res: any) => {
-        if (res.data?.GetProjectById?.data) {
-          updateFormData(res.data?.GetProjectById?.data?.project);
-          const files = res.data?.GetProjectById?.data?.references?.refs.map(
-            (file: any) => ({
-              id: file.id,
-              name: file.name,
-              updatedon: new Date().toDateString(),
-              isLocal: false,
-            }),
-          );
-          if (files.length) {
-            setFilesData(files);
-          }
-        } else {
-          toast.error(res?.error?.message);
-        }
-      })
-      .catch((error: any) => {
-        toast.error(error?.message || 'Failed to fetch project details!');
-      })
-      .finally(() => {
-        hideLoader();
-      });
-  }, []);
+    getProjectDetailsById();
+  }, [id]);
   useEffect(() => {
     if (base64Files.length > 0) {
       const newFiles = base64Files.map((file, i) => ({
@@ -148,6 +130,35 @@ export const UpdateProject: React.FC<{ id: string }> = (props) => {
     }
   }, [base64Files]);
 
+  const getProjectDetailsById = () => {
+    showLoader();
+    getProjectDetails({ projectId: id, page: 1, limit: 100 })
+      .then((res: any) => {
+        if (res.data?.GetProjectById?.data) {
+          updateFormData(res.data?.GetProjectById?.data?.project);
+          const files = res.data?.GetProjectById?.data?.references?.refs.map(
+            (file: any) => ({
+              id: file.id,
+              name: file.name,
+              updatedon: new Date().toDateString(),
+              isLocal: false,
+              ...file,
+            }),
+          );
+          if (files.length) {
+            setFilesData(files);
+          }
+        } else {
+          toast.error(res?.error?.message);
+        }
+      })
+      .catch((error: any) => {
+        toast.error(error?.message || 'Failed to fetch project details!');
+      })
+      .finally(() => {
+        hideLoader();
+      });
+  };
   const updateFormData = (data: any) => {
     setProject(data);
     form.setValue('name', data.name);
@@ -168,26 +179,30 @@ export const UpdateProject: React.FC<{ id: string }> = (props) => {
     formState: { errors },
   } = form;
 
-  const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    if (!saving) {
+  const onSubmit: SubmitHandler<FormInputs> = () => {
+    if (!saving && base64Files.length > 0) {
       setSaving(true);
+
       const files = base64Files.map((file) => ({
         fileName: file.fileName,
         fileContent: file.fileContent,
         contentType: file.contentType,
       }));
+      setFilesData((previous) => [...files, ...previous]);
       updateKnowledgebase({ projectId: id, files })
         .then((res: any) => {
-          if (res.data?.DeleteRefToKnowledgeBase?.status === 200) {
+          if (res.data?.AddRefToKnowledgeBase?.status === 200) {
             refetchProjects();
-            toast.success('Reference doc removed!');
+            getProjectDetails({ projectId: id, page: 1, limit: 100 });
+            toast.success('Reference doc updated!');
           }
         })
         .catch((error: any) => {
-          toast.error(error?.message || 'Failed to remove!');
+          toast.error(error?.message || 'Failed to add!');
         })
         .finally(() => {
           setSaving(false);
+          hideLoader();
         });
     }
   };
@@ -207,6 +222,7 @@ export const UpdateProject: React.FC<{ id: string }> = (props) => {
             fileContent: replaceBase64(reader.result as string),
             contentType: file.type,
             isLocal: true,
+            reftype: 'DOCUMENT',
           });
         reader.onerror = reject;
       });
@@ -233,24 +249,30 @@ export const UpdateProject: React.FC<{ id: string }> = (props) => {
       const dataSet = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreVertical className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="flex gap-1"
-              onClick={() => onActionMenuClick(dataSet, 'remove')}
-            >
-              <Trash2 className="text-destructive" size={20} /> Remove
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          {dataSet.name ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="flex gap-1"
+                  onClick={() => onActionMenuClick(dataSet, 'remove')}
+                >
+                  <Trash2 className="text-destructive" size={20} /> Remove
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <></>
+          )}
+        </>
       );
     },
   };
@@ -273,6 +295,7 @@ export const UpdateProject: React.FC<{ id: string }> = (props) => {
         .then((res: any) => {
           if (res.data?.DeleteRefToKnowledgeBase?.status === 200) {
             refetchProjects();
+            getProjectDetailsById();
             toast.success('Reference doc removed!');
           }
         })
@@ -296,8 +319,12 @@ export const UpdateProject: React.FC<{ id: string }> = (props) => {
               {ProjectStageLabel[project?.projectstage as ProjectStageEnum]}
             </div>
             <div className="flex items-center gap-4">
-              {/* <Edit3 size={20} className="cursor-pointer" /> */}
-              {/* <Share2 size={20} className="cursor-pointer" /> */}
+              <Save
+                size={20}
+                className="cursor-pointer"
+                onClick={() => onSubmit(form.getValues())}
+              />
+              <Share2 size={20} className="cursor-pointer" />
               <MoreVertical size={20} className="cursor-pointer" />
             </div>
           </div>
@@ -408,26 +435,41 @@ export const UpdateProject: React.FC<{ id: string }> = (props) => {
                 <Button type="button" variant={'link'}>
                   Add Item
                 </Button>
-                <div
-                  className={`${memoizedFilesData?.length ? 'opacity-0' : 'opacity-100'} absolute top-20 left-1/2 -translate-x-1/2 translate-y-4  bg-card p-10  text-center cursor-pointer z-10 w-2/3`}
+                {/* <div
+                  // style={{
+                  //   height: memoizedFilesData.length
+                  //     ? memoizedFilesData.length * 70 + 'px'
+                  //     : 'auto',
+                  // }}
+                  className={`${memoizedFilesData?.length ? 'opacity-0' : 'opacity-100'}  border-2 border-dashed rounded-lg border-muted-foreground bg-background p-10 mt-1 text-center cursor-pointer z-10 w-2/3`}
                 >
                   <p className="text-muted-foreground hover:opacity-80 ">
                     Drag & Drop files here, or click to select files
                   </p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>{' '}
           <div className="">
-            <DataTable
-              key={filesData.length}
-              columns={[...tableColumnDef, actionMenuColDef]}
-              data={memoizedFilesData}
-              rowSeletable={true}
-              actionMenu={true}
-              onActionMenuClick={() => {}}
-              // key={Date.now()}
-            />
+            <Dropzone onDrop={(acceptedFiles) => onDrop(acceptedFiles)} noClick>
+              {({ getRootProps, getInputProps }) => (
+                <section>
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+
+                    <DataTable
+                      key={filesData.length}
+                      columns={[...tableColumnDef, actionMenuColDef]}
+                      data={memoizedFilesData}
+                      rowSeletable={true}
+                      actionMenu={true}
+                      onActionMenuClick={() => {}}
+                      noDataText="Drag & Drop files here"
+                    />
+                  </div>
+                </section>
+              )}
+            </Dropzone>
           </div>
           <div className="flex justify-end items-center gap-2 mt-4">
             <Button

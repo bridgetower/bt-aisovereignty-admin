@@ -132,7 +132,7 @@ const Board: React.FC = () => {
   return (
     <>
       <div>
-        <div className="uppercase text-md text-[#486581] p-4">
+        <div className="uppercase text-md text-[#486581] py-4">
           Projects states
         </div>
         <ScrollArea className=" w-full rounded-md">
@@ -157,11 +157,14 @@ const Board: React.FC = () => {
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
         {/*  Project details table starts */}
-        <div className="uppercase text-md text-[#486581] p-4">
+        <div className="uppercase text-md text-[#486581] py-4">
           Projects states
         </div>
         <div className="bg-card p-4 rounded-md">
-          <ProjectListView projects={selectedProject.data} isLoading={false} />
+          <ProjectListView
+            projects={selectedProject.data}
+            isLoading={!groupedCards}
+          />
         </div>
       </div>
     </>

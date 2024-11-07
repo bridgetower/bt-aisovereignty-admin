@@ -4,9 +4,10 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 
+import { ErrorFallback } from '@/components/common/ErrorBoundary';
 import { AuthLayout } from '@/layout/AuthLayout';
 import { DashboardLayout } from '@/layout/DashboardLayout';
-import KnowledgeBaseWrapper from '@/layout/KnowledgeBaseWpper';
+import KnowledgeBaseWrapper from '@/layout/KnowledgeBaseWrapper';
 import { MainLayout } from '@/layout/MainLayout';
 import ProjectComponentWrapper from '@/layout/ProjectComponentWrapper';
 import Dashboard from '@/pages/dashboard/Dashboard';
@@ -16,69 +17,49 @@ import { KnowledgeBaseWebsitesContainer } from '@/pages/knowledgeBase/KnowledgeB
 import { ProjectList } from '@/pages/Projects/Projects';
 import ResetPassword from '@/pages/resetPassword';
 import SignIn from '@/pages/signIn';
+import { StageTypeList } from '@/pages/stageType/StageTypes';
+import { StatusTypeList } from '@/pages/statusType/StatusTypes';
 
 const AppRouter = () => {
   const router = createBrowserRouter([
     {
       element: <MainLayout />,
+      errorElement: <ErrorFallback />,
       children: [
         {
           element: <AuthLayout />,
           children: [
-            {
-              element: <SignIn />,
-              path: '/sign-in',
-            },
-            {
-              path: '/forgot-password',
-              element: <ForgotPassword />,
-            },
-            {
-              path: '/reset-password',
-              element: <ResetPassword />,
-            },
+            { path: '/sign-in', element: <SignIn /> },
+            { path: '/forgot-password', element: <ForgotPassword /> },
+            { path: '/reset-password', element: <ResetPassword /> },
           ],
         },
         {
           element: <DashboardLayout />,
           children: [
             {
+              path: '/',
+              element: <ProjectComponentWrapper />,
+              children: [
+                { path: '/', element: <Navigate to="/projects" replace /> },
+                { path: '/projects', element: <ProjectList /> },
+                { path: '/projects/:action/:id?', element: <ProjectList /> },
+              ],
+            },
+            {
               path: '/knowledgebase',
               element: <KnowledgeBaseWrapper />,
               children: [
+                { path: 'documents', element: <KnowledgeBaseContainer /> },
                 {
-                  path: '/knowledgebase/documents',
-                  element: <KnowledgeBaseContainer />,
-                },
-                {
-                  path: '/knowledgebase/websites',
+                  path: 'websites',
                   element: <KnowledgeBaseWebsitesContainer />,
                 },
               ],
             },
-            {
-              path: '/',
-              element: <ProjectComponentWrapper />,
-              children: [
-                {
-                  path: '/',
-                  element: <Navigate to={'/projects'} />,
-                },
-                {
-                  path: '/projects',
-                  element: <ProjectList />,
-                },
-                {
-                  path: '/projects/:action/:id?',
-                  element: <ProjectList />,
-                },
-              ],
-            },
-            {
-              path: '/dashboard',
-              element: <Dashboard />,
-            },
-
+            { path: '/dashboard', element: <Dashboard /> },
+            { path: '/stage-types', element: <StageTypeList /> },
+            { path: '/status-types', element: <StatusTypeList /> },
             {
               path: '*',
               element: (
@@ -94,12 +75,7 @@ const AppRouter = () => {
     },
   ]);
 
-  {
-    return (
-      <>
-        <RouterProvider router={router} />
-      </>
-    );
-  }
+  return <RouterProvider router={router} />;
 };
+
 export default AppRouter;

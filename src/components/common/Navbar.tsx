@@ -1,4 +1,4 @@
-import { Bell, IndentDecrease, PanelRightDashed } from 'lucide-react';
+import { Bell, IndentDecrease, Power } from 'lucide-react';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -7,10 +7,18 @@ import {
   useReadLocalStorage,
 } from 'usehooks-ts';
 
-import { notificationData } from '@/utils/data/dummyData';
-import { mainNavigationList, secondaryNavigationList } from '@/utils/data/nav';
+import { useAuth } from '@/context/CoginitoAuthProvider';
+import { useDashboardContext } from '@/context/DashboardProvider';
+import {
+  mainNavigationList,
+  projectNavigationList,
+  secondaryNavigationList,
+} from '@/utils/data/nav';
 
+import { NotificationsList } from '../projects/NotificationPanel';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Badge } from '../ui/badge';
+import { Button } from '../ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +26,7 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { SearchInput } from '../ui/searchInput';
-import { NotificationDrawer } from './NotificationDrawer';
+import RightDrawer from './rightDrawer';
 import { SidebarDrawer } from './SidebarDrawer';
 import ThemeSwitcher from './ThemeSwitcher';
 
@@ -29,6 +37,8 @@ interface NavbarProps {
 
 const Navbar = ({ setNavOpen, setSideOpen }: NavbarProps) => {
   const location = useLocation();
+  const { logout } = useAuth();
+  const { toggleNotification, isNotificationOpen } = useDashboardContext();
 
   const matches = useMediaQuery('(min-width: 1080px)');
   const [value, setValue] = useLocalStorage<
@@ -47,7 +57,11 @@ const Navbar = ({ setNavOpen, setSideOpen }: NavbarProps) => {
     (item) => item.path === location.pathname,
   );
 
-  const allNavList = [...mainNavigationList, ...secondaryNavigationList];
+  const allNavList = [
+    ...mainNavigationList,
+    ...secondaryNavigationList,
+    ...projectNavigationList,
+  ];
 
   function findMenuItemByPath(items: any, targetPath: string) {
     for (const item of items) {
@@ -89,68 +103,62 @@ const Navbar = ({ setNavOpen, setSideOpen }: NavbarProps) => {
   };
 
   return (
-    <div className="flex w-full flex-col">
-      <header className="flex  flex-row text-foreground justify-between items-center shadow-md bg-navbackground py-5 px-7 h-16 w-full ">
-        <div className="flex items-center gap-6">
-          {matches ? (
-            <IndentDecrease
-              className="cursor-pointer"
-              onClick={() => {
-                setNavOpen((v) => !v);
-              }}
-              size={20}
-            />
-          ) : (
-            <SidebarDrawer />
-          )}
-          {/* <Star
+    <>
+      <RightDrawer
+        onClose={() => toggleNotification()}
+        isOpen={isNotificationOpen}
+        title="Notifications"
+      >
+        <NotificationsList />
+      </RightDrawer>
+      <div className="flex w-full flex-col">
+        <header className="flex  flex-row text-foreground justify-between items-center shadow-md bg-navbackground py-5 px-7 h-16 w-full ">
+          <div className="flex items-center gap-6">
+            {matches ? (
+              <IndentDecrease
+                className="cursor-pointer"
+                onClick={() => {
+                  setNavOpen((v) => !v);
+                }}
+                size={20}
+              />
+            ) : (
+              <SidebarDrawer />
+            )}
+            {/* <Star
             className="cursor-pointer"
             onClick={handleUpdateFavoriteStatus}
             fill={isCurrentPageFavorite ? 'yellow' : ''}
             size={14}
           /> */}
-          <div className="flex items-center gap-x-2">
-            <Link to="/" className="text-sm text-muted-foreground">
-              {findMenuItemByPath(allNavList, location.pathname)
-                ?.primaryPathname ?? 'Dashboard'}
-            </Link>
-            <p className="text-muted-foreground">/</p>
-            <Link to="/" className="text-sm text-foreground">
-              {findMenuItemByPath(allNavList, location.pathname)
-                ?.secondaryPathname ?? 'Default'}
-            </Link>
+            <div className="flex items-center gap-x-2">
+              <Link to="/" className="text-sm text-muted-foreground">
+                {findMenuItemByPath(allNavList, location.pathname)
+                  ?.primaryPathname ?? 'Project'}
+              </Link>
+              <p className="text-muted-foreground">/</p>
+              <Link to="/" className="text-sm text-foreground">
+                {findMenuItemByPath(allNavList, location.pathname)
+                  ?.secondaryPathname ?? 'Project List'}
+              </Link>
+            </div>
           </div>
-        </div>
 
-        <div className="flex items-center gap-6">
-          <SearchInput />
-          <ThemeSwitcher />
-          {/* <ClockArrowDown size={20} /> */}
+          <div className="flex items-center gap-6">
+            <SearchInput />
+            <ThemeSwitcher />
+            {/* <ClockArrowDown size={20} /> */}
 
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <div className="relative">
-                <Bell size={20} className="cursor-pointer" />
-                <Badge
-                  variant={'destructive'}
-                  className="absolute -top-2 -right-1 text-xs p-1 w-4 h-4 rounded-full hover:bg-destructive"
-                >
-                  3
-                </Badge>
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              {notificationData.map((alert, i) => (
-                <DropdownMenuItem
-                  key={i}
-                  className={`${alert.type === 'alert' ? 'text-destructive' : 'text-foreground'}`}
-                >
-                  {alert.title}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          {matches ? (
+            <div className="relative" onClick={() => toggleNotification()}>
+              <Bell size={20} className="cursor-pointer" />
+              <Badge
+                variant={'destructive'}
+                className="absolute -top-1 right-0 text-[9px] font-bold p-[2.5px] w-3 h-3 rounded-full hover:bg-destructive"
+              >
+                4
+              </Badge>
+            </div>
+            {/* {matches ? (
             <PanelRightDashed
               className="cursor-pointer"
               onClick={() => {
@@ -160,10 +168,32 @@ const Navbar = ({ setNavOpen, setSideOpen }: NavbarProps) => {
             />
           ) : (
             <NotificationDrawer />
-          )}
-        </div>
-      </header>
-    </div>
+          )} */}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>
+                  <Button
+                    onClick={logout}
+                    variant="outline"
+                    className="flex justify-start gap-1 w-full"
+                  >
+                    <Power size={18} />
+                    <div>Logout</div>
+                  </Button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </header>
+      </div>
+    </>
   );
 };
 

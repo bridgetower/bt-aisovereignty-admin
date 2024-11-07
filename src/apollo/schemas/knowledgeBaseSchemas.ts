@@ -4,10 +4,10 @@ export const CREATE_DOC_REFERENCE = gql`
   mutation Mymutation(
     $projectId: String!
     $refType: String!
-    $websiteName: String!
-    $websiteUrl: String!
+    $websiteName: String
+    $websiteUrl: String
     $depth: Int
-    $file: [FileInput]!
+    $files: [FileInput]!
   ) {
     AddRefToKnowledgeBase(
       input: {
@@ -16,7 +16,7 @@ export const CREATE_DOC_REFERENCE = gql`
         websiteName: $websiteName
         websiteUrl: $websiteUrl
         depth: $depth
-        file: $file
+        files: $files
       }
     ) {
       data {

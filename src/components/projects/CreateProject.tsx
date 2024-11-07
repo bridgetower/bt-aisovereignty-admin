@@ -1,10 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ColumnDef } from '@tanstack/react-table';
-import { CircleHelp, Loader2, MoreVertical } from 'lucide-react';
+import { CircleHelp, Loader2, MoreVertical, Trash2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import Dropzone, { useDropzone } from 'react-dropzone';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
@@ -13,6 +13,14 @@ import { ProjectType } from '@/types/ProjectData';
 
 import { DataTable } from '../common/dataTable';
 import { Button } from '../ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
 import {
   Form,
   FormControl,
@@ -29,7 +37,6 @@ import {
   SelectValue,
 } from '../ui/select';
 import { Textarea } from '../ui/textarea';
-
 // Dummy data for the transaction (can also be passed as props)
 const knoledgeBaseColums: ColumnDef<any>[] = [
   {
@@ -78,7 +85,7 @@ export const CreateProject: React.FC = () => {
   const { createNewProject, refetchProjects } = useProject();
   const [saving, setSaving] = useState(false);
   const [base64Files, setBase64Files] = useState<IFileContent[]>([]);
-  const [filesData, setFilesData] = useState<any>([]);
+  const [filesData, setFilesData] = useState<any>(emptyData);
   const memoizedFilesData = React.useMemo(() => filesData, [filesData]);
   useEffect(() => {
     if (base64Files.length > 0) {
@@ -174,9 +181,49 @@ export const CreateProject: React.FC = () => {
     onDrop,
   });
 
+  const onActionMenuClick = (dataSet: any, action: string) => {
+    if (action === 'remove') {
+      setFilesData((prevFiles: any) =>
+        prevFiles.filter((file: any) => file.name !== dataSet.name),
+      );
+    }
+  };
+
+  const actionMenuColDef = {
+    id: 'actions',
+    cell: ({ row }: any) => {
+      const dataSet = row.original;
+
+      return (
+        <>
+          {dataSet.name ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="flex gap-1"
+                  onClick={() => onActionMenuClick(dataSet, 'remove')}
+                >
+                  <Trash2 className="text-destructive" size={20} /> Remove
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <></>
+          )}
+        </>
+      );
+    },
+  };
   return (
     <Form {...form}>
-      <Toaster />
       <div className="px-6 ">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex justify-between">
@@ -295,27 +342,27 @@ export const CreateProject: React.FC = () => {
                 <Button type="button" variant={'link'}>
                   Add Item
                 </Button>
-                <div
-                  className={`${memoizedFilesData?.length ? 'opacity-0' : 'opacity-100'} absolute top-20 left-1/2 -translate-x-1/2 translate-y-4 border-2 border-dashed rounded-lg border-muted-foreground bg-background p-10 mt-3 text-center cursor-pointer z-10 w-2/3`}
-                >
-                  <p className="text-muted-foreground hover:opacity-80 ">
-                    Drag & Drop files here, or click to select files
-                  </p>
-                </div>
               </div>
             </div>
           </div>{' '}
-          <div className="">
-            <DataTable
-              key={filesData.length}
-              columns={knoledgeBaseColums}
-              data={memoizedFilesData}
-              rowSeletable={true}
-              actionMenu={true}
-              onActionMenuClick={() => {}}
-              // key={Date.now()}
-            />
-          </div>
+          <Dropzone onDrop={(acceptedFiles) => onDrop(acceptedFiles)} noClick>
+            {({ getRootProps, getInputProps }) => (
+              <section>
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <DataTable
+                    key={filesData.length}
+                    columns={[...knoledgeBaseColums, actionMenuColDef]}
+                    data={memoizedFilesData}
+                    rowSeletable={true}
+                    actionMenu={true}
+                    onActionMenuClick={() => {}}
+                    // key={Date.now()}
+                  />
+                </div>
+              </section>
+            )}
+          </Dropzone>
           <div className="flex justify-end items-center gap-2 mt-12">
             <Button
               type="button"

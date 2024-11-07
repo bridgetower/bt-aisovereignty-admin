@@ -32,23 +32,23 @@ interface DataTableProps<
   TData extends {
     icon?: keyof typeof dynamicIconImports;
     doctype?: string;
-    dragable?: boolean;
+    noDataText?: string;
   },
   TValue,
 > {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  data: any[];
   rowSeletable?: boolean;
   actionMenu?: boolean;
   onActionMenuClick?: (data: TData, action: string) => void;
-  dragable?: boolean;
+  noDataText?: string;
 }
 
 export function DataTable<
   TData extends {
     icon?: keyof typeof dynamicIconImports;
     doctype?: string;
-    dragable?: boolean;
+    noDataText?: string;
   },
   TValue,
 >({
@@ -57,7 +57,7 @@ export function DataTable<
   rowSeletable,
   actionMenu,
   // onActionMenuClick,
-  dragable = false,
+  noDataText,
 }: DataTableProps<TData, TValue>) {
   const [columnsState, setColumnsState] =
     useState<ColumnDef<TData, TValue>[]>(columns);
@@ -121,11 +121,12 @@ export function DataTable<
                 {row.getVisibleCells().map((cell, index) => (
                   <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    {index === (rowSeletable ? 1 : 0) && (
-                      <div className="text-muted-foreground flex items-center gap-1">
-                        File {row.original.icon}
-                      </div>
-                    )}
+                    {index === (rowSeletable ? 1 : 0) &&
+                      row.original.reftype === 'DOCUMENT' && (
+                        <div className="text-muted-foreground flex items-center gap-1">
+                          File {row.original.icon}
+                        </div>
+                      )}
                   </TableCell>
                 ))}
               </TableRow>
@@ -136,7 +137,7 @@ export function DataTable<
                 colSpan={columns.length + 2}
                 className="h-36 text-center "
               >
-                No data to show
+                {noDataText || ' No data to show'}
               </TableCell>
             </TableRow>
           )}
