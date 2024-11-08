@@ -10,6 +10,7 @@ import {
 import { useAuth } from '@/context/CoginitoAuthProvider';
 import { useDashboardContext } from '@/context/DashboardProvider';
 import {
+  admintNavigationList,
   mainNavigationList,
   projectNavigationList,
   secondaryNavigationList,
@@ -61,6 +62,7 @@ const Navbar = ({ setNavOpen, setSideOpen }: NavbarProps) => {
     ...mainNavigationList,
     ...secondaryNavigationList,
     ...projectNavigationList,
+    ...admintNavigationList,
   ];
 
   function findMenuItemByPath(items: any, targetPath: string) {

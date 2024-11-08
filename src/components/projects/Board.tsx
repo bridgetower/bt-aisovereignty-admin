@@ -19,8 +19,8 @@ type GroupedCardsType = {
   DATA_STORAGE: IProjectAttributes[];
   DATA_PREPARATION: IProjectAttributes[];
   LLM_FINE_TUNING: IProjectAttributes[];
-  VERSIONING: IProjectAttributes[];
-  RAG: IProjectAttributes[];
+  // VERSIONING: IProjectAttributes[];
+  // RAG: IProjectAttributes[];
   PUBLISHED: IProjectAttributes[];
 };
 
@@ -56,10 +56,10 @@ const Board: React.FC = () => {
       return gropedData.DATA_PREPARATION;
     } else if (gropedData.LLM_FINE_TUNING.length > 0) {
       return gropedData.LLM_FINE_TUNING;
-    } else if (gropedData.VERSIONING.length > 0) {
-      return gropedData.VERSIONING;
-    } else if (gropedData.RAG.length > 0) {
-      return gropedData.RAG;
+      // } else if (gropedData.VERSIONING.length > 0) {
+      //   return gropedData.VERSIONING;
+      // } else if (gropedData.RAG.length > 0) {
+      //   return gropedData.RAG;
     } else if (gropedData.PUBLISHED.length > 0) {
       return gropedData.PUBLISHED;
     } else {
@@ -113,15 +113,15 @@ const Board: React.FC = () => {
           card.projectstage ===
           getProjectStageEnumValue(ProjectStageEnum.LLM_FINE_TUNING),
       ),
-      [ProjectStageEnum.VERSIONING]: projects.filter(
-        (card) =>
-          card.projectstage ===
-          getProjectStageEnumValue(ProjectStageEnum.VERSIONING),
-      ),
-      [ProjectStageEnum.RAG]: projects.filter(
-        (card) =>
-          card.projectstage === getProjectStageEnumValue(ProjectStageEnum.RAG),
-      ),
+      // [ProjectStageEnum.VERSIONING]: projects.filter(
+      //   (card) =>
+      //     card.projectstage ===
+      //     getProjectStageEnumValue(ProjectStageEnum.VERSIONING),
+      // ),
+      // [ProjectStageEnum.RAG]: projects.filter(
+      //   (card) =>
+      //     card.projectstage === getProjectStageEnumValue(ProjectStageEnum.RAG),
+      // ),
       [ProjectStageEnum.PUBLISHED]: projects.filter(
         (card) =>
           card.projectstage ===
@@ -173,7 +173,7 @@ const Board: React.FC = () => {
 
 const SkeletonBoard: React.FC = () => (
   <div className="flex gap-4">
-    {[...Array(7)].map((_, idx) => (
+    {[...Array(6)].map((_, idx) => (
       <div className="" key={idx}>
         <div className="mt-4 ">
           <SkeletonCard />

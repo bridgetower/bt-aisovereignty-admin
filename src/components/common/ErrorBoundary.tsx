@@ -1,6 +1,8 @@
 import React from 'react';
 import { useRouteError } from 'react-router-dom';
 
+import { Button } from '../ui/button';
+
 // Define the props and state types
 
 export const ErrorFallback: React.FC = () => {
@@ -12,6 +14,9 @@ export const ErrorFallback: React.FC = () => {
       <div className="p-6 text-center text-red-500">
         <h1 className="text-4xl font-semibold">Oops! Got an error</h1>
         <p className="mt-2 text-2xl">{error?.message}</p>
+        <div className="mt-4">
+          <Button onClick={() => window.location.reload()}>Reload</Button>
+        </div>
       </div>
     </div>
   );

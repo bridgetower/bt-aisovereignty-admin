@@ -136,15 +136,13 @@ export const UpdateProject: React.FC<{ id: string }> = (props) => {
       .then((res: any) => {
         if (res.data?.GetProjectById?.data) {
           updateFormData(res.data?.GetProjectById?.data?.project);
-          const files = res.data?.GetProjectById?.data?.references?.refs.map(
-            (file: any) => ({
-              id: file.id,
-              name: file.name,
-              updatedon: new Date().toDateString(),
-              isLocal: false,
-              ...file,
-            }),
-          );
+          const files = res.data?.GetProjectById?.data.map((file: any) => ({
+            id: file.id,
+            name: file.name,
+            updatedon: new Date().toDateString(),
+            isLocal: false,
+            ...file,
+          }));
           if (files.length) {
             setFilesData(files);
           }

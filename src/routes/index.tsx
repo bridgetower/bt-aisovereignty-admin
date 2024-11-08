@@ -18,7 +18,7 @@ import { ProjectList } from '@/pages/Projects/Projects';
 import ResetPassword from '@/pages/resetPassword';
 import SignIn from '@/pages/signIn';
 import { StageTypeList } from '@/pages/stageType/StageTypes';
-import { StatusTypeList } from '@/pages/statusType/StatusTypes';
+import { StepTypeList } from '@/pages/stepType/StepTypes';
 
 const AppRouter = () => {
   const router = createBrowserRouter([
@@ -59,7 +59,7 @@ const AppRouter = () => {
             },
             { path: '/dashboard', element: <Dashboard /> },
             { path: '/stage-types', element: <StageTypeList /> },
-            { path: '/status-types', element: <StatusTypeList /> },
+            { path: '/step-types', element: <StepTypeList /> },
             {
               path: '*',
               element: (

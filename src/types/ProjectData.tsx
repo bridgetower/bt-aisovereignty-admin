@@ -26,8 +26,8 @@ export enum ProjectStageEnum {
   DATA_STORAGE = 'DATA_STORAGE',
   DATA_PREPARATION = 'DATA_PREPARATION',
   LLM_FINE_TUNING = 'LLM_FINE_TUNING',
-  VERSIONING = 'VERSIONING',
-  RAG = 'RAG',
+  // VERSIONING = 'VERSIONING',
+  // RAG = 'RAG',
   PUBLISHED = 'PUBLISHED',
 }
 
@@ -35,13 +35,13 @@ export const getProjectStageEnumValue = (key: string): string => {
   return ProjectStageEnum[key as keyof typeof ProjectStageEnum];
 };
 export const ProjectStageLabel = {
-  DATA_SELECTION: 'Source Data',
+  DATA_SELECTION: 'Data Source',
   DATA_INGESTION: 'Data Ingestion',
   DATA_STORAGE: 'Data Storage',
   DATA_PREPARATION: 'Data Preparation',
   LLM_FINE_TUNING: 'LLM Fine Tuning',
-  VERSIONING: 'Versioning',
-  RAG: 'RAG',
+  // VERSIONING: 'Versioning',
+  // RAG: 'RAG',
   PUBLISHED: 'Published',
 };
 

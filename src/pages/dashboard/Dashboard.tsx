@@ -1,55 +1,66 @@
 import {
-  Blocks,
-  Check,
-  Contact2,
-  DoorOpen,
-  Lightbulb,
-  SproutIcon,
+  DatabaseBackup,
+  DatabaseZap,
+  Factory,
+  Rocket,
+  TrendingUpDown,
+  UploadCloud,
 } from 'lucide-react';
 
-import { Stepper } from '@/components/common/HorizontalStepper';
 import OrgChart from '@/components/common/orgChart';
-import { KnowledgeBaseContainer } from '@/pages/knowledgeBase/KnowledgeBase';
-import { KnowledgeBaseWebsitesContainer } from '@/pages/knowledgeBase/KnowledgeBaseWebsites';
+import { Stepper } from '@/components/common/Stepper';
+import { ProjectStageLabel } from '@/types/ProjectData';
 
 import { ProjectList } from '../Projects/Projects';
 
 const stepData = [
   {
     completed: true,
-    icon: <Contact2 className="text-white" />,
-    label: 'Contact',
-    sectionId: 'contact',
-  },
-  {
-    completed: true,
-    icon: <SproutIcon className="text-white" />,
-    label: 'Sprout',
-    sectionId: 'sprout',
+    icon: <UploadCloud className="text-white" />,
+    label: ProjectStageLabel.DATA_SELECTION,
+    sectionId: ProjectStageLabel.DATA_SELECTION,
+    isExpanded: false,
+    data: [], //'Contact Section Content',
   },
   {
     completed: false,
-    icon: <Blocks className="text-white" />,
-    label: 'Blocks',
-    sectionId: 'blocks',
+    icon: <DatabaseZap className="text-white" />,
+    label: ProjectStageLabel.DATA_INGESTION,
+    sectionId: ProjectStageLabel.DATA_INGESTION,
+    isExpanded: false,
+    data: [], //'Sprout Section Content',
   },
   {
     completed: false,
-    icon: <DoorOpen className="text-white" />,
-    label: 'Open',
-    sectionId: 'open',
+    icon: <DatabaseBackup className="text-white" />,
+    label: ProjectStageLabel.DATA_STORAGE,
+    sectionId: ProjectStageLabel.DATA_STORAGE,
+    isExpanded: false,
+    data: [], //'Blocks Section Content',
   },
   {
     completed: false,
-    icon: <Lightbulb className="text-white" />,
-    label: 'Idea',
-    sectionId: 'idea',
+    icon: <TrendingUpDown className="text-white" />,
+    label: ProjectStageLabel.DATA_PREPARATION,
+    sectionId: ProjectStageLabel.DATA_PREPARATION,
+    isExpanded: false,
+    data: [], //'Open Section Content',
   },
   {
     completed: false,
-    icon: <Check className="text-white" />,
-    label: 'Complete',
-    sectionId: 'complete',
+    icon: <Factory className="text-white" />,
+    label: ProjectStageLabel.LLM_FINE_TUNING,
+    sectionId: ProjectStageLabel.LLM_FINE_TUNING,
+    isExpanded: false,
+    data: [], //'Idea Section Content',
+  },
+  {
+    completed: false,
+    icon: <Rocket className="text-white" />,
+    label: ProjectStageLabel.PUBLISHED,
+    sectionId: ProjectStageLabel.PUBLISHED,
+    isExpanded: false,
+    data: [], //'Complete Section Content',
   },
 ];
 
@@ -57,9 +68,12 @@ const Dashboard = () => {
   const renderContent = (sectionId: string) => {
     switch (sectionId) {
       case 'contact':
-        return <KnowledgeBaseContainer />;
+        // return <KnowledgeBaseContainer />;
+        return <h1>Contact</h1>;
       case 'sprout':
-        return <KnowledgeBaseWebsitesContainer />;
+        // return <KnowledgeBaseWebsitesContainer />;
+        return <h1>sprout</h1>;
+
       case 'blocks':
         return (
           <div className="p-4">
@@ -80,9 +94,10 @@ const Dashboard = () => {
   return (
     <Stepper
       steps={stepData}
-      renderContent={renderContent}
+      renderContent={() => null}
       animationDuration={0.5}
       className="bg-card rounded-2xl"
+      onStepClick={() => null}
     />
   );
 };

@@ -1,5 +1,5 @@
 import { ProjectStageLabel } from '@/types/ProjectData';
-import { IStageType } from '@/types/StageTypes';
+import { IStepType } from '@/types/StepTypes';
 
 export const orgData = {
   id: '1',
@@ -70,7 +70,7 @@ export const orgData = {
 
 // Assuming ProjectStage enum is defined as follows:
 
-export const stages: IStageType[] = [
+export const stages: IStepType[] = [
   {
     id: '1',
     name: ProjectStageLabel.DATA_SELECTION,
@@ -101,18 +101,18 @@ export const stages: IStageType[] = [
     description:
       'In this stage, the data is used for fine-tuning large language models.',
   },
-  {
-    id: '6',
-    name: ProjectStageLabel.VERSIONING,
-    description:
-      'This stage handles versioning to manage updates and track changes.',
-  },
-  {
-    id: '7',
-    name: ProjectStageLabel.RAG,
-    description:
-      'In this stage, Retrieval-Augmented Generation (RAG) is implemented.',
-  },
+  // {
+  //   id: '6',
+  //   name: ProjectStageLabel.VERSIONING,
+  //   description:
+  //     'This stage handles versioning to manage updates and track changes.',
+  // },
+  // {
+  //   id: '7',
+  //   name: ProjectStageLabel.RAG,
+  //   description:
+  //     'In this stage, Retrieval-Augmented Generation (RAG) is implemented.',
+  // },
   {
     id: '8',
     name: ProjectStageLabel.PUBLISHED,

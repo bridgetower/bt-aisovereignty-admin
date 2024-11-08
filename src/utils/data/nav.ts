@@ -5,7 +5,7 @@ export const mainNavigationList: TNavItem[] = [
   {
     icon: 'warehouse',
     label: 'Dashboard',
-    path: '#',
+    path: '/dashboard',
     defaultOpen: false,
     subItems: [],
   },
@@ -53,8 +53,8 @@ export const admintNavigationList: TNavItem[] = [
   },
   {
     icon: 'list-check',
-    label: 'Status Types',
-    path: '/status-types',
+    label: 'Step Types',
+    path: '/step-types',
     defaultOpen: false,
     subItems: [],
   },

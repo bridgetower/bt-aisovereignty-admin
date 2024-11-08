@@ -26,7 +26,7 @@ export const ProjectCard: React.FC<CardProps> = ({
   };
   return (
     <Card
-      className={`shadow rounded-xl cursor-pointer w-60 relative hover:border-[#D9E2EC] border-4 hover:bg-[#1677FF1A] ${isSelectd ? 'border-[#D9E2EC] border-4 bg-[#1677FF1A]' : 'bg-card border-4 border-card'}`}
+      className={`shadow rounded-xl cursor-pointer min-w-60 w-full relative hover:border-[#D9E2EC] border-4 hover:bg-[#1677FF1A] ${isSelectd ? 'border-[#D9E2EC] border-4 bg-[#1677FF1A]' : 'bg-card border-4 border-card'}`}
       onClick={() => onClick()}
     >
       <CardContent className="p-0 pt-4">

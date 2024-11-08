@@ -1,7 +1,9 @@
+import { useLazyQuery } from '@apollo/client';
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreVertical, Plus, Trash2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
+import { GET_PROJECT_STAGE_AND_STEP_TYPES } from '@/apollo/schemas/masterTableSchemas';
 import { DataTable } from '@/components/common/dataTable';
 import Pagination from '@/components/common/pagination';
 import { Button } from '@/components/ui/button';
@@ -14,8 +16,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Skeleton } from '@/components/ui/skeleton';
-import { IStageType } from '@/types/StageTypes';
-import { stages } from '@/utils/data/dummyData';
+import { useLoader } from '@/context/LoaderProvider';
+import { IStageType } from '@/types/StageType';
 
 import { AddEditSatgeType } from './AddEditStageType';
 const tableColumnDef: ColumnDef<any>[] = [
@@ -28,20 +30,56 @@ const tableColumnDef: ColumnDef<any>[] = [
     header: 'Description',
   },
   {
-    accessorKey: 'addedon',
+    accessorKey: 'createdat',
     header: 'Added on',
   },
 ];
 export const StageTypeList: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [stageTypes, setstageTypes] = useState<IStageType[]>(stages);
+  const pageLimit = 10;
+  const [page, setPage] = useState(1);
+  const [stageTypes, setstageTypes] = useState<IStageType[]>([]);
   const [isAddEditOpen, setIsAddEditOpen] = useState(false);
+  const { showLoader, hideLoader } = useLoader();
+  const [getList, { refetch, loading }] = useLazyQuery(
+    GET_PROJECT_STAGE_AND_STEP_TYPES,
+  );
   const memoizedstageTypes = React.useMemo(() => stageTypes, [stageTypes]);
+  const idToken = localStorage.getItem('idToken');
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+    if (!idToken) {
+      return;
+    }
+    showLoader();
+    getList({
+      variables: {
+        limit: pageLimit,
+        pageNo: page,
+        type: 'STAGETYPE',
+      },
+      context: {
+        headers: {
+          identity: idToken,
+        },
+      },
+    })
+      .then((res) => {
+        setstageTypes(res.data?.ListStageTypeAndStepType?.data?.refs || []);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        hideLoader();
+      });
+  }, [idToken, page]);
+
+  const onPageChange = (page: number) => {
+    setPage(page);
+  };
+  const onClose = () => {
+    setIsAddEditOpen(false);
+    refetch();
+  };
   const onActionMenuClick = (dataSet: any, action: string) => {};
   const actionMenuColDef = {
     id: 'actions',
@@ -78,10 +116,7 @@ export const StageTypeList: React.FC = () => {
   };
   return (
     <>
-      <AddEditSatgeType
-        isOpen={isAddEditOpen}
-        onClose={() => setIsAddEditOpen(false)}
-      />
+      <AddEditSatgeType isOpen={isAddEditOpen} onClose={onClose} />
       <div className="bg-card rounded-2xl p-4">
         <div className="flex justify-between pb-4">
           <div className="uppercase text-md text-[#486581]">Stage Types</div>
@@ -89,7 +124,7 @@ export const StageTypeList: React.FC = () => {
             <Plus size={20} /> Add new
           </Button>
         </div>
-        {isLoading ? (
+        {loading ? (
           <>
             <div>
               <Skeleton className="h-12" />
@@ -119,13 +154,13 @@ export const StageTypeList: React.FC = () => {
               rowSeletable={true}
               actionMenu={true}
               onActionMenuClick={() => {}}
-              noDataText=" Drag & Drop files here"
+              noDataText="No stage types found"
             />
             <div className="flex justify-end">
               <Pagination
-                totalItems={12}
-                itemsPerPage={10}
-                onPageChange={() => {}}
+                totalItems={memoizedstageTypes.length}
+                itemsPerPage={pageLimit}
+                onPageChange={onPageChange}
               />
             </div>
           </div>

@@ -1,10 +1,12 @@
+import { useMutation } from '@apollo/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { z } from 'zod';
 
+import { CREATE_PROJECT_STEP_TYPE } from '@/apollo/schemas/masterTableSchemas';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog';
 import {
@@ -36,29 +38,38 @@ type AddEditSatgeTypeProps = {
 export const AddEditStatusType: React.FC<AddEditSatgeTypeProps> = (props) => {
   const { isOpen, onClose } = props;
   const [saving, setSaving] = useState(false);
+  const [createStepType] = useMutation(CREATE_PROJECT_STEP_TYPE);
   const form = useForm<FormInputs>({
     resolver: zodResolver(formSchema),
   });
+  const idToken = localStorage.getItem('idToken');
 
   const { handleSubmit } = form;
   const onSubmit: SubmitHandler<FormInputs> = (data: StatusTypeData) => {
     if (!saving) {
       setSaving(true);
-      //   createDoc({
-      //     name: data.name,
-      //     description: data.description,
-      //   })
-      //     .then(() => {
-      //       toast.success('File uploaded successfully');
-      //       onClose();
-      //       refetchDocs();
-      //     })
-      //     .catch((error: any) => {
-      //       toast.error('Failed to save!');
-      //     })
-      //     .finally(() => {
-      //       setSaving(false);
-      //     });
+      createStepType({
+        variables: {
+          name: data.name,
+          description: data.description,
+        },
+        context: {
+          headers: {
+            identity: idToken,
+          },
+        },
+      })
+        .then(() => {
+          toast.success('New step created!');
+          onClose();
+          form.reset();
+        })
+        .catch((error: any) => {
+          toast.error('Failed to create!');
+        })
+        .finally(() => {
+          setSaving(false);
+        });
     }
   };
   // Toggle modal visibility

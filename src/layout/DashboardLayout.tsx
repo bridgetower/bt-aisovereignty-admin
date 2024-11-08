@@ -10,7 +10,7 @@ import { useAuth } from '@/context/CoginitoAuthProvider';
 import { DashboardProvider } from '@/context/DashboardProvider';
 
 export function DashboardLayout({ children }: { children?: React.ReactNode }) {
-  const { dbUser } = useAuth();
+  const { dbUser, session } = useAuth();
 
   const [navOpen, setNavOpen] = useState(true);
   const [sidebarOpen, setSideOpen] = useState(false);
@@ -40,7 +40,7 @@ export function DashboardLayout({ children }: { children?: React.ReactNode }) {
     }
   }, [isMatches]);
 
-  if (!dbUser) {
+  if (session && (!session.isValid() || !dbUser)) {
     return <Navigate to="/sign-in" />;
   }
 

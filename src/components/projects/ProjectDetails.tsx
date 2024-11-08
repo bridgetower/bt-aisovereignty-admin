@@ -1,98 +1,142 @@
-import { ColumnDef } from '@tanstack/react-table';
 import {
   AlertCircle,
   CircleHelp,
+  DatabaseBackup,
+  DatabaseZap,
   Edit3,
+  Factory,
   MoreVertical,
+  Rocket,
   Share2,
-  Trash2,
+  TrendingUpDown,
+  UploadCloud,
 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
-import Dropzone, { useDropzone } from 'react-dropzone';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-import { useLoader } from '@/context/LoaderProvider';
-import { IFileContent, useProject } from '@/context/ProjectProvider';
+import { useProject } from '@/context/ProjectProvider';
 import {
   IProjectAttributes,
   ProjectStageEnum,
   ProjectStageLabel,
 } from '@/types/ProjectData';
 
-import { DataTable } from '../common/dataTable';
-import { MiniPagination } from '../common/MiniPagination';
 import { SidepanelSkeleton } from '../common/SidepanelSkeleton';
+import { ISteperData, Stepper } from '../common/Stepper';
 import { Button } from '../ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
 import { Select, SelectTrigger } from '../ui/select';
-import { convertFilesToBase64 } from './sharedFunction';
-
+const stepData: ISteperData[] = [
+  {
+    completed: true,
+    icon: <UploadCloud className="text-white" />,
+    label: ProjectStageLabel.DATA_SELECTION,
+    data: null,
+    dataLoading: false,
+    isExpanded: true,
+  },
+  {
+    completed: false,
+    icon: <DatabaseZap className="text-white" />,
+    label: ProjectStageLabel.DATA_INGESTION,
+    data: null,
+    dataLoading: false,
+    isExpanded: false,
+  },
+  {
+    completed: false,
+    icon: <DatabaseBackup className="text-white" />,
+    label: ProjectStageLabel.DATA_STORAGE,
+    data: null,
+    dataLoading: false,
+    isExpanded: false,
+  },
+  {
+    completed: false,
+    icon: <TrendingUpDown className="text-white" />,
+    label: ProjectStageLabel.DATA_PREPARATION,
+    data: null,
+    dataLoading: false,
+    isExpanded: false,
+  },
+  {
+    completed: false,
+    icon: <Factory className="text-white" />,
+    label: ProjectStageLabel.LLM_FINE_TUNING,
+    data: null,
+    dataLoading: false,
+    isExpanded: false,
+  },
+  {
+    completed: false,
+    icon: <Rocket className="text-white" />,
+    label: ProjectStageLabel.PUBLISHED,
+    data: null,
+    dataLoading: false,
+    isExpanded: false,
+  },
+];
 // Dummy data for the transaction (can also be passed as props)
-const tableColumnDef: ColumnDef<any>[] = [
-  {
-    accessorKey: 'name',
-    header: 'File name',
-  },
-  {
-    accessorKey: 'updatedon',
-    header: 'Last updated on',
-  },
-];
+// const tableColumnDef: ColumnDef<any>[] = [
+//   {
+//     accessorKey: 'name',
+//     header: 'File name',
+//   },
+//   {
+//     accessorKey: 'updatedon',
+//     header: 'Last updated on',
+//   },
+// ];
 
-const hashItemColumns: ColumnDef<any>[] = [
-  {
-    accessorKey: 'name',
-    header: 'File name',
-  },
-  {
-    accessorKey: 'updatedon',
-    header: 'Last updated on',
-  },
-];
+// const hashItemColumns: ColumnDef<any>[] = [
+//   {
+//     accessorKey: 'name',
+//     header: 'File name',
+//   },
+//   {
+//     accessorKey: 'updatedon',
+//     header: 'Last updated on',
+//   },
+// ];
 
-const dummyData = [
-  {
-    id: '728ed52f',
-    name: 'Data Source Hash',
-    updatedon: 'Jan 4, 2024',
-  },
-  {
-    id: '728ed5f',
-    name: 'Data Source Hash',
-    updatedon: 'Jan 4, 2024',
-  },
-];
+// const dummyData = [
+//   {
+//     id: '728ed52f',
+//     name: 'Data Source Hash',
+//     updatedon: 'Jan 4, 2024',
+//   },
+//   {
+//     id: '728ed5f',
+//     name: 'Data Source Hash',
+//     updatedon: 'Jan 4, 2024',
+//   },
+// ];
 
+let tempStepsData: ISteperData[] = [];
 const ProjectDetails: React.FC<{ id: string }> = (props) => {
-  const rowLimit: number = 4;
+  const rowLimit: number = 1;
   const topRef = useRef<HTMLDivElement | null>(null);
   const { id } = props;
   const navigate = useNavigate();
-  const [filesData, setFilesData] = useState<IFileContent[]>([]);
+  const [stepperData, setStepperData] = useState<ISteperData[]>([]);
   // const [hashData, setHashData] = useState<any[]>([]);
   const [project, setProject] = useState<IProjectAttributes | null>(null);
-  const memoizedFilesData = React.useMemo(() => filesData, [filesData]);
-  const [saving, setSaving] = useState(false);
+  // const memoizedStepperData = React.useMemo(() => stepperData, [stepperData]);
+  // const [saving, setSaving] = useState(false);
   const [docPage, setDocPage] = useState(1);
-  const [totalPages, setTotalPages] = useState({ refs: 1, hash: 1 });
-  const { showLoader, hideLoader } = useLoader();
+  // const [totalPages, setTotalPages] = useState({ refs: 1, hash: 1 });
+  // const { showLoader, hideLoader } = useLoader();
   const {
     getProjectDetails,
-    refetchProjects,
-    deleteDocReference,
-    updateKnowledgebase,
+    // refetchProjects,
+    // deleteDocReference,
+    // updateKnowledgebase,
   } = useProject();
   useEffect(() => {
     topRef.current?.scrollIntoView({ behavior: 'smooth' });
     console.log('ProjectId-', id);
+    tempStepsData = stepData;
+    setDocPage(1);
   }, [id]);
 
   useEffect(() => {
@@ -103,25 +147,44 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
   }, [id, docPage]);
 
   const getProjectDetailsById = () => {
-    showLoader();
+    // showLoader();
     getProjectDetails({ projectId: id, page: docPage, limit: rowLimit })
       .then((res: any) => {
         if (res.data?.GetProjectById?.data) {
           setProject(res.data.GetProjectById.data?.project);
-          const files = res.data?.GetProjectById?.data?.references?.refs.map(
-            (file: any) => ({
-              id: file.id,
-              name: file.name,
-              updatedon: new Date().toDateString(),
-              isLocal: false,
-              ...file,
-            }),
-          );
-          setTotalPages((prev) => ({
-            ...prev,
-            refs: res.data?.GetProjectById?.data?.references?.totalPages,
-          }));
-          setFilesData(files || []);
+          // const files = res.data?.GetProjectById?.data?.map((file: any) => ({
+          //   id: file.id,
+          //   name: file.name,
+          //   updatedon: new Date().toDateString(),
+          //   isLocal: false,
+          //   ...file,
+          // }));
+          // setTotalPages((prev) => ({
+          //   ...prev,
+          //   refs: res.data?.GetProjectById?.data?.references?.totalPages,
+          // }));
+          const lastCompletedStage =
+            res.data.GetProjectById.data?.project?.projectstage;
+          let stepCompleted = true;
+          tempStepsData = tempStepsData.map((step) => {
+            const stage = res.data?.GetProjectById?.data?.stagedata?.stages;
+            const data: any[] =
+              stage?.filter((s: any) => s.name === step.label) || [];
+            const finalData = {
+              ...step,
+              data: step.data ? step.data : data.length ? data[0] : null,
+              completed: stepCompleted,
+              dataLoading: false,
+            };
+            if (
+              step.label ===
+              ProjectStageLabel[lastCompletedStage as ProjectStageEnum]
+            ) {
+              stepCompleted = false;
+            }
+            return finalData;
+          });
+          setStepperData(tempStepsData);
         } else {
           toast.error(res?.error?.message);
         }
@@ -130,130 +193,136 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
         toast.error(error?.message || 'Failed to fetch project details!');
       })
       .finally(() => {
-        hideLoader();
+        // hideLoader();
       });
   };
-  const onDrop = async (acceptedFiles: File[]) => {
-    const base64Files = await convertFilesToBase64(acceptedFiles);
-    if (base64Files.length > 0) {
-      const newFiles = base64Files.map((file, i) => ({
-        id: file.fileName + i,
-        name: file.fileName,
-        updatedon: new Date().toDateString(),
-        reftype: 'DOCUMENT',
-        isLocal: true,
-      }));
+  const onStepClick = (index: number) => {
+    if (stepData[index].data) {
+      return;
+    }
+    setDocPage(index);
+  };
+  // const onDrop = async (acceptedFiles: File[]) => {
+  //   const base64Files = await convertFilesToBase64(acceptedFiles);
+  //   if (base64Files.length > 0) {
+  //     const newFiles = base64Files.map((file, i) => ({
+  //       id: file.fileName + i,
+  //       name: file.fileName,
+  //       updatedon: new Date().toDateString(),
+  //       reftype: 'DOCUMENT',
+  //       isLocal: true,
+  //     }));
 
-      setFilesData((prevFiles: any) =>
-        [...newFiles, ...prevFiles].length > 4
-          ? [...newFiles, ...prevFiles].filter((e) => e.name)
-          : [...newFiles, ...prevFiles],
-      );
-    }
-    saveFiles(base64Files);
-  };
-  const saveFiles = (base64Files: IFileContent[]) => {
-    if (!saving) {
-      setSaving(true);
-      showLoader();
-      const files = base64Files.map((file) => ({
-        fileName: file.fileName,
-        fileContent: file.fileContent,
-        contentType: file.contentType,
-      }));
-      updateKnowledgebase({ projectId: id, files })
-        .then((res: any) => {
-          if (res.data?.AddRefToKnowledgeBase?.status === 200) {
-            refetchProjects();
-            getProjectDetails({
-              projectId: id,
-              page: docPage,
-              limit: rowLimit,
-            });
-            toast.success('Reference doc addes!');
-          }
-        })
-        .catch((error: any) => {
-          toast.error(error?.message || 'Failed to add!');
-        })
-        .finally(() => {
-          setSaving(false);
-          hideLoader();
-        });
-    }
-  };
-  const { getRootProps: getRootProps, getInputProps: getInputProps } =
-    useDropzone({
-      onDrop,
-    });
-  const onActionMenuClick = (dataSet: any, action: string) => {
-    if (action === 'remove') {
-      if (dataSet.isLocal) {
-        setFilesData((prevFiles: any) =>
-          prevFiles.filter((file: any) => file.name !== dataSet.name),
-        );
-      } else {
-        removeDocs(dataSet.id);
-      }
-    }
-  };
-  const removeDocs = (refId: string) => {
-    if (!saving) {
-      setSaving(true);
-      showLoader();
-      deleteDocReference(refId)
-        .then((res: any) => {
-          if (res.data?.DeleteRefToKnowledgeBase?.status === 200) {
-            refetchProjects();
-            getProjectDetailsById();
-            toast.success('Reference doc removed!');
-          }
-        })
-        .catch((error: any) => {
-          toast.error(error?.message || 'Failed to remove!');
-        })
-        .finally(() => {
-          setSaving(false);
-          hideLoader();
-        });
-    }
-  };
-  const paginationChangeHandler = (page: number) => {
-    setDocPage(page);
-  };
-  const actionMenuColDef = {
-    id: 'actions',
-    cell: ({ row }: any) => {
-      const dataSet = row.original;
+  //     setFilesData((prevFiles: any) =>
+  //       [...newFiles, ...prevFiles].length > 4
+  //         ? [...newFiles, ...prevFiles].filter((e) => e.name)
+  //         : [...newFiles, ...prevFiles],
+  //     );
+  //   }
+  //   saveFiles(base64Files);
+  // };
+  // const saveFiles = (base64Files: IFileContent[]) => {
+  //   if (!saving) {
+  //     setSaving(true);
+  //     showLoader();
+  //     const files = base64Files.map((file) => ({
+  //       fileName: file.fileName,
+  //       fileContent: file.fileContent,
+  //       contentType: file.contentType,
+  //     }));
+  //     updateKnowledgebase({ projectId: id, files })
+  //       .then((res: any) => {
+  //         if (res.data?.AddRefToKnowledgeBase?.status === 200) {
+  //           refetchProjects();
+  //           getProjectDetails({
+  //             projectId: id,
+  //             page: docPage,
+  //             limit: rowLimit,
+  //           });
+  //           toast.success('Reference doc addes!');
+  //         }
+  //       })
+  //       .catch((error: any) => {
+  //         toast.error(error?.message || 'Failed to add!');
+  //       })
+  //       .finally(() => {
+  //         setSaving(false);
+  //         hideLoader();
+  //       });
+  //   }
+  // };
+  // const { getRootProps: getRootProps, getInputProps: getInputProps } =
+  //   useDropzone({
+  //     onDrop,
+  //   });
+  // const onActionMenuClick = (dataSet: any, action: string) => {
+  //   if (action === 'remove') {
+  //     if (dataSet.isLocal) {
+  //       setFilesData((prevFiles: any) =>
+  //         prevFiles.filter((file: any) => file.name !== dataSet.name),
+  //       );
+  //     } else {
+  //       removeDocs(dataSet.id);
+  //     }
+  //   }
+  // };
+  // const removeDocs = (refId: string) => {
+  //   if (!saving) {
+  //     setSaving(true);
+  //     showLoader();
+  //     deleteDocReference(refId)
+  //       .then((res: any) => {
+  //         if (res.data?.DeleteRefToKnowledgeBase?.status === 200) {
+  //           refetchProjects();
+  //           getProjectDetailsById();
+  //           toast.success('Reference doc removed!');
+  //         }
+  //       })
+  //       .catch((error: any) => {
+  //         toast.error(error?.message || 'Failed to remove!');
+  //       })
+  //       .finally(() => {
+  //         setSaving(false);
+  //         hideLoader();
+  //       });
+  //   }
+  // };
+  // const paginationChangeHandler = (page: number) => {
+  //   setDocPage(page);
+  // };
+  // const actionMenuColDef = {
+  //   id: 'actions',
+  //   cell: ({ row }: any) => {
+  //     const dataSet = row.original;
 
-      return (
-        <>
-          {dataSet.name ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
-                  <MoreVertical className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="flex gap-1"
-                  onClick={() => onActionMenuClick(dataSet, 'remove')}
-                >
-                  <Trash2 className="text-destructive" size={20} /> Remove
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <></>
-          )}
-        </>
-      );
-    },
-  };
+  //     return (
+  //       <>
+  //         {dataSet.name ? (
+  //           <DropdownMenu>
+  //             <DropdownMenuTrigger asChild>
+  //               <Button variant="ghost" className="h-8 w-8 p-0">
+  //                 <span className="sr-only">Open menu</span>
+  //                 <MoreVertical className="h-4 w-4" />
+  //               </Button>
+  //             </DropdownMenuTrigger>
+  //             <DropdownMenuContent align="end">
+  //               <DropdownMenuLabel>Actions</DropdownMenuLabel>
+  //               <DropdownMenuSeparator />
+  //               <DropdownMenuItem
+  //                 className="flex gap-1"
+  //                 onClick={() => onActionMenuClick(dataSet, 'remove')}
+  //               >
+  //                 <Trash2 className="text-destructive" size={20} /> Remove
+  //               </DropdownMenuItem>
+  //             </DropdownMenuContent>
+  //           </DropdownMenu>
+  //         ) : (
+  //           <></>
+  //         )}
+  //       </>
+  //     );
+  //   },
+  // };
   return (
     <div className="px-6 " ref={topRef}>
       {project ? (
@@ -331,7 +400,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
             <div className="font-semibold ">Description</div>{' '}
             <p className="text-sm font-normal">{project.description}</p>
           </div>
-          <div className="text-sm text-foreground mt-4 font-roboto ">
+          {/* <div className="text-sm text-foreground mt-4 font-roboto ">
             <div className="font-semibold flex justify-between items-center">
               <div>Attachments ({filesData.length} items)</div>
               <div {...getRootProps()}>
@@ -368,8 +437,8 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
                 onPageChange={paginationChangeHandler} // Custom page change function
               />
             </div>
-          </div>
-          <div className="text-sm text-foreground mt-4 font-roboto ">
+          </div> */}
+          {/* <div className="text-sm text-foreground mt-4 font-roboto ">
             <div className="font-semibold ">
               Hash ({dummyData.length} items)
             </div>{' '}
@@ -381,7 +450,14 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
                 onActionMenuClick={() => {}}
               />
             </div>
-          </div>
+          </div> */}
+          <Stepper
+            steps={stepperData}
+            renderContent={() => null}
+            animationDuration={0.5}
+            className="bg-card rounded-2xl"
+            onStepClick={onStepClick}
+          />
         </>
       ) : (
         <SidepanelSkeleton />

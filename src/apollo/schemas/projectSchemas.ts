@@ -71,35 +71,47 @@ export const FETCH_PROJECT_BY_ID = gql`
           createdby
           description
           id
-          projecttype
-          projectstatus
-          projectstage
-          organizationid
-          name
           isactive
+          name
+          organizationid
+          projectstage
+          projectstatus
+          projecttype
         }
-        references {
-          refs {
-            chainid
-            chaintype
-            createdat
-            datasourceid
-            depth
-            id
-            ingested
-            ingestionjobid
-            name
-            referencestage
-            reftype
-            s3poststorehash
-            url
-            size
-            s3prestoretxhash
-            s3prestorehash
-            s3poststoretxhash
-          }
+        stagedata {
           total
           totalPages
+          stages {
+            createdat
+            description
+            id
+            isactive
+            isdeleted
+            name
+            stagesequence
+            stagetypeid
+            status
+            steps {
+              createdat
+              description
+              id
+              isactive
+              isdeleted
+              name
+              stageid
+              status
+              stepsequence
+              stepdetails {
+                createdat
+                id
+                isactive
+                isdeleted
+                metadata
+                status
+                stepid
+              }
+            }
+          }
         }
       }
       error

@@ -4,9 +4,12 @@ import AuthNavbar from '@/components/common/AuthNavbar';
 import { useAuth } from '@/context/CoginitoAuthProvider';
 
 export function AuthLayout({ children }: { children?: React.ReactNode }) {
-  const { dbUser } = useAuth();
+  const { dbUser, session } = useAuth();
 
-  if (dbUser) {
+  // if (dbUser) {
+  //   return <Navigate to="/" />;
+  // }
+  if (session && session.isValid() && dbUser) {
     return <Navigate to="/" />;
   }
   return (

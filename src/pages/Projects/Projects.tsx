@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import RightDrawer from '@/components/common/rightDrawer';
 import Board from '@/components/projects/Board';
@@ -10,6 +10,7 @@ import { UpdateProject } from '@/components/projects/UpdateProject';
 import { useDashboardContext } from '@/context/DashboardProvider';
 
 export const ProjectList: React.FC = () => {
+  const navigate = useNavigate();
   const { id, action } = useParams();
   const [activeRightPanel, setActiveRightPanel] = useState<
     string | null | undefined
@@ -19,8 +20,8 @@ export const ProjectList: React.FC = () => {
     setActiveRightPanel(action);
   }, [action]);
   const closePanel = () => {
-    // navigate('/projects', { replace: true });
-    window.history.back();
+    navigate('/projects', { replace: true });
+    // window.history.back();
   };
   return (
     <>
