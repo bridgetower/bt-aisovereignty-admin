@@ -32,38 +32,38 @@ const Board: React.FC = () => {
     data: IProjectAttributes[];
     index: number | null;
   }>({ data: [], index: null });
-  const { projects } = useProject();
+  const { projects, loadingProject } = useProject();
 
   useEffect(() => {
-    if (projects && projects.length) {
+    if (!loadingProject) {
       const groupedData = getGroupedData(projects);
       setGroupedCards(groupedData);
       setSelectedProject({
-        data: getInitialSelection(groupedData),
-        index: 0,
+        data: getInitialSelection(groupedData).data,
+        index: getInitialSelection(groupedData).index,
       });
     }
-  }, [projects]);
+  }, [projects, loadingProject]);
 
   const getInitialSelection = (gropedData: GroupedCardsType) => {
     if (gropedData.DATA_SELECTION.length > 0) {
-      return gropedData.DATA_SELECTION;
+      return { data: gropedData.DATA_SELECTION, index: 0 };
     } else if (gropedData.DATA_INGESTION.length > 0) {
-      return gropedData.DATA_INGESTION;
+      return { data: gropedData.DATA_INGESTION, index: 1 };
     } else if (gropedData.DATA_STORAGE.length > 0) {
-      return gropedData.DATA_STORAGE;
+      return { data: gropedData.DATA_STORAGE, index: 2 };
     } else if (gropedData.DATA_PREPARATION.length > 0) {
-      return gropedData.DATA_PREPARATION;
+      return { data: gropedData.DATA_PREPARATION, index: 3 };
     } else if (gropedData.LLM_FINE_TUNING.length > 0) {
-      return gropedData.LLM_FINE_TUNING;
+      return { data: gropedData.LLM_FINE_TUNING, index: 4 };
       // } else if (gropedData.VERSIONING.length > 0) {
       //   return gropedData.VERSIONING;
       // } else if (gropedData.RAG.length > 0) {
       //   return gropedData.RAG;
     } else if (gropedData.PUBLISHED.length > 0) {
-      return gropedData.PUBLISHED;
+      return { data: gropedData.PUBLISHED, index: 5 };
     } else {
-      return [];
+      return { data: [], index: 0 };
     }
   };
   const getGroupedData = (

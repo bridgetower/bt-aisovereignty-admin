@@ -1,15 +1,9 @@
 import {
   AlertCircle,
   CircleHelp,
-  DatabaseBackup,
-  DatabaseZap,
   Edit3,
-  Factory,
   MoreVertical,
-  Rocket,
   Share2,
-  TrendingUpDown,
-  UploadCloud,
 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -20,62 +14,14 @@ import {
   IProjectAttributes,
   ProjectStageEnum,
   ProjectStageLabel,
+  stepData,
 } from '@/types/ProjectData';
 
 import { SidepanelSkeleton } from '../common/SidepanelSkeleton';
 import { ISteperData, Stepper } from '../common/Stepper';
 import { Button } from '../ui/button';
 import { Select, SelectTrigger } from '../ui/select';
-const stepData: ISteperData[] = [
-  {
-    completed: true,
-    icon: <UploadCloud className="text-white" />,
-    label: ProjectStageLabel.DATA_SELECTION,
-    data: null,
-    dataLoading: false,
-    isExpanded: true,
-  },
-  {
-    completed: false,
-    icon: <DatabaseZap className="text-white" />,
-    label: ProjectStageLabel.DATA_INGESTION,
-    data: null,
-    dataLoading: false,
-    isExpanded: false,
-  },
-  {
-    completed: false,
-    icon: <DatabaseBackup className="text-white" />,
-    label: ProjectStageLabel.DATA_STORAGE,
-    data: null,
-    dataLoading: false,
-    isExpanded: false,
-  },
-  {
-    completed: false,
-    icon: <TrendingUpDown className="text-white" />,
-    label: ProjectStageLabel.DATA_PREPARATION,
-    data: null,
-    dataLoading: false,
-    isExpanded: false,
-  },
-  {
-    completed: false,
-    icon: <Factory className="text-white" />,
-    label: ProjectStageLabel.LLM_FINE_TUNING,
-    data: null,
-    dataLoading: false,
-    isExpanded: false,
-  },
-  {
-    completed: false,
-    icon: <Rocket className="text-white" />,
-    label: ProjectStageLabel.PUBLISHED,
-    data: null,
-    dataLoading: false,
-    isExpanded: false,
-  },
-];
+
 // Dummy data for the transaction (can also be passed as props)
 // const tableColumnDef: ColumnDef<any>[] = [
 //   {
@@ -121,7 +67,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
   const [stepperData, setStepperData] = useState<ISteperData[]>([]);
   // const [hashData, setHashData] = useState<any[]>([]);
   const [project, setProject] = useState<IProjectAttributes | null>(null);
-  // const memoizedStepperData = React.useMemo(() => stepperData, [stepperData]);
+  const memoizedStepperData = React.useMemo(() => stepperData, [stepperData]);
   // const [saving, setSaving] = useState(false);
   const [docPage, setDocPage] = useState(1);
   // const [totalPages, setTotalPages] = useState({ refs: 1, hash: 1 });
@@ -131,10 +77,10 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
     // refetchProjects,
     // deleteDocReference,
     // updateKnowledgebase,
+    loadingProject,
   } = useProject();
   useEffect(() => {
     topRef.current?.scrollIntoView({ behavior: 'smooth' });
-    console.log('ProjectId-', id);
     tempStepsData = stepData;
     setDocPage(1);
   }, [id]);
@@ -200,7 +146,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
     if (stepData[index].data) {
       return;
     }
-    setDocPage(index);
+    setDocPage(index + 1);
   };
   // const onDrop = async (acceptedFiles: File[]) => {
   //   const base64Files = await convertFilesToBase64(acceptedFiles);
@@ -325,7 +271,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
   // };
   return (
     <div className="px-6 " ref={topRef}>
-      {project ? (
+      {!loadingProject && project ? (
         <>
           <div className="flex justify-between">
             <div className="text-sm text-foreground">
@@ -451,8 +397,11 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
               />
             </div>
           </div> */}
+          <div className="text-sm text-foreground mt-4 font-roboto ">
+            <div className="font-semibold mt-4">Project Stage History</div>
+          </div>
           <Stepper
-            steps={stepperData}
+            steps={memoizedStepperData}
             renderContent={() => null}
             animationDuration={0.5}
             className="bg-card rounded-2xl"

@@ -70,6 +70,7 @@ type ProjectContextType = {
   }) => Promise<FetchResult<any>>;
   setNotificationPanel: (value: boolean) => void;
   notificationPanel: boolean;
+  loadingProject?: boolean;
 };
 
 // Create context with initial empty values
@@ -157,9 +158,12 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
   }, [page, limit, idToken]);
 
   const [createProjectMutation] = useMutation(CREATE_NEW_PROJECT);
-  const [getProjectById] = useLazyQuery(FETCH_PROJECT_BY_ID, {
-    fetchPolicy: 'network-only',
-  });
+  const [getProjectById, { loading: loadingDetails }] = useLazyQuery(
+    FETCH_PROJECT_BY_ID,
+    {
+      fetchPolicy: 'network-only',
+    },
+  );
   const [addDocToknowledgebase] = useMutation(CREATE_DOC_REFERENCE);
   const [deleteDocMutation] = useMutation(DELETE_DOC_REFERENCE);
   const createNewProject = async (
@@ -244,6 +248,7 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
 
         setNotificationPanel,
         notificationPanel,
+        loadingProject: initialLoding || loadingDetails,
       }}
     >
       {children}

@@ -1,3 +1,14 @@
+import {
+  DatabaseBackup,
+  DatabaseZap,
+  Factory,
+  Rocket,
+  TrendingUpDown,
+  UploadCloud,
+} from 'lucide-react';
+
+import { ISteperData } from '@/components/common/Stepper';
+
 // src/types.ts
 export interface IProjectAttributes {
   id: string;
@@ -39,7 +50,7 @@ export const ProjectStageLabel = {
   DATA_INGESTION: 'Data Ingestion',
   DATA_STORAGE: 'Data Storage',
   DATA_PREPARATION: 'Data Preparation',
-  LLM_FINE_TUNING: 'LLM Fine Tuning',
+  LLM_FINE_TUNING: 'RAG Ingestion',
   // VERSIONING: 'Versioning',
   // RAG: 'RAG',
   PUBLISHED: 'Published',
@@ -106,4 +117,55 @@ export const projectColors = [
   // 'sky',
   // 'violet',
   // 'fuchsia',
+];
+export const stepData: ISteperData[] = [
+  {
+    completed: true,
+    icon: <UploadCloud className="text-white" />,
+    label: ProjectStageLabel.DATA_SELECTION,
+    data: null,
+    dataLoading: false,
+    isExpanded: true,
+  },
+  {
+    completed: false,
+    icon: <DatabaseZap className="text-white" />,
+    label: ProjectStageLabel.DATA_INGESTION,
+    data: null,
+    dataLoading: false,
+    isExpanded: false,
+  },
+  {
+    completed: false,
+    icon: <DatabaseBackup className="text-white" />,
+    label: ProjectStageLabel.DATA_STORAGE,
+    data: null,
+    dataLoading: false,
+    isExpanded: false,
+  },
+  {
+    completed: false,
+    icon: <TrendingUpDown className="text-white" />,
+    label: ProjectStageLabel.DATA_PREPARATION,
+    data: null,
+    dataLoading: false,
+    isExpanded: false,
+  },
+  {
+    completed: false,
+    icon: <Factory className="text-white" />,
+    label: ProjectStageLabel.LLM_FINE_TUNING,
+    data: null,
+    dataLoading: false,
+    isExpanded: false,
+  },
+  {
+    completed: false,
+    icon: <Rocket className="text-white" />,
+    label: ProjectStageLabel.PUBLISHED,
+    data: null,
+    dataLoading: false,
+    isExpanded: false,
+    isLast: true,
+  },
 ];
