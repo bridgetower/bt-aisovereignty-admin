@@ -37,7 +37,7 @@ export const GET_PROJECT_STAGE_AND_STEP_TYPES = gql`
       data {
         total
         totalPages
-        refs {
+        data {
           createdat
           description
           id

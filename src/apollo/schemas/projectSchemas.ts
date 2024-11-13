@@ -6,7 +6,7 @@ export const CREATE_NEW_PROJECT = gql`
     $description: String
     $projectType: String!
     $organizationId: String!
-    $files: [FileInput]!
+    $files: [ProjectFileInput]!
   ) {
     AddProjectAndReference(
       input: {
@@ -18,16 +18,59 @@ export const CREATE_NEW_PROJECT = gql`
       }
     ) {
       data {
-        createdat
-        createdby
-        description
-        id
-        isactive
-        name
-        organizationid
-        projectstage
-        projectstatus
-        projecttype
+        project {
+          project {
+            createdat
+            createdby
+            description
+            id
+            isactive
+            name
+            organizationid
+            projectstage
+            projectstatus
+            projecttype
+          }
+          stagedata {
+            stages {
+              createdat
+              description
+              id
+              isactive
+              isdeleted
+              name
+              stagesequence
+              stagetypeid
+              status
+              steps {
+                createdat
+                description
+                id
+                isactive
+                isdeleted
+                name
+                stepsequence
+                status
+                stageid
+                stepdetails {
+                  createdat
+                  id
+                  isactive
+                  isdeleted
+                  metadata
+                  status
+                  stepid
+                }
+              }
+            }
+            total
+            totalPages
+          }
+        }
+        urls {
+          key
+          url
+        }
       }
       error
       status
@@ -113,6 +156,31 @@ export const FETCH_PROJECT_BY_ID = gql`
             }
           }
         }
+      }
+      error
+      status
+    }
+  }
+`;
+export const UPDATE_PROJECT_STATUS = gql`
+  mutation Mymutation($projectId: String!) {
+    UpdateProjectStatus(
+      input: {
+        projectId: $projectId
+        fileStatus: [{ fileName: "", status: "" }]
+      }
+    ) {
+      data {
+        createdat
+        createdby
+        description
+        id
+        projecttype
+        projectstatus
+        projectstage
+        organizationid
+        name
+        isactive
       }
       error
       status

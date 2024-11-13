@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ColumnDef } from '@tanstack/react-table';
+import CryptoJS from 'crypto-js';
 import { CircleHelp, Loader2, MoreVertical, Trash2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import Dropzone, { useDropzone } from 'react-dropzone';
@@ -47,6 +48,10 @@ const knoledgeBaseColums: ColumnDef<any>[] = [
     accessorKey: 'updatedon',
     header: 'Last updated on',
   },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+  },
 ];
 
 const emptyData = [
@@ -82,11 +87,13 @@ type FormInputs = z.infer<typeof formSchema>;
 
 export const CreateProject: React.FC = () => {
   const navigate = useNavigate();
-  const { createNewProject, refetchProjects } = useProject();
+  const { createNewProject, refetchProjects, updateProjectStatusMutation } =
+    useProject();
   const [saving, setSaving] = useState(false);
   const [base64Files, setBase64Files] = useState<IFileContent[]>([]);
-  const [filesData, setFilesData] = useState<any>(emptyData);
+  const [filesData, setFilesData] = useState<any>([]);
   const memoizedFilesData = React.useMemo(() => filesData, [filesData]);
+  const [hideActionButtons, setHideActionButtons] = useState(false);
   useEffect(() => {
     if (base64Files.length > 0) {
       const newFiles = base64Files.map((file, i) => ({
@@ -94,6 +101,7 @@ export const CreateProject: React.FC = () => {
         name: file.fileName,
         doctype: 'File',
         updatedon: new Date().toDateString(),
+        status: 'Pending',
       }));
 
       setFilesData((prevFiles: any) =>
@@ -117,36 +125,123 @@ export const CreateProject: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = form;
-  const onSubmit: SubmitHandler<FormInputs> = (data: FormData) => {
+  const onSubmit: SubmitHandler<FormInputs> = async (data: FormData) => {
     if (!saving) {
       setSaving(true);
-      createNewProject({
-        name: data.name,
-        description: data.description,
-        projectType: data.projecttype,
-        organizationId: process.env.REACT_APP_ORGANIZATION_ID || '',
-        files: base64Files.map((file) => ({
-          fileName: file.fileName,
-          fileContent: file.fileContent,
-          contentType: file.contentType,
-        })),
-      })
-        .then((res: any) => {
-          console.log(res);
-          form.reset();
-          setFilesData([]);
+      const hashedFiles = base64Files.map(async (file) => ({
+        fileName: file.fileName,
+        hash: await getHashedFile(file),
+        fileSize: formatFileSize(Number(file.fileSize) || 0),
+        contentType: file.contentType,
+      }));
+      const hashedFilesData = await Promise.all(hashedFiles);
+      try {
+        const res = await createNewProject({
+          name: data.name,
+          description: data.description,
+          projectType: data.projecttype,
+          organizationId: process.env.REACT_APP_ORGANIZATION_ID || '',
+          files: hashedFilesData,
+          // files: base64Files.map((file) => ({
+          //   fileName: file.fileName,
+          //   fileContent: file.fileContent,
+          //   contentType: file.contentType,
+          // })),
+        });
+        if (res.data?.AddProjectAndReference?.status === 200) {
+          setHideActionButtons(true);
+          const projectId =
+            res.data?.AddProjectAndReference?.data?.project?.project?.id;
+          const respData = res.data?.AddProjectAndReference?.data?.urls;
+          for (const element of respData) {
+            const file = base64Files.find(
+              (file) => file.fileName === element.key,
+            );
+            const tempFileData = filesData.map((fileData: any) => {
+              if (fileData.name === element.key) {
+                return {
+                  ...fileData,
+                  status: 'Processing',
+                };
+              }
+              return fileData;
+            });
+            setFilesData(tempFileData);
+            const url = element.url;
+            if (!file) {
+              continue;
+            }
+            const binaryData = Uint8Array.from(
+              atob(file.fileContent || ''),
+              (c) => c.charCodeAt(0),
+            );
+            const fileUploadRes = await fetch(url, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': file.contentType, //'application/octet-stream',
+              },
+              body: binaryData, // Direct string content
+            });
+            if (!fileUploadRes.ok) {
+              const tempFileData = filesData.map((fileData: any) => {
+                if (fileData.name === element.key) {
+                  return {
+                    ...fileData,
+                    status: 'Error',
+                  };
+                }
+                return fileData;
+              });
+              setFilesData(tempFileData);
+              // throw new Error('file upload failed');
+            } else {
+              const tempFileData1 = filesData.map((fileData: any) => {
+                if (fileData.name === element.key) {
+                  return {
+                    ...fileData,
+                    status: 'Completed',
+                  };
+                }
+                return fileData;
+              });
+              setFilesData(tempFileData1);
+            }
+          }
+          setSaving(false);
+          // form.reset();
+          // setFilesData([]);
           refetchProjects();
           toast.success('Project created successfully!');
-        })
-        .catch((error: any) => {
-          toast.error('Failed to create!');
-        })
-        .finally(() => {
+
+          await updateProjectStatusMutation({
+            projectId,
+          });
+          setHideActionButtons(false);
+          navigate('/projects/details/' + projectId, { replace: true });
+        } else {
           setSaving(false);
-        });
+          toast.error(res.data?.AddProjectAndReference?.error);
+        }
+      } catch (error: any) {
+        console.log(error);
+        setSaving(false);
+        toast.error('Failed to create project');
+      }
     }
   };
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 
+    // Math.floor(Math.log(bytes) / Math.log(k)) finds the appropriate unit
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    // Convert to the appropriate unit and round to 2 decimal places
+    const finalSize = parseFloat((bytes / Math.pow(k, i)).toFixed(2));
+
+    return `${finalSize} ${sizes[i]}`;
+  };
   // Dropzone file handler
   const onDrop = (acceptedFiles: File[]) => {
     convertFilesToBase64(acceptedFiles);
@@ -162,6 +257,7 @@ export const CreateProject: React.FC = () => {
             fileName: file.name,
             fileContent: replaceBase64(reader.result as string),
             contentType: file.type,
+            fileSize: file.size,
           });
         reader.onerror = reject;
       });
@@ -189,6 +285,41 @@ export const CreateProject: React.FC = () => {
     }
   };
 
+  // Instead of: import * as crypto from 'crypto';
+  // const crypto = window.crypto;
+
+  // And update your hash function to use the Web Crypto API:
+  const getHashedFile = async (file: IFileContent) => {
+    // const msgBuffer = new TextEncoder().encode(
+    //   JSON.stringify({
+    //     fileName: file.fileName,
+    //     fileContent: file.fileContent,
+    //   }),
+    // );
+    const metadata = JSON.stringify({
+      fileName: file.fileName,
+      fileContent: file.fileContent,
+    });
+    // const hashBuffer = await crypto.subtle.digest('SHA-256', metadata);
+    // const hashArray = Array.from(new Uint8Array(hashBuffer));
+    // const hashHex = hashArray
+    //   .map((b) => b.toString(16).padStart(2, '0'))
+    //   .join('');
+    const hash = CryptoJS.SHA256(metadata).toString(CryptoJS.enc.Hex);
+    return hash;
+  };
+  // const getHashedFile = (file: IFileContent) => {
+  //   const hash = crypto
+  //     .createHash('sha256')
+  //     .update(
+  //       JSON.stringify({
+  //         fileName: file.fileName,
+  //         fileContent: file.fileContent,
+  //       }),
+  //     )
+  //     .digest('hex');
+  //   return hash;
+  // };
   const actionMenuColDef = {
     id: 'actions',
     cell: ({ row }: any) => {
@@ -358,39 +489,42 @@ export const CreateProject: React.FC = () => {
                     actionMenu={true}
                     onActionMenuClick={() => {}}
                     // key={Date.now()}
+                    noDataText="Drag and drop files here"
                   />
                 </div>
               </section>
             )}
           </Dropzone>
-          <div className="flex justify-end items-center gap-2 mt-12">
-            <Button
-              type="button"
-              variant={'outline'}
-              size={'sm'}
-              onClick={() => navigate('/projects', { replace: true })}
-            >
-              Cancel
-            </Button>
-            <Button
-              disabled={saving || Object.keys(errors).length > 0}
-              size={'sm'}
-              className={
-                Object.keys(errors).length > 0
-                  ? `bg-secondary text-neutral-400 cursor-not-allowed`
-                  : ''
-              }
-            >
-              {saving ? (
-                <div className="flex items-center gap-1">
-                  <Loader2 size={16} className="animate-spin" />
-                  <span>Saving...</span>
-                </div>
-              ) : (
-                'Next'
-              )}
-            </Button>
-          </div>
+          {!hideActionButtons && (
+            <div className="flex justify-end items-center gap-2 mt-12">
+              <Button
+                type="button"
+                variant={'outline'}
+                size={'sm'}
+                onClick={() => navigate('/projects', { replace: true })}
+              >
+                Cancel
+              </Button>
+              <Button
+                disabled={saving || Object.keys(errors).length > 0}
+                size={'sm'}
+                className={
+                  Object.keys(errors).length > 0
+                    ? `bg-secondary text-neutral-400 cursor-not-allowed`
+                    : ''
+                }
+              >
+                {saving ? (
+                  <div className="flex items-center gap-1">
+                    <Loader2 size={16} className="animate-spin" />
+                    <span>Saving...</span>
+                  </div>
+                ) : (
+                  'Next'
+                )}
+              </Button>
+            </div>
+          )}
         </form>
       </div>
     </Form>

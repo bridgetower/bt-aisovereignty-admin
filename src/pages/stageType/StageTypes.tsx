@@ -63,7 +63,15 @@ export const StageTypeList: React.FC = () => {
       },
     })
       .then((res) => {
-        setstageTypes(res.data?.ListStageTypeAndStepType?.data?.refs || []);
+        const st = (res.data?.ListStageTypeAndStepType?.data?.data || []).map(
+          (d: any) => {
+            return {
+              ...d,
+              createdat: new Date(d.createdat).toLocaleString(),
+            };
+          },
+        );
+        setstageTypes(st);
       })
       .catch((error) => {
         console.error(error);

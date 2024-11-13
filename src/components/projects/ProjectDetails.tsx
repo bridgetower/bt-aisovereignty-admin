@@ -19,7 +19,6 @@ import {
 
 import { SidepanelSkeleton } from '../common/SidepanelSkeleton';
 import { ISteperData, Stepper } from '../common/Stepper';
-import { Button } from '../ui/button';
 import { Select, SelectTrigger } from '../ui/select';
 
 // Dummy data for the transaction (can also be passed as props)
@@ -72,17 +71,18 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
   const [docPage, setDocPage] = useState(1);
   // const [totalPages, setTotalPages] = useState({ refs: 1, hash: 1 });
   // const { showLoader, hideLoader } = useLoader();
+  const [loadingProject, setLoadingProject] = useState(true);
   const {
     getProjectDetails,
     // refetchProjects,
     // deleteDocReference,
     // updateKnowledgebase,
-    loadingProject,
   } = useProject();
   useEffect(() => {
     topRef.current?.scrollIntoView({ behavior: 'smooth' });
     tempStepsData = stepData;
     setDocPage(1);
+    setLoadingProject(true);
   }, [id]);
 
   useEffect(() => {
@@ -140,6 +140,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
       })
       .finally(() => {
         // hideLoader();
+        setLoadingProject(false);
       });
   };
   const onStepClick = (index: number) => {
@@ -330,7 +331,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
               Est. End Date: NA
             </span>
           </div>
-          <div className="bg-[#C6F7E9] p-6 flex justify-between items-center rounded-md mt-4">
+          {/* <div className="bg-[#C6F7E9] p-6 flex justify-between items-center rounded-md mt-4">
             <div className={`text-info`}>Time Spent on this project</div>
             <div className="text-info font-semibold text-xl">12:45:56</div>
           </div>
@@ -341,7 +342,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
             <Button className="uppercase " variant={'secondary'} size={'sm'}>
               Take action
             </Button>
-          </div>
+          </div> */}
           <div className="text-sm text-foreground mt-4 font-roboto ">
             <div className="font-semibold ">Description</div>{' '}
             <p className="text-sm font-normal">{project.description}</p>

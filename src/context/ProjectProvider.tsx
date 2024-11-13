@@ -21,6 +21,7 @@ import {
   CREATE_NEW_PROJECT,
   FETCH_PROJECT_BY_ID,
   FETCH_PROJECT_LIST,
+  UPDATE_PROJECT_STATUS,
 } from '@/apollo/schemas/projectSchemas';
 import { IProjectAttributes } from '@/types/ProjectData';
 
@@ -30,10 +31,12 @@ import { useLoader } from './LoaderProvider';
 
 export interface IFileContent {
   fileName: string;
-  fileContent: string;
   contentType: string;
   isLocal?: boolean;
+  fileContent?: string;
   id?: string;
+  fileSize?: string;
+  hash?: string;
 }
 export interface ICreateProjectPayload {
   name: string;
@@ -63,6 +66,9 @@ type ProjectContextType = {
     page: number;
     limit: number;
   }) => Promise<FetchResult<FetchResult<any>>>;
+  updateProjectStatusMutation: (content: {
+    projectId: string;
+  }) => Promise<FetchResult<any>>;
   deleteDocReference: (id: string) => Promise<FetchResult<any>>;
   updateKnowledgebase: (content: {
     projectId: string;
@@ -128,7 +134,7 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
         (project: IProjectAttributes, i: number) => {
           return {
             ...project,
-            hasAlert: i === 0 ? true : false,
+            // hasAlert: i === 0 ? true : false,
           };
         },
       );
@@ -165,6 +171,7 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
     },
   );
   const [addDocToknowledgebase] = useMutation(CREATE_DOC_REFERENCE);
+  const [updateProjectStatus] = useMutation(UPDATE_PROJECT_STATUS);
   const [deleteDocMutation] = useMutation(DELETE_DOC_REFERENCE);
   const createNewProject = async (
     content: ICreateProjectPayload,
@@ -189,6 +196,18 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
         limit: content.limit,
         pageNo: content.page,
       },
+      context: {
+        headers: {
+          identity: idToken,
+        },
+      },
+    });
+  };
+  const updateProjectStatusMutation = async (content: {
+    projectId: string;
+  }): Promise<FetchResult<any>> => {
+    return updateProjectStatus({
+      variables: { ...content },
       context: {
         headers: {
           identity: idToken,
@@ -231,6 +250,7 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
         error,
         createNewProject,
         refetchProjects: handleRefetch,
+        updateProjectStatusMutation,
         page,
         limit,
         setPage,

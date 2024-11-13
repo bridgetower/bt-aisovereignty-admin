@@ -1,4 +1,3 @@
-import { saveAs } from 'file-saver';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   Check,
@@ -9,6 +8,7 @@ import {
   Globe,
   Link2,
   Loader,
+  Loader2,
   Paperclip,
 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -16,6 +16,8 @@ import toast from 'react-hot-toast';
 
 import { copyToClipboard } from '@/utils/copyToClipboard';
 import { timeAgo } from '@/utils/timeAgo';
+
+import { Badge } from '../ui/badge';
 
 export interface ISteperData {
   completed: boolean;
@@ -176,6 +178,12 @@ const StepItem = React.forwardRef<
                   <div className="text-sm flex items-center gap-1 mt-4">
                     {/* <Link className="" size={10} /> */}
                     Step {i + 1} : {step?.name}
+                    {!step?.stepdetails?.length && (
+                      <Loader2
+                        className=" text-blue-400 animate-spin"
+                        size={16}
+                      />
+                    )}
                   </div>
                   <StepMetadataDetails step={step} />
 
@@ -276,39 +284,39 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
       return data;
     }
   };
-  function base64ToBlob(
-    base64Data: string,
-    contentType: string = 'application/octet-stream',
-  ): Blob | null {
-    try {
-      // Ensure the base64 string is properly formatted
-      const cleanedBase64Data = base64Data.replace(/\s/g, ''); // Remove any whitespace characters
-      const byteCharacters = atob(cleanedBase64Data);
-      const byteNumbers = Array.from(byteCharacters).map((char) =>
-        char.charCodeAt(0),
-      );
-      const byteArray = new Uint8Array(byteNumbers);
+  // function base64ToBlob(
+  //   base64Data: string,
+  //   contentType: string = 'application/octet-stream',
+  // ): Blob | null {
+  //   try {
+  //     // Ensure the base64 string is properly formatted
+  //     const cleanedBase64Data = base64Data.replace(/\s/g, ''); // Remove any whitespace characters
+  //     const byteCharacters = atob(cleanedBase64Data);
+  //     const byteNumbers = Array.from(byteCharacters).map((char) =>
+  //       char.charCodeAt(0),
+  //     );
+  //     const byteArray = new Uint8Array(byteNumbers);
 
-      return new Blob([byteArray], { type: contentType });
-    } catch (error) {
-      console.error('Error decoding base64 string:', error);
-      return null;
-    }
-  }
-  function downloadBase64File(
-    base64Data: string,
-    filename: string,
-    contentType: string,
-  ) {
-    // Convert base64 to Blob
-    const blob = base64ToBlob(base64Data, contentType);
-    if (!blob) {
-      toast.error('Failed to create Blob from base64 data.');
-      return;
-    }
-    // Use FileSaver to save the Blob as a file
-    saveAs(blob, filename);
-  }
+  //     return new Blob([byteArray], { type: contentType });
+  //   } catch (error) {
+  //     console.error('Error decoding base64 string:', error);
+  //     return null;
+  //   }
+  // }
+  // function downloadBase64File(
+  //   base64Data: string,
+  //   filename: string,
+  //   contentType: string,
+  // ) {
+  //   // Convert base64 to Blob
+  //   const blob = base64ToBlob(base64Data, contentType);
+  //   if (!blob) {
+  //     toast.error('Failed to create Blob from base64 data.');
+  //     return;
+  //   }
+  //   // Use FileSaver to save the Blob as a file
+  //   saveAs(blob, filename);
+  // }
   const oncopy = (text: string) => {
     copyToClipboard(text).then(() => {
       toast.success('Copied!');
@@ -330,19 +338,22 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
                   className="w-full flex gap-1 item-center bg-background mb-1 px-2 py-1 rounded-md"
                 >
                   <Paperclip className=" text-foreground" size={14} />
-                  <div
+                  <a
                     className="underline text-xs"
-                    onClick={() =>
-                      downloadBase64File(
-                        (data?.fileContent || data?.content) as string,
-                        data?.fileName,
-                        data?.contentType,
-                      )
-                    }
+                    href={data?.downloadUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    // onClick={() =>
+                    //   downloadBase64File(
+                    //     (data?.fileContent || data?.content) as string,
+                    //     data?.fileName,
+                    //     data?.contentType,
+                    //   )
+                    // }
                   >
                     {data?.fileName}
-                  </div>
-                  <div className="text-xs">{data?.size || '0kb'}</div>
+                  </a>
+                  {data?.size && <div className="text-xs">{data?.size}</div>}
                   <CheckCircle2
                     className="text-green-500"
                     size={16}
@@ -354,6 +365,7 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
             })}
           </ul>
         );
+
       case 'File hashing':
       case 'Hashing of s3 file':
         return (
@@ -387,6 +399,8 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
         );
 
       case 'Store to Blockchain':
+      case 'Store chunk hash to Blockchain':
+      case 'Store recombined file to Blockchain':
         return (
           <ul className="font-medium  text-foreground">
             {(step.stepdetails || []).map((d: any, i: number) => {
@@ -407,6 +421,186 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
                     </a>
                   </div>
                   <div>{timeAgo(data.timestamp)}</div>
+                  <CheckCircle2
+                    className="text-green-500"
+                    size={16}
+                    fill="#52C41A"
+                    stroke="white"
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        );
+      case 'Chunking':
+        return (
+          <ul className="font-medium text-foreground">
+            {(step.stepdetails || []).map((d: any, i: number) => {
+              const data = jsonParse(d.metadata);
+              return (
+                <li
+                  key={i}
+                  className="w-full flex gap-1 item-center bg-background mb-1 px-2 py-1 rounded-md"
+                >
+                  <Paperclip className=" text-foreground" size={14} />
+                  <div>{data?.fileName}</div>
+                  <div className="text-xs">Chunks</div>
+                  <Badge variant={'success'} className="py-0 text-xs">
+                    {data?.number_of_chunks}
+                  </Badge>
+                  <CheckCircle2
+                    className="text-green-500"
+                    size={16}
+                    fill="#52C41A"
+                    stroke="white"
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        );
+
+      case 'Chunking hash':
+        return (
+          <ul className="font-medium  text-foreground">
+            {(step.stepdetails || []).map((d: any, i: number) => {
+              const data = jsonParse(d.metadata);
+              return (
+                <>
+                  {data?.hash && (
+                    <li
+                      key={i}
+                      className="w-full flex gap-1 item-center bg-background mb-1 px-2 py-1 rounded-md cursor-default"
+                    >
+                      <Link2 className=" text-foreground" size={14} />
+                      <div className="underline text-xs">{data?.fileName}</div>
+                      <div className="underline text-xs w-[300px] truncate">
+                        {data?.hash}
+                      </div>
+                      <CheckCircle2
+                        className="text-green-500"
+                        size={16}
+                        fill="#52C41A"
+                        stroke="white"
+                      />
+                      <Copy
+                        className="cursor-pointer"
+                        size={14}
+                        onClick={() => oncopy(data?.hash || '')}
+                      />
+                    </li>
+                  )}
+                </>
+              );
+            })}
+          </ul>
+        );
+
+      case 'Embedding of chunks':
+        return (
+          <ul className="font-medium text-foreground">
+            {(step.stepdetails || []).map((d: any, i: number) => {
+              const data = jsonParse(d.metadata);
+              return (
+                <li
+                  key={i}
+                  className="w-full flex gap-1 item-center bg-background mb-1 px-2 py-1 rounded-md"
+                >
+                  <Link2 className=" text-foreground" size={14} />
+                  <div>{data?.fileName}</div>
+                  <div className="text-xs">Chunks</div>
+                  <Badge className="py-0 text-xs" variant={'success'}>
+                    {data?.number_of_chunks}
+                  </Badge>
+                  <div className="text-xs">Vector dimensions</div>
+                  <Badge className="py-0 text-xs" variant={'success'}>
+                    {data?.vector_dimensions}
+                  </Badge>
+                  <CheckCircle2
+                    className="text-green-500"
+                    size={16}
+                    fill="#52C41A"
+                    stroke="white"
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        );
+
+      case 'Hashing of reconstructive data':
+        return (
+          <ul className="font-medium  text-foreground">
+            {(step.stepdetails || []).map((d: any, i: number) => {
+              const data = jsonParse(d.metadata);
+              return (
+                <>
+                  <li
+                    key={i}
+                    className="w-full flex gap-1 item-center bg-background mb-1 px-2 py-1 rounded-md cursor-default"
+                  >
+                    <Link2 className=" text-foreground" size={14} />
+                    <div className="underline text-xs">{data?.file_name}</div>
+                    <div className="underline text-xs w-[300px] truncate">
+                      {data?.file_content_hash}
+                    </div>
+                    <CheckCircle2
+                      className="text-green-500"
+                      size={16}
+                      fill="#52C41A"
+                      stroke="white"
+                    />
+                    <Copy
+                      className="cursor-pointer"
+                      size={14}
+                      onClick={() => oncopy(data?.file_content_hash || '')}
+                    />
+                  </li>
+                </>
+              );
+            })}
+          </ul>
+        );
+
+      case 'Reconstruction of data':
+        return (
+          <ul className="font-medium text-foreground">
+            {(step.stepdetails || []).map((d: any, i: number) => {
+              const data = jsonParse(d.metadata);
+              return (
+                <li
+                  key={i}
+                  className="w-full flex gap-1 item-center bg-background mb-1 px-2 py-1 rounded-md"
+                >
+                  <Paperclip className=" text-foreground" size={14} />
+                  <div className="underline text-xs">{data?.file_name}</div>
+                  <CheckCircle2
+                    className="text-green-500"
+                    size={16}
+                    fill="#52C41A"
+                    stroke="white"
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        );
+      case 'Writing to open search':
+        return (
+          <ul className="font-medium text-foreground">
+            {(step.stepdetails || []).map((d: any, i: number) => {
+              const data = jsonParse(d.metadata);
+              return (
+                <li
+                  key={i}
+                  className="w-full flex gap-1 item-center bg-background mb-1 px-2 py-1 rounded-md"
+                >
+                  <Link2 className=" text-foreground" size={14} />
+                  <div>{data?.fileName}</div>
+                  <div className="text-xs">Vector Database</div>
+                  <Badge variant={'success'} className="py-0 text-xs">
+                    {data?.vector_database}
+                  </Badge>
                   <CheckCircle2
                     className="text-green-500"
                     size={16}

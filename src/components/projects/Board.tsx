@@ -35,7 +35,7 @@ const Board: React.FC = () => {
   const { projects, loadingProject } = useProject();
 
   useEffect(() => {
-    if (!loadingProject) {
+    if (!loadingProject && !selectedProject.data.length) {
       const groupedData = getGroupedData(projects);
       setGroupedCards(groupedData);
       setSelectedProject({
@@ -43,7 +43,7 @@ const Board: React.FC = () => {
         index: getInitialSelection(groupedData).index,
       });
     }
-  }, [projects, loadingProject]);
+  }, [projects, loadingProject, selectedProject]);
 
   const getInitialSelection = (gropedData: GroupedCardsType) => {
     if (gropedData.DATA_SELECTION.length > 0) {
