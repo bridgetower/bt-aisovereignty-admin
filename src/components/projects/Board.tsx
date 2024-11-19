@@ -35,15 +35,27 @@ const Board: React.FC = () => {
   const { projects, loadingProject } = useProject();
 
   useEffect(() => {
-    if (!loadingProject && !selectedProject.data.length) {
-      const groupedData = getGroupedData(projects);
-      setGroupedCards(groupedData);
-      setSelectedProject({
-        data: getInitialSelection(groupedData).data,
-        index: getInitialSelection(groupedData).index,
-      });
-    }
-  }, [projects, loadingProject, selectedProject]);
+    const getData = () => {
+      if (!loadingProject) {
+        const groupedData = getGroupedData(projects);
+        setGroupedCards(groupedData);
+        if (projects && projects.length) {
+          setSelectedProject({
+            data: getInitialSelection(groupedData).data,
+            index: getInitialSelection(groupedData).index,
+          });
+        }
+      }
+    };
+    getData();
+    const intervalId = setInterval(() => {
+      getData();
+    }, 30000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [projects, loadingProject]);
 
   const getInitialSelection = (gropedData: GroupedCardsType) => {
     if (gropedData.DATA_SELECTION.length > 0) {

@@ -9,17 +9,17 @@ export const Loader: React.FC<LoaderWrapperProps> = ({ show }) => {
     <>
       {show ? (
         <div
-          className="fixed inset-0 flex items-center justify-center bg-black/30 "
-          style={{ zIndex: 100 }}
+          className="fixed inset-0 flex items-center justify-center bg-black/30"
+          style={{ zIndex: 110 }}
         >
-          <div className="relative flex items-center justify-center w-64 h-64">
+          <div className="relative flex items-center justify-center w-16 h-16">
             <img
               src="/logo512.png"
-              alt="Loading"
-              className="w-16 h-w-16 rounded-full animate-zoom-in-out"
+              alt="Loading indicator"
+              className="w-12 h-12 rounded-full animate-zoom-in-out"
             />
-            {/* Rotating Circle */}
-            <div className="absolute border-t-4 border-amber-500 border-solid rounded-full w-20 h-20 animate-spin"></div>
+            {/* Lucide Loader Icon */}
+            <div className="absolute border-4 border-t-transparent border-primary border-solid rounded-full w-full h-full animate-spin"></div>
           </div>
         </div>
       ) : null}

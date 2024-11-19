@@ -89,7 +89,18 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
     if (!id) {
       return;
     }
+    // Initial call
     getProjectDetailsById();
+    if (docPage !== 6) {
+      // Set up the interval
+      const intervalId = setInterval(() => {
+        getProjectDetailsById();
+      }, 30000); // 30 seconds = 30000 milliseconds
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
   }, [id, docPage]);
 
   const getProjectDetailsById = () => {
@@ -132,7 +143,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
           });
           setStepperData(tempStepsData);
         } else {
-          toast.error(res?.error?.message);
+          toast.error(res?.data?.GetProjectById?.error);
         }
       })
       .catch((error: any) => {

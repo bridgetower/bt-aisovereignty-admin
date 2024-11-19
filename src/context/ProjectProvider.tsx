@@ -99,8 +99,14 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
   const { showLoader, hideLoader } = useLoader();
   const idToken = localStorage.getItem('idToken');
   useEffect(() => {
-    console.log(projects);
-  }, [projects]);
+    const intervalId = setInterval(() => {
+      fetchWithoutLoader();
+    }, 30000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   const {
     loading: initialLoding,
@@ -155,6 +161,17 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
       console.error('Error refetching data:', err);
     } finally {
       hideLoader(); // Hide loader
+    }
+  };
+  const fetchWithoutLoader = async () => {
+    try {
+      await refetch({
+        pageNo: page,
+        limit,
+        organizationId,
+      }); // Await the refetch call to complete
+    } catch (err) {
+      console.error('Error refetching data:', err);
     }
   };
   useEffect(() => {

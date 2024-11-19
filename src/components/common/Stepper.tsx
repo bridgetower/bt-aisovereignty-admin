@@ -122,8 +122,6 @@ const StepItem = React.forwardRef<
   { step: ISteperData; onClick: () => void }
 >(({ step, onClick }, ref) => {
   const { completed, label, data, isExpanded, isLast, dataLoading } = step;
-  console.log(data);
-
   return (
     <li ref={ref} className="flex flex-col cursor-pointer my-4 relative w-full">
       <div className="flex items-center" onClick={onClick}>
@@ -218,64 +216,6 @@ const StepItem = React.forwardRef<
 
 StepItem.displayName = 'StepItem';
 
-// const MetadataTable = ({ stepdetails }: { stepdetails: any[] }) => {
-//   useEffect(() => {
-//     console.log(stepdetails);
-//   }, [stepdetails]);
-
-//   return (
-//     <Table className="text-[#334E68]">
-//       <TableHeader className="text-xs">
-//         <TableRow>
-//           {Object.keys(JSON.parse(stepdetails[0].metadata)).map((key, i) => (
-//             <TableHead className="uppercase" key={i}>
-//               {key}
-//             </TableHead>
-//           ))}
-//         </TableRow>
-//       </TableHeader>
-//       <TableBody className="text-xs">
-//         {stepdetails.length ? (
-//           stepdetails.map((details, j) => (
-//             <TableRow key={j}>
-//               {Object.keys(JSON.parse(details.metadata)).map((key, k) => (
-//                 <TableCell className="" key={k}>
-//                   <div className="flex items-center gap-1">
-//                     {key === 'txHash' ? (
-//                       <>
-//                         <a
-//                           className={`text-blue-500 w-40 truncate`}
-//                           href={`https://testnet.snowtrace.io/tx/${JSON.parse(details.metadata)[key]}`}
-//                           target="_blank"
-//                           rel="noreferrer"
-//                         >
-//                           {JSON.parse(details.metadata)[key]}
-//                         </a>
-//                       </>
-//                     ) : (
-//                       <div
-//                         className={`text-xs p-1 mt-1 px-2 rounded-md w-40 truncate`}
-//                       >
-//                         {JSON.parse(details.metadata)[key]}
-//                       </div>
-//                     )}
-//                   </div>
-//                 </TableCell>
-//               ))}
-//             </TableRow>
-//           ))
-//         ) : (
-//           <TableRow>
-//             <TableCell colSpan={3} className="text-center">
-//               No metadata found
-//             </TableCell>
-//           </TableRow>
-//         )}
-//       </TableBody>
-//     </Table>
-//   );
-// };
-
 const StepMetadataDetails = ({ step }: { step: any }) => {
   const jsonParse = (data: any) => {
     try {
@@ -331,6 +271,9 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
         return (
           <ul className="font-medium text-foreground">
             {(step.stepdetails || []).map((d: any, i: number) => {
+              if (d.metadata === 'null' || d.metadata === 'undefind') {
+                return null;
+              }
               const data = jsonParse(d.metadata);
               return (
                 <li
@@ -371,6 +314,9 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
         return (
           <ul className="font-medium  text-foreground">
             {(step.stepdetails || []).map((d: any, i: number) => {
+              if (d.metadata === 'null' || d.metadata === 'undefind') {
+                return null;
+              }
               const data = jsonParse(d.metadata);
               return (
                 <li
@@ -404,6 +350,9 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
         return (
           <ul className="font-medium  text-foreground">
             {(step.stepdetails || []).map((d: any, i: number) => {
+              if (d.metadata === 'null' || d.metadata === 'undefind') {
+                return null;
+              }
               const data = jsonParse(d.metadata);
               return (
                 <li
@@ -436,6 +385,9 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
         return (
           <ul className="font-medium text-foreground">
             {(step.stepdetails || []).map((d: any, i: number) => {
+              if (d.metadata === 'null' || d.metadata === 'undefind') {
+                return null;
+              }
               const data = jsonParse(d.metadata);
               return (
                 <li
@@ -464,6 +416,9 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
         return (
           <ul className="font-medium  text-foreground">
             {(step.stepdetails || []).map((d: any, i: number) => {
+              if (d.metadata === 'null' || d.metadata === 'undefind') {
+                return null;
+              }
               const data = jsonParse(d.metadata);
               return (
                 <>
@@ -500,6 +455,9 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
         return (
           <ul className="font-medium text-foreground">
             {(step.stepdetails || []).map((d: any, i: number) => {
+              if (d.metadata === 'null' || d.metadata === 'undefind') {
+                return null;
+              }
               const data = jsonParse(d.metadata);
               return (
                 <li
@@ -532,6 +490,9 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
         return (
           <ul className="font-medium  text-foreground">
             {(step.stepdetails || []).map((d: any, i: number) => {
+              if (d.metadata === 'null' || d.metadata === 'undefind') {
+                return null;
+              }
               const data = jsonParse(d.metadata);
               return (
                 <>
@@ -566,6 +527,9 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
         return (
           <ul className="font-medium text-foreground">
             {(step.stepdetails || []).map((d: any, i: number) => {
+              if (d.metadata === 'null' || d.metadata === 'undefind') {
+                return null;
+              }
               const data = jsonParse(d.metadata);
               return (
                 <li
@@ -589,6 +553,9 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
         return (
           <ul className="font-medium text-foreground">
             {(step.stepdetails || []).map((d: any, i: number) => {
+              if (d.metadata === 'null' || d.metadata === 'undefind') {
+                return null;
+              }
               const data = jsonParse(d.metadata);
               return (
                 <li

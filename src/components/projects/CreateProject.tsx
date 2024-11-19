@@ -199,7 +199,7 @@ export const CreateProject: React.FC = () => {
                 if (fileData.name === element.key) {
                   return {
                     ...fileData,
-                    status: 'Completed',
+                    status: 'Uploaded',
                   };
                 }
                 return fileData;
@@ -247,8 +247,45 @@ export const CreateProject: React.FC = () => {
     convertFilesToBase64(acceptedFiles);
   };
 
+  // const convertFilesToBase64 = (files: File[]) => {
+  //   const promises = files.map((file) => {
+  //     console.log('file', file);
+  //     return new Promise((resolve, reject) => {
+  //       const reader = new FileReader();
+
+  //       // Read file content as text
+  //       reader.readAsText(file);
+
+  //       reader.onload = () => {
+  //         // Trim the text content
+  //         const content = reader.result as string;
+  //         const trimmedContent = content.trim(); // Trim the file content
+
+  //         // Convert trimmed content to base64
+  //         const base64Content = btoa(
+  //           unescape(encodeURIComponent(trimmedContent)),
+  //         );
+
+  //         resolve({
+  //           fileName: file.name,
+  //           fileContent: replaceBase64(base64Content), // Apply your replaceBase64 function
+  //           contentType: file.type,
+  //           fileSize: file.size,
+  //         });
+  //       };
+
+  //       reader.onerror = reject;
+  //     });
+  //   });
+
+  //   Promise.all(promises).then((base64Files) => {
+  //     setBase64Files(() => [...(base64Files as IFileContent[])]);
+  //   });
+  // };
   const convertFilesToBase64 = (files: File[]) => {
     const promises = files.map((file) => {
+      console.log('file', file);
+
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -290,22 +327,13 @@ export const CreateProject: React.FC = () => {
 
   // And update your hash function to use the Web Crypto API:
   const getHashedFile = async (file: IFileContent) => {
-    // const msgBuffer = new TextEncoder().encode(
-    //   JSON.stringify({
-    //     fileName: file.fileName,
-    //     fileContent: file.fileContent,
-    //   }),
-    // );
     const metadata = JSON.stringify({
       fileName: file.fileName,
       fileContent: file.fileContent,
     });
-    // const hashBuffer = await crypto.subtle.digest('SHA-256', metadata);
-    // const hashArray = Array.from(new Uint8Array(hashBuffer));
-    // const hashHex = hashArray
-    //   .map((b) => b.toString(16).padStart(2, '0'))
-    //   .join('');
     const hash = CryptoJS.SHA256(metadata).toString(CryptoJS.enc.Hex);
+    console.log('hash', metadata);
+
     return hash;
   };
   // const getHashedFile = (file: IFileContent) => {
