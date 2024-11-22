@@ -44,6 +44,7 @@ export interface ICreateProjectPayload {
   projectType: string;
   organizationId: string;
   files: IFileContent[];
+  chainType: string;
 }
 type ProjectContextType = {
   page: number;

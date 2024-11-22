@@ -27,7 +27,7 @@ type GroupedCardsType = {
 const Board: React.FC = () => {
   // const [filters, setFilters] = useState({ sort: '', name: '', status: '' });
   const [groupedCards, setGroupedCards] = useState<GroupedCardsType>();
-
+  const [activeCard, setActiveCard] = useState<number | null>(null);
   const [selectedProject, setSelectedProject] = useState<{
     data: IProjectAttributes[];
     index: number | null;
@@ -58,23 +58,48 @@ const Board: React.FC = () => {
   }, [projects, loadingProject]);
 
   const getInitialSelection = (gropedData: GroupedCardsType) => {
-    if (gropedData.DATA_SELECTION.length > 0) {
+    if (
+      gropedData.DATA_SELECTION.length > 0 &&
+      (activeCard === 0 || activeCard === null)
+    ) {
+      setActiveCard(0);
       return { data: gropedData.DATA_SELECTION, index: 0 };
-    } else if (gropedData.DATA_INGESTION.length > 0) {
+    } else if (
+      gropedData.DATA_INGESTION.length > 0 &&
+      (activeCard === 1 || activeCard === null)
+    ) {
+      setActiveCard(1);
       return { data: gropedData.DATA_INGESTION, index: 1 };
-    } else if (gropedData.DATA_STORAGE.length > 0) {
+    } else if (
+      gropedData.DATA_STORAGE.length > 0 &&
+      (activeCard === 2 || activeCard === null)
+    ) {
+      setActiveCard(2);
       return { data: gropedData.DATA_STORAGE, index: 2 };
-    } else if (gropedData.DATA_PREPARATION.length > 0) {
+    } else if (
+      gropedData.DATA_PREPARATION.length > 0 &&
+      (activeCard === 3 || activeCard === null)
+    ) {
+      setActiveCard(3);
       return { data: gropedData.DATA_PREPARATION, index: 3 };
-    } else if (gropedData.LLM_FINE_TUNING.length > 0) {
+    } else if (
+      gropedData.LLM_FINE_TUNING.length > 0 &&
+      (activeCard === 4 || activeCard === null)
+    ) {
+      setActiveCard(4);
       return { data: gropedData.LLM_FINE_TUNING, index: 4 };
       // } else if (gropedData.VERSIONING.length > 0) {
       //   return gropedData.VERSIONING;
       // } else if (gropedData.RAG.length > 0) {
       //   return gropedData.RAG;
-    } else if (gropedData.PUBLISHED.length > 0) {
+    } else if (
+      gropedData.PUBLISHED.length > 0 &&
+      (activeCard === 5 || activeCard === null)
+    ) {
+      setActiveCard(5);
       return { data: gropedData.PUBLISHED, index: 5 };
     } else {
+      setActiveCard(null);
       return { data: [], index: 0 };
     }
   };

@@ -77,10 +77,12 @@ interface FormData {
   name: string;
   description: string;
   projecttype: string;
+  chainType: string;
 }
 const formSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   projecttype: z.string().min(1, { message: 'Project Type is required' }),
+  chainType: z.string().min(1, { message: 'Chain Type is required' }),
   description: z.string().min(1, { message: 'Description is required' }),
 });
 type FormInputs = z.infer<typeof formSchema>;
@@ -142,11 +144,7 @@ export const CreateProject: React.FC = () => {
           projectType: data.projecttype,
           organizationId: process.env.REACT_APP_ORGANIZATION_ID || '',
           files: hashedFilesData,
-          // files: base64Files.map((file) => ({
-          //   fileName: file.fileName,
-          //   fileContent: file.fileContent,
-          //   contentType: file.contentType,
-          // })),
+          chainType: data.chainType,
         });
         if (res.data?.AddProjectAndReference?.status === 200) {
           setHideActionButtons(true);
@@ -451,6 +449,45 @@ export const CreateProject: React.FC = () => {
                                 {type.key}
                               </SelectItem>
                             ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </span>
+            </div>
+          </div>
+          <div className="text-sm text-foreground mt-4">
+            <div className="flex items-center gap-2">
+              <span className="font-bold ">Blockchain</span>{' '}
+              <span>
+                <FormField
+                  control={form.control}
+                  name="chainType"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormControl>
+                        <Select
+                          {...field}
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <SelectTrigger
+                            className="h-8 rounded-lg font-normal
+                  border-neutral-300 bg-transparent placeholder:text-muted-foreground
+                  focus:outline-none"
+                          >
+                            <SelectValue placeholder="Select blockchain" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value={'Avalanche'}>
+                              Avalanche
+                            </SelectItem>
+                            <SelectItem value={'Provenance'}>
+                              Provenance
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </FormControl>

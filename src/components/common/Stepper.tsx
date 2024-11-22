@@ -14,6 +14,8 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
+import { ChainTypes } from '@/types/ChainTypes';
+import { getExplorerUrl } from '@/utils/blockchainExplorer';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 import { timeAgo } from '@/utils/timeAgo';
 
@@ -362,7 +364,11 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
                   <Globe className=" text-foreground" size={14} />
                   <div className="underline text-xs w-[300px] truncate">
                     <a
-                      href={`https://testnet.snowtrace.io/tx/${data.txHash}`}
+                      // href={`https://testnet.snowtrace.io/tx/${data.txHash}`}
+                      href={getExplorerUrl(
+                        (data.chainType || 'Avalanche') as ChainTypes,
+                        `tx/${data.txHash}`,
+                      )}
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -503,7 +509,7 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
                     <Link2 className=" text-foreground" size={14} />
                     <div className="underline text-xs">{data?.file_name}</div>
                     <div className="underline text-xs w-[300px] truncate">
-                      {data?.file_content_hash}
+                      {data?.hash}
                     </div>
                     <CheckCircle2
                       className="text-green-500"

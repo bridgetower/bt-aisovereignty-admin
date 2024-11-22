@@ -7,6 +7,7 @@ export const CREATE_NEW_PROJECT = gql`
     $projectType: String!
     $organizationId: String!
     $files: [ProjectFileInput]!
+    $chainType: String!
   ) {
     AddProjectAndReference(
       input: {
@@ -15,6 +16,7 @@ export const CREATE_NEW_PROJECT = gql`
         description: $description
         organizationId: $organizationId
         files: $files
+        chainType: $chainType
       }
     ) {
       data {
@@ -30,6 +32,7 @@ export const CREATE_NEW_PROJECT = gql`
             projectstage
             projectstatus
             projecttype
+            chaintype
           }
           stagedata {
             stages {
@@ -96,6 +99,7 @@ export const FETCH_PROJECT_LIST = gql`
           organizationid
           name
           isactive
+          chaintype
         }
       }
       error
@@ -120,6 +124,7 @@ export const FETCH_PROJECT_BY_ID = gql`
           projectstage
           projectstatus
           projecttype
+          chaintype
         }
         stagedata {
           total
