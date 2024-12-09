@@ -6,8 +6,8 @@ export const CREATE_NEW_PROJECT = gql`
     $description: String
     $projectType: String!
     $organizationId: String!
-    $files: [ProjectFileInput]!
     $chainType: String!
+    $files: [ProjectFileInput]!
   ) {
     AddProjectAndReference(
       input: {
@@ -21,54 +21,31 @@ export const CREATE_NEW_PROJECT = gql`
     ) {
       data {
         project {
-          project {
+          references {
             createdat
-            createdby
-            description
+            datasourceid
+            depth
             id
-            isactive
+            ingested
+            ingestionjobid
             name
-            organizationid
-            projectstage
-            projectstatus
-            projecttype
-            chaintype
+            referencestage
+            reftype
+            size
+            status
+            url
           }
-          stagedata {
-            stages {
-              createdat
-              description
-              id
-              isactive
-              isdeleted
-              name
-              stagesequence
-              stagetypeid
-              status
-              steps {
-                createdat
-                description
-                id
-                isactive
-                isdeleted
-                name
-                stepsequence
-                status
-                stageid
-                stepdetails {
-                  createdat
-                  id
-                  isactive
-                  isdeleted
-                  metadata
-                  status
-                  stepid
-                }
-              }
-            }
-            total
-            totalPages
-          }
+          chaintype
+          createdat
+          isactive
+          id
+          description
+          name
+          organizationid
+          projectstage
+          projectstatus
+          projecttype
+          createdby
         }
         urls {
           key
@@ -114,6 +91,21 @@ export const FETCH_PROJECT_BY_ID = gql`
     ) {
       data {
         project {
+          references {
+            createdat
+            datasourceid
+            depth
+            id
+            ingested
+            ingestionjobid
+            name
+            referencestage
+            reftype
+            size
+            status
+            url
+          }
+          chaintype
           createdat
           createdby
           description
@@ -124,11 +116,8 @@ export const FETCH_PROJECT_BY_ID = gql`
           projectstage
           projectstatus
           projecttype
-          chaintype
         }
         stagedata {
-          total
-          totalPages
           stages {
             createdat
             description
@@ -148,7 +137,6 @@ export const FETCH_PROJECT_BY_ID = gql`
               name
               stageid
               status
-              stepsequence
               stepdetails {
                 createdat
                 id
@@ -158,8 +146,11 @@ export const FETCH_PROJECT_BY_ID = gql`
                 status
                 stepid
               }
+              stepsequence
             }
           }
+          total
+          totalPages
         }
       }
       error
@@ -186,6 +177,96 @@ export const UPDATE_PROJECT_STATUS = gql`
         organizationid
         name
         isactive
+      }
+      error
+      status
+    }
+  }
+`;
+export const UPDATE_PROJECT_STATUS_BY_ADMIN = gql`
+  mutation MyMutation($fileId: String!, $status: String!) {
+    UpdateReferenceStatusByAdmin(
+      input: { files: { id: $fileId, status: $status } }
+    ) {
+      data {
+        createdat
+        datasourceid
+        depth
+        id
+        ingested
+        ingestionjobid
+        name
+        referencestage
+        reftype
+        size
+        url
+      }
+      error
+      status
+    }
+  }
+`;
+export const ADD_FILE_TO_PROJECT = gql`
+  mutation Mymutation($files: [ProjectFileInput]!, $projectId: String!) {
+    AddFileToProjectByAdmin(input: { files: $files, projectId: $projectId }) {
+      error
+      status
+      data {
+        refs {
+          createdat
+          datasourceid
+          depth
+          id
+          ingested
+          ingestionjobid
+          name
+          referencestage
+          reftype
+          size
+          status
+          url
+        }
+        urls {
+          key
+          url
+        }
+      }
+    }
+  }
+`;
+export const FETCH_REFERENCES_BY_PROJECT_ID = gql`
+  query MyQuery(
+    $limit: Int!
+    $pageNo: Int!
+    $refType: String!
+    $status: String!
+  ) {
+    ListReference(
+      input: {
+        limit: $limit
+        pageNo: $pageNo
+        refType: $refType
+        status: $status
+      }
+    ) {
+      data {
+        refs {
+          createdat
+          depth
+          id
+          projectid
+          ingested
+          name
+          referencestage
+          reftype
+          size
+          status
+          url
+          datasourceid
+          ingestionjobid
+        }
+        total
+        totalPages
       }
       error
       status

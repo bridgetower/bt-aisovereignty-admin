@@ -159,7 +159,7 @@ export const StageTypeList: React.FC = () => {
             <DataTable
               columns={[...tableColumnDef, actionMenuColDef]}
               data={memoizedstageTypes}
-              rowSeletable={true}
+              rowSeletable={false}
               actionMenu={true}
               onActionMenuClick={() => {}}
               noDataText="No stage types found"

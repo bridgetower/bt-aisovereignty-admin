@@ -91,7 +91,7 @@ export function DataTable<
   });
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-xl border">
       <Table key={JSON.stringify(data)}>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

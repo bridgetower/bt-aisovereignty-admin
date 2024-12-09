@@ -10,6 +10,26 @@ import {
 import { ISteperData } from '@/components/common/Stepper';
 
 // src/types.ts
+
+export interface IReference {
+  id: string;
+  name: string;
+  datasourceid: string;
+  description: string;
+  type: string;
+  url: string;
+  createdby: string;
+  createdat: Date;
+  isactive: boolean;
+  hashRecorded: any[];
+  depth: string | number;
+  ingested: boolean;
+  ingestionjobid: string;
+  referencestage: string;
+  reftype: string;
+  size: string;
+  status: string;
+}
 export interface IProjectAttributes {
   id: string;
   name: string;
@@ -22,6 +42,8 @@ export interface IProjectAttributes {
   createdat: Date;
   isactive: boolean;
   hashRecorded: any[];
+  references: IReference[];
+  chaintype: string;
   hasAlert?: boolean;
 }
 export enum ProjectType {
@@ -32,11 +54,11 @@ export enum ProjectType {
 }
 
 export enum ProjectStageEnum {
-  DATA_SELECTION = 'DATA_SELECTION',
+  DATA_SOURCE = 'DATA_SOURCE',
   DATA_INGESTION = 'DATA_INGESTION',
   DATA_STORAGE = 'DATA_STORAGE',
   DATA_PREPARATION = 'DATA_PREPARATION',
-  LLM_FINE_TUNING = 'LLM_FINE_TUNING',
+  RAG_INGESTION = 'RAG_INGESTION',
   // VERSIONING = 'VERSIONING',
   // RAG = 'RAG',
   PUBLISHED = 'PUBLISHED',
@@ -46,11 +68,11 @@ export const getProjectStageEnumValue = (key: string): string => {
   return ProjectStageEnum[key as keyof typeof ProjectStageEnum];
 };
 export const ProjectStageLabel = {
-  DATA_SELECTION: 'Data Source',
+  DATA_SOURCE: 'Data Source',
   DATA_INGESTION: 'Data Ingestion',
   DATA_STORAGE: 'Data Storage',
   DATA_PREPARATION: 'Data Preparation',
-  LLM_FINE_TUNING: 'RAG Ingestion',
+  RAG_INGESTION: 'RAG Ingestion',
   // VERSIONING: 'Versioning',
   // RAG: 'RAG',
   PUBLISHED: 'Published',
@@ -67,7 +89,11 @@ export type ActionStatus =
   | 'ACTIVE'
   | 'ERROR'
   | 'CANCELLED'
-  | 'COMPLETED';
+  | 'COMPLETED'
+  | 'PENDING'
+  | 'APPROVED'
+  | 'REJECTED'
+  | 'UPLOADED';
 
 export const statusColor: Record<ActionStatus, { bg: string; text: string }> = {
   INITIATED: {
@@ -87,8 +113,24 @@ export const statusColor: Record<ActionStatus, { bg: string; text: string }> = {
     text: 'text-orange-600',
   },
   COMPLETED: {
-    bg: 'bg-purple-100',
-    text: 'text-purple-600',
+    bg: 'bg-green-100',
+    text: 'text-green-600',
+  },
+  PENDING: {
+    bg: 'bg-orange-100',
+    text: 'text-orange-600',
+  },
+  APPROVED: {
+    bg: 'bg-green-100',
+    text: 'text-green-600',
+  },
+  REJECTED: {
+    bg: 'bg-red-100',
+    text: 'text-red-600',
+  },
+  UPLOADED: {
+    bg: 'bg-yellow-100',
+    text: 'text-yellow-600',
   },
 };
 
@@ -122,7 +164,7 @@ export const stepData: ISteperData[] = [
   {
     completed: true,
     icon: <UploadCloud className="text-white" />,
-    label: ProjectStageLabel.DATA_SELECTION,
+    label: ProjectStageLabel.DATA_SOURCE,
     data: null,
     dataLoading: false,
     isExpanded: true,
@@ -154,7 +196,7 @@ export const stepData: ISteperData[] = [
   {
     completed: false,
     icon: <Factory className="text-white" />,
-    label: ProjectStageLabel.LLM_FINE_TUNING,
+    label: ProjectStageLabel.RAG_INGESTION,
     data: null,
     dataLoading: false,
     isExpanded: false,

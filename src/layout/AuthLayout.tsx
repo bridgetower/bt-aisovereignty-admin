@@ -10,7 +10,9 @@ export function AuthLayout({ children }: { children?: React.ReactNode }) {
   //   return <Navigate to="/" />;
   // }
   if (session && session.isValid() && dbUser) {
-    return <Navigate to="/" />;
+    console.log(location.pathname);
+
+    return <Navigate to={'/'} />;
   }
   return (
     <main className="w-screen min-h-screen bg-background">

@@ -37,7 +37,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Textarea } from '../ui/textarea';
+import { AddWebUrls } from './addWeburlComponent';
 // Dummy data for the transaction (can also be passed as props)
 const knoledgeBaseColums: ColumnDef<any>[] = [
   {
@@ -96,10 +98,13 @@ export const CreateProject: React.FC = () => {
   const [filesData, setFilesData] = useState<any>([]);
   const memoizedFilesData = React.useMemo(() => filesData, [filesData]);
   const [hideActionButtons, setHideActionButtons] = useState(false);
+  const [refType, setRefType] = useState<'DOCUMENT' | 'WEBSITE'>('DOCUMENT');
+  const [refUrls, setRefUrls] = useState<any[]>([]);
+  const [urlErrors, setUrlErrors] = useState<any>(null);
   useEffect(() => {
     if (base64Files.length > 0) {
       const newFiles = base64Files.map((file, i) => ({
-        id: file.fileName + i,
+        id: (file.fileName || 'refdoc') + i,
         name: file.fileName,
         doctype: 'File',
         updatedon: new Date().toDateString(),
@@ -131,26 +136,33 @@ export const CreateProject: React.FC = () => {
     if (!saving) {
       setSaving(true);
       const hashedFiles = base64Files.map(async (file) => ({
-        fileName: file.fileName,
-        hash: await getHashedFile(file),
+        fileName: file.fileName || '',
+        hash: await getHashedFile({
+          fileName: file.fileName,
+          fileContent: file.fileContent,
+        }),
         fileSize: formatFileSize(Number(file.fileSize) || 0),
-        contentType: file.contentType,
+        contentType: file.contentType || '',
+        depth: 0,
+        refType: 'DOCUMENT' as const,
+        websiteName: '',
+        websiteUrl: '',
       }));
       const hashedFilesData = await Promise.all(hashedFiles);
       try {
         const res = await createNewProject({
-          name: data.name,
+          name: data.name, //.replace(/\s/g, '_'),
           description: data.description,
           projectType: data.projecttype,
           organizationId: process.env.REACT_APP_ORGANIZATION_ID || '',
-          files: hashedFilesData,
+          files: [...hashedFilesData, ...refUrls],
           chainType: data.chainType,
         });
         if (res.data?.AddProjectAndReference?.status === 200) {
           setHideActionButtons(true);
-          const projectId =
-            res.data?.AddProjectAndReference?.data?.project?.project?.id;
+          const projectId = res.data?.AddProjectAndReference?.data?.project?.id;
           const respData = res.data?.AddProjectAndReference?.data?.urls;
+
           for (const element of respData) {
             const file = base64Files.find(
               (file) => file.fileName === element.key,
@@ -176,7 +188,7 @@ export const CreateProject: React.FC = () => {
             const fileUploadRes = await fetch(url, {
               method: 'PUT',
               headers: {
-                'Content-Type': file.contentType, //'application/octet-stream',
+                'Content-Type': file.contentType || 'application/octet-stream',
               },
               body: binaryData, // Direct string content
             });
@@ -206,14 +218,14 @@ export const CreateProject: React.FC = () => {
             }
           }
           setSaving(false);
-          // form.reset();
-          // setFilesData([]);
-          refetchProjects();
-          toast.success('Project created successfully!');
 
           await updateProjectStatusMutation({
             projectId,
           });
+          // form.reset();
+          // setFilesData([]);
+          refetchProjects();
+          toast.success('Project created successfully!');
           setHideActionButtons(false);
           navigate('/projects/details/' + projectId, { replace: true });
         } else {
@@ -324,11 +336,8 @@ export const CreateProject: React.FC = () => {
   // const crypto = window.crypto;
 
   // And update your hash function to use the Web Crypto API:
-  const getHashedFile = async (file: IFileContent) => {
-    const metadata = JSON.stringify({
-      fileName: file.fileName,
-      fileContent: file.fileContent,
-    });
+  const getHashedFile = async (data: any) => {
+    const metadata = JSON.stringify(data);
     const hash = CryptoJS.SHA256(metadata).toString(CryptoJS.enc.Hex);
     console.log('hash', metadata);
 
@@ -346,6 +355,27 @@ export const CreateProject: React.FC = () => {
   //     .digest('hex');
   //   return hash;
   // };
+
+  const onAddingNewWebsite = (data: any) => {
+    console.log('data', data);
+    const urlsData: Promise<any>[] = data.map(async (website: any) => ({
+      fileName: '',
+      hash: await getHashedFile({
+        name: website.websiteName,
+        ulr: website.websiteUrl,
+        depth: website.depth,
+      }),
+      fileSize: '',
+      contentType: '',
+      depth: website.depth,
+      refType: 'WEBSITE' as const,
+      websiteName: website.websiteName,
+      websiteUrl: website.websiteUrl,
+    }));
+    Promise.all(urlsData).then((data) => {
+      setRefUrls(data);
+    });
+  };
   const actionMenuColDef = {
     id: 'actions',
     cell: ({ row }: any) => {
@@ -529,37 +559,74 @@ export const CreateProject: React.FC = () => {
           </div>
           <div className="text-sm text-foreground mt-4 font-roboto relative">
             <div className="font-semibold flex justify-between items-center">
-              <div>
+              <div className="py-4">
                 Attachments ({filesData.filter((e: any) => e.name).length}{' '}
                 items)
               </div>
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                <Button type="button" variant={'link'}>
-                  Add Item
-                </Button>
+                {refType === 'DOCUMENT' && (
+                  <Button
+                    type="button"
+                    variant={'link'}
+                    className="text-sky-600"
+                  >
+                    Add Item
+                  </Button>
+                )}
               </div>
             </div>
           </div>{' '}
-          <Dropzone onDrop={(acceptedFiles) => onDrop(acceptedFiles)} noClick>
-            {({ getRootProps, getInputProps }) => (
-              <section>
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <DataTable
-                    key={filesData.length}
-                    columns={[...knoledgeBaseColums, actionMenuColDef]}
-                    data={memoizedFilesData}
-                    rowSeletable={true}
-                    actionMenu={true}
-                    onActionMenuClick={() => {}}
-                    // key={Date.now()}
-                    noDataText="Drag and drop files here"
-                  />
-                </div>
-              </section>
-            )}
-          </Dropzone>
+          <Tabs defaultValue="document" className="w-full">
+            <TabsList>
+              <TabsTrigger
+                value="document"
+                className=""
+                onClick={() => setRefType('DOCUMENT')}
+              >
+                Documents
+              </TabsTrigger>
+              <TabsTrigger
+                value="website"
+                onClick={() => setRefType('WEBSITE')}
+              >
+                Websites
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="document">
+              <Dropzone
+                onDrop={(acceptedFiles) => onDrop(acceptedFiles)}
+                noClick
+              >
+                {({ getRootProps, getInputProps }) => (
+                  <section>
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <DataTable
+                        key={filesData.length}
+                        columns={[...knoledgeBaseColums, actionMenuColDef]}
+                        data={memoizedFilesData}
+                        rowSeletable={false}
+                        actionMenu={true}
+                        onActionMenuClick={() => {}}
+                        // key={Date.now()}
+                        noDataText="Drag and drop files here"
+                      />
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
+            </TabsContent>
+            <TabsContent value="website">
+              <AddWebUrls
+                listData={[]}
+                onAddWebUrls={onAddingNewWebsite}
+                setError={(error: any) => {
+                  setUrlErrors(error);
+                }}
+              />
+            </TabsContent>
+          </Tabs>
           {!hideActionButtons && (
             <div className="flex justify-end items-center gap-2 mt-12">
               <Button

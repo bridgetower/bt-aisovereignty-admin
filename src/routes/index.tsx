@@ -19,6 +19,7 @@ import ResetPassword from '@/pages/resetPassword';
 import SignIn from '@/pages/signIn';
 import { StageTypeList } from '@/pages/stageType/StageTypes';
 import { StepTypeList } from '@/pages/stepType/StepTypes';
+import { UserSFileRequestList } from '@/pages/usersFileRequest/UsersFileRequestList';
 
 const AppRouter = () => {
   const router = createBrowserRouter([
@@ -60,6 +61,7 @@ const AppRouter = () => {
             { path: '/dashboard', element: <Dashboard /> },
             { path: '/stage-types', element: <StageTypeList /> },
             { path: '/step-types', element: <StepTypeList /> },
+            { path: 'add-file-request', element: <UserSFileRequestList /> },
             {
               path: '*',
               element: (

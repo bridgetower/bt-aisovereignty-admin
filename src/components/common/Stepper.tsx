@@ -5,7 +5,6 @@ import {
   ChevronDown,
   ChevronRight,
   Copy,
-  Globe,
   Link2,
   Loader,
   Loader2,
@@ -288,13 +287,6 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
                     href={data?.downloadUrl}
                     target="_blank"
                     rel="noreferrer"
-                    // onClick={() =>
-                    //   downloadBase64File(
-                    //     (data?.fileContent || data?.content) as string,
-                    //     data?.fileName,
-                    //     data?.contentType,
-                    //   )
-                    // }
                   >
                     {data?.fileName}
                   </a>
@@ -361,7 +353,11 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
                   key={i}
                   className="w-full flex gap-1 item-center bg-background mb-1 px-2 py-1 rounded-md cursor-default"
                 >
-                  <Globe className=" text-foreground" size={14} />
+                  <img
+                    src={`/images/blockchainIcons/${data.chainType?.toLowerCase()}.png`}
+                    className="w-4 rounded-full text-foreground"
+                    alt={data.chainType}
+                  />
                   <div className="underline text-xs w-[300px] truncate">
                     <a
                       // href={`https://testnet.snowtrace.io/tx/${data.txHash}`}

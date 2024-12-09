@@ -160,7 +160,7 @@ export const StepTypeList: React.FC = () => {
             <DataTable
               columns={[...tableColumnDef, actionMenuColDef]}
               data={memoizedStatusTypes}
-              rowSeletable={true}
+              rowSeletable={false}
               actionMenu={true}
               onActionMenuClick={() => {}}
               noDataText=" Drag & Drop files here"

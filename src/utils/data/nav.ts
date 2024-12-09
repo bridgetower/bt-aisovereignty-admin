@@ -45,6 +45,13 @@ export const projectNavigationList: TNavItem[] = [
 ];
 export const admintNavigationList: TNavItem[] = [
   {
+    icon: 'inbox',
+    label: 'File Requests',
+    path: '/add-file-request',
+    defaultOpen: false,
+    subItems: [],
+  },
+  {
     icon: 'list-todo',
     label: 'Stage Types',
     path: '/stage-types',
@@ -55,13 +62,6 @@ export const admintNavigationList: TNavItem[] = [
     icon: 'list-check',
     label: 'Step Types',
     path: '/step-types',
-    defaultOpen: false,
-    subItems: [],
-  },
-  {
-    icon: 'settings',
-    label: 'Settings',
-    path: '#',
     defaultOpen: false,
     subItems: [],
   },

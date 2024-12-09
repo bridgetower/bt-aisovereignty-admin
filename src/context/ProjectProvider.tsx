@@ -18,10 +18,12 @@ import {
   DELETE_DOC_REFERENCE,
 } from '@/apollo/schemas/knowledgeBaseSchemas';
 import {
+  ADD_FILE_TO_PROJECT,
   CREATE_NEW_PROJECT,
   FETCH_PROJECT_BY_ID,
   FETCH_PROJECT_LIST,
   UPDATE_PROJECT_STATUS,
+  UPDATE_PROJECT_STATUS_BY_ADMIN,
 } from '@/apollo/schemas/projectSchemas';
 import { IProjectAttributes } from '@/types/ProjectData';
 
@@ -30,13 +32,17 @@ import { useLoader } from './LoaderProvider';
 // Define types for the context state
 
 export interface IFileContent {
-  fileName: string;
-  contentType: string;
+  refType: 'DOCUMENT' | 'WEBSITE';
+  fileName?: string;
+  contentType?: string;
   isLocal?: boolean;
   fileContent?: string;
   id?: string;
   fileSize?: string;
   hash?: string;
+  depth?: number;
+  websiteName?: string;
+  websiteUrl?: string;
 }
 export interface ICreateProjectPayload {
   name: string;
@@ -56,6 +62,10 @@ type ProjectContextType = {
   createNewProject: (
     content: ICreateProjectPayload,
   ) => Promise<FetchResult<any>>;
+  addFileToProject: (content: {
+    files: IFileContent[];
+    projectId: string;
+  }) => Promise<FetchResult<any>>;
   refetchProjects: (variables?: Record<string, any>) => Promise<any>;
   totalPages: number;
   organizationId: string;
@@ -69,6 +79,10 @@ type ProjectContextType = {
   }) => Promise<FetchResult<FetchResult<any>>>;
   updateProjectStatusMutation: (content: {
     projectId: string;
+  }) => Promise<FetchResult<any>>;
+  updateReferenceStatusByAdminMutation: (content: {
+    fileId: string;
+    status: string;
   }) => Promise<FetchResult<any>>;
   deleteDocReference: (id: string) => Promise<FetchResult<any>>;
   updateKnowledgebase: (content: {
@@ -99,15 +113,15 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const { showLoader, hideLoader } = useLoader();
   const idToken = localStorage.getItem('idToken');
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      fetchWithoutLoader();
-    }, 30000);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     fetchWithoutLoader();
+  //   }, 30000);
 
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, []);
 
   const {
     loading: initialLoding,
@@ -182,6 +196,7 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
   }, [page, limit, idToken]);
 
   const [createProjectMutation] = useMutation(CREATE_NEW_PROJECT);
+  const [addFilesToProjectMutation] = useMutation(ADD_FILE_TO_PROJECT);
   const [getProjectById, { loading: loadingDetails }] = useLazyQuery(
     FETCH_PROJECT_BY_ID,
     {
@@ -190,11 +205,27 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
   );
   const [addDocToknowledgebase] = useMutation(CREATE_DOC_REFERENCE);
   const [updateProjectStatus] = useMutation(UPDATE_PROJECT_STATUS);
+  const [updateReferenceStatusByAdmin] = useMutation(
+    UPDATE_PROJECT_STATUS_BY_ADMIN,
+  );
   const [deleteDocMutation] = useMutation(DELETE_DOC_REFERENCE);
   const createNewProject = async (
     content: ICreateProjectPayload,
   ): Promise<FetchResult<any>> => {
     return createProjectMutation({
+      variables: { ...content },
+      context: {
+        headers: {
+          identity: idToken,
+        },
+      },
+    });
+  };
+  const addFileToProject = async (content: {
+    files: IFileContent[];
+    projectId: string;
+  }): Promise<FetchResult<any>> => {
+    return addFilesToProjectMutation({
       variables: { ...content },
       context: {
         headers: {
@@ -225,6 +256,19 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
     projectId: string;
   }): Promise<FetchResult<any>> => {
     return updateProjectStatus({
+      variables: { ...content },
+      context: {
+        headers: {
+          identity: idToken,
+        },
+      },
+    });
+  };
+  const updateReferenceStatusByAdminMutation = async (content: {
+    fileId: string;
+    status: string;
+  }): Promise<FetchResult<any>> => {
+    return updateReferenceStatusByAdmin({
       variables: { ...content },
       context: {
         headers: {
@@ -267,8 +311,10 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
         projects,
         error,
         createNewProject,
+        addFileToProject,
         refetchProjects: handleRefetch,
         updateProjectStatusMutation,
+        updateReferenceStatusByAdminMutation,
         page,
         limit,
         setPage,

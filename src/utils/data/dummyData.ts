@@ -73,7 +73,7 @@ export const orgData = {
 export const stages: IStepType[] = [
   {
     id: '1',
-    name: ProjectStageLabel.DATA_SELECTION,
+    name: ProjectStageLabel.DATA_SOURCE,
     description:
       'This stage involves selecting the data sources for the project.',
   },
@@ -97,7 +97,7 @@ export const stages: IStepType[] = [
   },
   {
     id: '5',
-    name: ProjectStageLabel.LLM_FINE_TUNING,
+    name: ProjectStageLabel.RAG_INGESTION,
     description:
       'In this stage, the data is used for fine-tuning large language models.',
   },

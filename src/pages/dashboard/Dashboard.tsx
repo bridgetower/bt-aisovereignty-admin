@@ -17,8 +17,8 @@ const stepData = [
   {
     completed: true,
     icon: <UploadCloud className="text-white" />,
-    label: ProjectStageLabel.DATA_SELECTION,
-    sectionId: ProjectStageLabel.DATA_SELECTION,
+    label: ProjectStageLabel.DATA_SOURCE,
+    sectionId: ProjectStageLabel.DATA_SOURCE,
     isExpanded: false,
     data: [], //'Contact Section Content',
   },
@@ -49,8 +49,8 @@ const stepData = [
   {
     completed: false,
     icon: <Factory className="text-white" />,
-    label: ProjectStageLabel.LLM_FINE_TUNING,
-    sectionId: ProjectStageLabel.LLM_FINE_TUNING,
+    label: ProjectStageLabel.RAG_INGESTION,
+    sectionId: ProjectStageLabel.RAG_INGESTION,
     isExpanded: false,
     data: [], //'Idea Section Content',
   },

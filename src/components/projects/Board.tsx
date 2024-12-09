@@ -14,11 +14,11 @@ import { ProjectCard } from './Card';
 import { ProjectListView } from './ProjectListView';
 
 type GroupedCardsType = {
-  DATA_SELECTION: IProjectAttributes[];
+  DATA_SOURCE: IProjectAttributes[];
   DATA_INGESTION: IProjectAttributes[];
   DATA_STORAGE: IProjectAttributes[];
   DATA_PREPARATION: IProjectAttributes[];
-  LLM_FINE_TUNING: IProjectAttributes[];
+  RAG_INGESTION: IProjectAttributes[];
   // VERSIONING: IProjectAttributes[];
   // RAG: IProjectAttributes[];
   PUBLISHED: IProjectAttributes[];
@@ -59,11 +59,11 @@ const Board: React.FC = () => {
 
   const getInitialSelection = (gropedData: GroupedCardsType) => {
     if (
-      gropedData.DATA_SELECTION.length > 0 &&
+      gropedData.DATA_SOURCE.length > 0 &&
       (activeCard === 0 || activeCard === null)
     ) {
       setActiveCard(0);
-      return { data: gropedData.DATA_SELECTION, index: 0 };
+      return { data: gropedData.DATA_SOURCE, index: 0 };
     } else if (
       gropedData.DATA_INGESTION.length > 0 &&
       (activeCard === 1 || activeCard === null)
@@ -83,11 +83,11 @@ const Board: React.FC = () => {
       setActiveCard(3);
       return { data: gropedData.DATA_PREPARATION, index: 3 };
     } else if (
-      gropedData.LLM_FINE_TUNING.length > 0 &&
+      gropedData.RAG_INGESTION.length > 0 &&
       (activeCard === 4 || activeCard === null)
     ) {
       setActiveCard(4);
-      return { data: gropedData.LLM_FINE_TUNING, index: 4 };
+      return { data: gropedData.RAG_INGESTION, index: 4 };
       // } else if (gropedData.VERSIONING.length > 0) {
       //   return gropedData.VERSIONING;
       // } else if (gropedData.RAG.length > 0) {
@@ -125,10 +125,10 @@ const Board: React.FC = () => {
     //   });
 
     return {
-      [ProjectStageEnum.DATA_SELECTION]: projects.filter(
+      [ProjectStageEnum.DATA_SOURCE]: projects.filter(
         (card) =>
           card.projectstage ===
-          getProjectStageEnumValue(ProjectStageEnum.DATA_SELECTION),
+          getProjectStageEnumValue(ProjectStageEnum.DATA_SOURCE),
       ),
       [ProjectStageEnum.DATA_INGESTION]: projects.filter(
         (card) =>
@@ -145,10 +145,10 @@ const Board: React.FC = () => {
           card.projectstage ===
           getProjectStageEnumValue(ProjectStageEnum.DATA_PREPARATION),
       ),
-      [ProjectStageEnum.LLM_FINE_TUNING]: projects.filter(
+      [ProjectStageEnum.RAG_INGESTION]: projects.filter(
         (card) =>
           card.projectstage ===
-          getProjectStageEnumValue(ProjectStageEnum.LLM_FINE_TUNING),
+          getProjectStageEnumValue(ProjectStageEnum.RAG_INGESTION),
       ),
       // [ProjectStageEnum.VERSIONING]: projects.filter(
       //   (card) =>

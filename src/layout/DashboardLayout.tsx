@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import { Navigate, Outlet, useLocation } from 'react-router-dom'; // Import useLocation for route tracking
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'; // Import useLocation for route tracking
 import { useLocalStorage, useMediaQuery } from 'usehooks-ts';
 
 import Navbar from '@/components/common/Navbar';
@@ -19,6 +19,7 @@ export function DashboardLayout({ children }: { children?: React.ReactNode }) {
     [],
   );
   const location = useLocation();
+  const navigate = useNavigate();
   const isMatches = useMediaQuery('(min-width: 1080px)');
 
   // Track the recent page visits
@@ -40,10 +41,16 @@ export function DashboardLayout({ children }: { children?: React.ReactNode }) {
     }
   }, [isMatches]);
 
-  if (session && (!session.isValid() || !dbUser)) {
-    return <Navigate to="/sign-in" />;
-  }
-
+  // if (!session || !session.isValid() || !dbUser) {
+  // if (!dbUser) {
+  //   return <Navigate to="/sign-in" />;
+  // }
+  useEffect(() => {
+    const isLoogerIn = localStorage.getItem('idToken');
+    if (!dbUser && !isLoogerIn) {
+      navigate('/sign-in');
+    }
+  }, [location]);
   return (
     <DashboardProvider>
       <main

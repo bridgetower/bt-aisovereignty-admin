@@ -114,7 +114,7 @@ export const UpdateProject: React.FC<{ id: string }> = (props) => {
   useEffect(() => {
     if (base64Files.length > 0) {
       const newFiles = base64Files.map((file, i) => ({
-        id: file.fileName + i,
+        id: (file.fileName || '') + i,
         name: file.fileName,
         updatedon: new Date().toDateString(),
         isLocal: true,
@@ -207,6 +207,10 @@ export const UpdateProject: React.FC<{ id: string }> = (props) => {
         fileName: file.fileName,
         fileContent: file.fileContent,
         contentType: file.contentType,
+        depth: 0,
+        refType: 'DOCUMENT' as const,
+        websiteName: '',
+        websiteUrl: '',
       }));
       setFilesData((previous) => [...files, ...previous]);
       updateKnowledgebase({ projectId: id, files })
