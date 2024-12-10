@@ -564,9 +564,9 @@ const StepMetadataDetails = ({ step }: { step: any }) => {
                   key={i}
                   className="w-full flex gap-1 item-center bg-background mb-1 px-2 py-1 rounded-md"
                 >
-                  <Link2 className=" text-foreground" size={14} />
-                  <div>{data?.fileName}</div>
-                  <div className="text-xs">Vector Database</div>
+                  <Paperclip className=" text-foreground" size={14} />
+                  <div>{data?.filename && data.filename + ' - '}</div>
+                  <div className="text-xs"> Vector Database</div>
                   <Badge variant={'success'} className="py-0 text-xs">
                     {data?.vector_database}
                   </Badge>
