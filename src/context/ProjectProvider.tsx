@@ -22,6 +22,7 @@ import {
   CREATE_NEW_PROJECT,
   FETCH_PROJECT_BY_ID,
   FETCH_PROJECT_LIST,
+  FETCH_STAGE_BY_REFID,
   UPDATE_PROJECT_STATUS,
   UPDATE_PROJECT_STATUS_BY_ADMIN,
 } from '@/apollo/schemas/projectSchemas';
@@ -77,8 +78,12 @@ type ProjectContextType = {
     page: number;
     limit: number;
   }) => Promise<FetchResult<FetchResult<any>>>;
+  getStagebyRefId: (content: {
+    refId: string;
+  }) => Promise<FetchResult<FetchResult<any>>>;
   updateProjectStatusMutation: (content: {
     projectId: string;
+    files: { id: string; status: string }[];
   }) => Promise<FetchResult<any>>;
   updateReferenceStatusByAdminMutation: (content: {
     fileId: string;
@@ -197,8 +202,14 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const [createProjectMutation] = useMutation(CREATE_NEW_PROJECT);
   const [addFilesToProjectMutation] = useMutation(ADD_FILE_TO_PROJECT);
-  const [getProjectById, { loading: loadingDetails }] = useLazyQuery(
+  const [getProjectById, { loading: loadingProjectDetails }] = useLazyQuery(
     FETCH_PROJECT_BY_ID,
+    {
+      fetchPolicy: 'network-only',
+    },
+  );
+  const [getStepsByRefId, { loading: loadingFileStageDetails }] = useLazyQuery(
+    FETCH_STAGE_BY_REFID,
     {
       fetchPolicy: 'network-only',
     },
@@ -277,6 +288,19 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
       },
     });
   };
+  const getStagebyRefId = async (content: { refId: string }): Promise<any> => {
+    return getStepsByRefId({
+      variables: {
+        refId: content.refId,
+      },
+      context: {
+        headers: {
+          identity: idToken,
+        },
+      },
+    });
+  };
+
   const updateKnowledgebase = async (content: {
     files: IFileContent[];
     projectId: string;
@@ -315,6 +339,7 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
         refetchProjects: handleRefetch,
         updateProjectStatusMutation,
         updateReferenceStatusByAdminMutation,
+        getStagebyRefId,
         page,
         limit,
         setPage,
@@ -332,7 +357,8 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
 
         setNotificationPanel,
         notificationPanel,
-        loadingProject: initialLoding || loadingDetails,
+        loadingProject:
+          initialLoding || loadingFileStageDetails || loadingProjectDetails,
       }}
     >
       {children}

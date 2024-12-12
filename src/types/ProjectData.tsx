@@ -160,6 +160,11 @@ export const projectColors = [
   // 'violet',
   // 'fuchsia',
 ];
+export interface SourceReference {
+  refType: 'website' | 'document';
+  content: string;
+  id: number;
+}
 export const stepData: ISteperData[] = [
   {
     completed: true,

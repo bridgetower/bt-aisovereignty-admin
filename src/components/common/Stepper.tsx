@@ -32,6 +32,8 @@ export interface ISteperData {
   selected?: boolean;
   index?: number;
   dataLoading?: boolean;
+  status?: string;
+  name?: string;
 }
 
 interface StepperProps {

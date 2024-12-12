@@ -50,6 +50,7 @@ export const CREATE_NEW_PROJECT = gql`
         urls {
           key
           url
+          id
         }
       }
       error
@@ -159,12 +160,9 @@ export const FETCH_PROJECT_BY_ID = gql`
   }
 `;
 export const UPDATE_PROJECT_STATUS = gql`
-  mutation Mymutation($projectId: String!) {
+  mutation Mymutation($projectId: String!, $status: String!, $id: String!) {
     UpdateProjectStatus(
-      input: {
-        projectId: $projectId
-        fileStatus: [{ fileName: "", status: "" }]
-      }
+      input: { projectId: $projectId, files: [{ id: $id, status: $status }] }
     ) {
       data {
         createdat
@@ -267,6 +265,64 @@ export const FETCH_REFERENCES_BY_PROJECT_ID = gql`
         }
         total
         totalPages
+      }
+      error
+      status
+    }
+  }
+`;
+
+export const FETCH_STAGE_BY_REFID = gql`
+  query MyQuery($refId: String!) {
+    GetStepsByRefId(input: { refId: $refId }) {
+      data {
+        reference {
+          createdat
+          datasourceid
+          depth
+          id
+          ingested
+          ingestionjobid
+          name
+          projectid
+          referencestage
+          reftype
+          size
+          status
+          url
+        }
+        stages {
+          createdat
+          description
+          id
+          isactive
+          isdeleted
+          name
+          stagesequence
+          stagetypeid
+          status
+          steps {
+            createdat
+            description
+            id
+            isactive
+            isdeleted
+            name
+            stageid
+            status
+            stepdetails {
+              createdat
+              id
+              isactive
+              isdeleted
+              metadata
+              refid
+              status
+              stepid
+            }
+            stepsequence
+          }
+        }
       }
       error
       status

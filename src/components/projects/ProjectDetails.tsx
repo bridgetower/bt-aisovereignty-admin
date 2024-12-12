@@ -9,7 +9,7 @@ import {
   Share2,
   Trash2,
 } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dropzone, { useDropzone } from 'react-dropzone';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -22,9 +22,8 @@ import {
   stepData,
 } from '@/types/ProjectData';
 
-import { DataTable } from '../common/dataTable';
 import { SidepanelSkeleton } from '../common/SidepanelSkeleton';
-import { ISteperData, Stepper } from '../common/Stepper';
+import { ISteperData } from '../common/Stepper';
 import { Button } from '../ui/button';
 import {
   DropdownMenu,
@@ -37,6 +36,7 @@ import {
 import { Select, SelectTrigger } from '../ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { AddWebUrls } from './addWeburlComponent';
+import { Sources } from './Sources';
 
 // Dummy data for the transaction (can also be passed as props)
 const tableColumnDef: ColumnDef<any>[] = [
@@ -81,7 +81,7 @@ const tableColumnDef: ColumnDef<any>[] = [
 let tempStepsData: ISteperData[] = [];
 const ProjectDetails: React.FC<{ id: string }> = (props) => {
   const rowLimit: number = 1;
-  const topRef = useRef<HTMLDivElement | null>(null);
+  // const topRef = useRef<HTMLDivElement | null>(null);
   const { id } = props;
   const navigate = useNavigate();
   const [stepperData, setStepperData] = useState<ISteperData[]>([]);
@@ -100,16 +100,16 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
   const [refUrls, setRefUrls] = useState<IFileContent[]>([]);
   const [urlErrors, setUrlErrors] = useState<any>(null);
   const [webUrlsList, setWebUrlsList] = useState<any[]>([]);
+  const [refStageDetails, setRefStageDetails] = useState<any[]>([]);
   const {
     getProjectDetails,
     refetchProjects,
-    // deleteDocReference,
-    updateProjectStatusMutation,
     updateReferenceStatusByAdminMutation,
     addFileToProject,
+    getStagebyRefId,
   } = useProject();
   useEffect(() => {
-    topRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // topRef.current?.scrollIntoView({ behavior: 'smooth' });
     tempStepsData = stepData;
     setDocPage(1);
     setLoadingProject(true);
@@ -151,6 +151,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
       );
     }
   }, [base64Files]);
+
   const getProjectDetailsById = () => {
     // showLoader();
     getProjectDetails({ projectId: id, page: docPage, limit: rowLimit })
@@ -219,6 +220,47 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
         setLoadingProject(false);
       });
   };
+
+  const getStageDetailByRef = (refId: string) => {
+    console.log(refId, 'deifh3i');
+
+    getStagebyRefId({ refId: refId })
+      .then((res: any) => {
+        if (res.data?.GetStepsByRefId?.data) {
+          console.log('res', res.data?.GetStepsByRefId?.data);
+
+          // tempStepsData = tempStepsData.map((step) => {
+          //   const data = res.data?.GetStepsByRefId?.data?.stages;
+          //   // const data: any[] =
+          //   //   stage?.filter((s: any) => s.name === step.label) || [];
+          //   const finalData = {
+          //     ...step,
+          //     data: step.data ? step.data : data.length ? data[0] : null,
+          //     completed: true,
+          //     dataLoading: false,
+          //   };
+
+          //   return finalData;
+          // });
+          const data = (res.data?.GetStepsByRefId?.data?.stages || []).map(
+            (stage: ISteperData) => ({
+              data: stage,
+              completed: stage.status === 'COMPLETED',
+              label: stage.name,
+              //     dataLoading: false
+            }),
+          );
+
+          setRefStageDetails(data);
+        }
+      })
+      .catch((error: any) => {
+        toast.error(
+          error?.message || 'Failed to fetch reference stages details!',
+        );
+      });
+  };
+
   const onStepClick = (index: number) => {
     if (stepData[index].data) {
       return;
@@ -505,7 +547,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
     },
   };
   return (
-    <div className="px-6 " ref={topRef}>
+    <div className="px-6 ">
       {!loadingProject && project ? (
         <>
           <div className="flex justify-between">
@@ -639,7 +681,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
                   <section>
                     <div {...getRootProps()}>
                       <input {...getInputProps()} />
-                      <DataTable
+                      {/* <DataTable
                         key={filesData.length}
                         columns={[...tableColumnDef, actionMenuColDef]}
                         data={memoizedFilesData}
@@ -648,6 +690,12 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
                         onActionMenuClick={() => {}}
                         // key={Date.now()}
                         noDataText="Drag and drop files here"
+                      /> */}
+                      <Sources
+                        sourceArray={memoizedFilesData}
+                        activeIndex={0}
+                        onOpen={getStageDetailByRef}
+                        stepperData={refStageDetails}
                       />
                     </div>
                   </section>
@@ -665,28 +713,30 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
             </TabsContent>
           </Tabs>
           <div className="flex justify-end py-4">
-            <Button
-              disabled={
-                saving || (urlErrors && Object.keys(urlErrors).length > 0)
-              }
-              size={'sm'}
-              className={
-                urlErrors && Object.keys(urlErrors).length > 0
-                  ? `bg-secondary text-neutral-400 cursor-not-allowed`
-                  : ''
-              }
-              onClick={() => saveFiles()}
-            >
-              {saving ? (
-                <div className="flex items-center gap-1">
-                  <Loader2 size={16} className="animate-spin" /> Updating...
-                </div>
-              ) : (
-                'Update'
-              )}
-            </Button>
+            {base64Files.find((e) => e.isLocal) ? (
+              <Button
+                disabled={
+                  saving || (urlErrors && Object.keys(urlErrors).length > 0)
+                }
+                size={'sm'}
+                className={
+                  urlErrors && Object.keys(urlErrors).length > 0
+                    ? `bg-secondary text-neutral-400 cursor-not-allowed`
+                    : ''
+                }
+                onClick={() => saveFiles()}
+              >
+                {saving ? (
+                  <div className="flex items-center gap-1">
+                    <Loader2 size={16} className="animate-spin" /> Updating...
+                  </div>
+                ) : (
+                  'Update'
+                )}
+              </Button>
+            ) : null}
           </div>
-          <div className="text-sm text-foreground mt-4 font-roboto ">
+          {/* <div className="text-sm text-foreground mt-4 font-roboto ">
             <div className="font-semibold mt-4">Project Stage History</div>
           </div>
           <Stepper
@@ -695,7 +745,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
             animationDuration={0.5}
             className="bg-card rounded-2xl"
             onStepClick={onStepClick}
-          />
+          /> */}
         </>
       ) : (
         <SidepanelSkeleton />

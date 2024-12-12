@@ -161,7 +161,8 @@ export const CreateProject: React.FC = () => {
         if (res.data?.AddProjectAndReference?.status === 200) {
           setHideActionButtons(true);
           const projectId = res.data?.AddProjectAndReference?.data?.project?.id;
-          const respData = res.data?.AddProjectAndReference?.data?.urls;
+          const respData: { id: string; url: string; key: string }[] =
+            res.data?.AddProjectAndReference?.data?.urls;
 
           for (const element of respData) {
             const file = base64Files.find(
@@ -218,9 +219,13 @@ export const CreateProject: React.FC = () => {
             }
           }
           setSaving(false);
-
+          const uploadedFiles = respData.map((file) => ({
+            id: file.id,
+            status: 'UPLOADED',
+          }));
           await updateProjectStatusMutation({
             projectId,
+            files: uploadedFiles,
           });
           // form.reset();
           // setFilesData([]);

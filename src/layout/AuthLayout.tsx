@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom'; // Import useLocation for route tracking
 
-import AuthNavbar from '@/components/common/AuthNavbar';
+import { SignInBanner } from '@/components/common/signinBanner';
 import { useAuth } from '@/context/CoginitoAuthProvider';
 
 export function AuthLayout({ children }: { children?: React.ReactNode }) {
@@ -15,10 +15,12 @@ export function AuthLayout({ children }: { children?: React.ReactNode }) {
     return <Navigate to={'/'} />;
   }
   return (
-    <main className="w-screen min-h-screen bg-background">
-      <AuthNavbar />
-
+    <SignInBanner>
       {children ?? <Outlet />}
-    </main>
+      {/* <main className="w-screen min-h-screen bg-background">
+        <AuthNavbar />
+
+      </main> */}
+    </SignInBanner>
   );
 }

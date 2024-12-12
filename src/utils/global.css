@@ -34,7 +34,7 @@
     --card-foreground: 220, 10%, 15%;
     /* Darker text color on cards */
 
-    --primary: 220, 10%,20%;;
+    --primary: 220, 10%, 20%;
     /* Slightly muted blue for primary actions */
     --primary-foreground: 0, 0%, 100%;
     /* White text on primary buttons */
@@ -63,7 +63,7 @@
 
     --warning-foreground: 0, 0%, 100%;
 
-    --info: 176, 100%, 13%
+    --info: 176, 100%, 13%;
   }
 
   .dark {
@@ -107,11 +107,11 @@
 
     --warning-foreground: 0, 0%, 100%;
 
-    --info: 176, 100%, 13%
+    --info: 176, 100%, 13%;
   }
 }
 
-@layer base {
+/* @layer base {
   * {
     @apply border-border;
   }
@@ -120,4 +120,4 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-}
+} */

@@ -2,7 +2,7 @@
 
 export default {
   darkMode: ['class'],
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/**/*.{ts,tsx, css}', './public/index.html'],
   theme: {
     container: {
       center: 'true',
