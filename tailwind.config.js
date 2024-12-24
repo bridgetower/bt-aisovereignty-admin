@@ -2,7 +2,7 @@
 
 export default {
   darkMode: ['class'],
-  content: ['./src/**/*.{ts,tsx, css}', './public/index.html'],
+  content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
     container: {
       center: 'true',
@@ -17,9 +17,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        inter: 'Inter", sans-serif',
-        firaSans: 'Fira Sans", sans-serif',
         roboto: ['Roboto', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
+        firaSans: ['Fira Sans', 'sans-serif'],
       },
       fontSize: {
         h1: ['65px', '62px'],

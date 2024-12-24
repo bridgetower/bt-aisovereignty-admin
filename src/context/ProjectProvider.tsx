@@ -13,13 +13,11 @@ import React, {
   useState,
 } from 'react';
 
-import {
-  CREATE_DOC_REFERENCE,
-  DELETE_DOC_REFERENCE,
-} from '@/apollo/schemas/knowledgeBaseSchemas';
+import { CREATE_DOC_REFERENCE } from '@/apollo/schemas/knowledgeBaseSchemas';
 import {
   ADD_FILE_TO_PROJECT,
   CREATE_NEW_PROJECT,
+  DELETE_DOC_REFERENCE,
   FETCH_PROJECT_BY_ID,
   FETCH_PROJECT_LIST,
   FETCH_STAGE_BY_REFID,
@@ -85,11 +83,16 @@ type ProjectContextType = {
     projectId: string;
     files: { id: string; status: string }[];
   }) => Promise<FetchResult<any>>;
-  updateReferenceStatusByAdminMutation: (content: {
-    fileId: string;
-    status: string;
-  }) => Promise<FetchResult<any>>;
-  deleteDocReference: (id: string) => Promise<FetchResult<any>>;
+  updateReferenceStatusByAdminMutation: (
+    content: {
+      id: string;
+      status: string;
+    }[],
+  ) => Promise<FetchResult<any>>;
+  deleteDocReference: (
+    id: string,
+    refType: string,
+  ) => Promise<FetchResult<any>>;
   updateKnowledgebase: (content: {
     projectId: string;
     files: IFileContent[];
@@ -220,6 +223,7 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
     UPDATE_PROJECT_STATUS_BY_ADMIN,
   );
   const [deleteDocMutation] = useMutation(DELETE_DOC_REFERENCE);
+
   const createNewProject = async (
     content: ICreateProjectPayload,
   ): Promise<FetchResult<any>> => {
@@ -265,9 +269,10 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
   };
   const updateProjectStatusMutation = async (content: {
     projectId: string;
+    files: { id: string; status: string }[];
   }): Promise<FetchResult<any>> => {
     return updateProjectStatus({
-      variables: { ...content },
+      variables: { projectId: content.projectId, files: content.files },
       context: {
         headers: {
           identity: idToken,
@@ -275,12 +280,14 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
       },
     });
   };
-  const updateReferenceStatusByAdminMutation = async (content: {
-    fileId: string;
-    status: string;
-  }): Promise<FetchResult<any>> => {
+  const updateReferenceStatusByAdminMutation = async (
+    content: {
+      id: string;
+      status: string;
+    }[],
+  ): Promise<FetchResult<any>> => {
     return updateReferenceStatusByAdmin({
-      variables: { ...content },
+      variables: { files: content },
       context: {
         headers: {
           identity: idToken,
@@ -300,7 +307,6 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
       },
     });
   };
-
   const updateKnowledgebase = async (content: {
     files: IFileContent[];
     projectId: string;
@@ -318,9 +324,12 @@ export const ProjectContextProvider: React.FC<{ children: ReactNode }> = ({
       },
     });
   };
-  const deleteDocReference = async (id: string): Promise<FetchResult<any>> => {
+  const deleteDocReference = async (
+    id: string,
+    refType: string,
+  ): Promise<FetchResult<any>> => {
     return deleteDocMutation({
-      variables: { refId: id },
+      variables: { refId: id, refType: refType },
       context: {
         headers: {
           identity: idToken,

@@ -65,7 +65,7 @@ export enum ProjectStageEnum {
 }
 
 export const getProjectStageEnumValue = (key: string): string => {
-  return ProjectStageEnum[key as keyof typeof ProjectStageEnum];
+  return ProjectStatusEnum[key as keyof typeof ProjectStatusEnum];
 };
 export const ProjectStageLabel = {
   DATA_SOURCE: 'Data Source',
@@ -93,7 +93,10 @@ export type ActionStatus =
   | 'PENDING'
   | 'APPROVED'
   | 'REJECTED'
-  | 'UPLOADED';
+  | 'UPLOADED'
+  | 'PUBLISHED'
+  | 'ERRORED'
+  | 'PROCESSING';
 
 export const statusColor: Record<ActionStatus, { bg: string; text: string }> = {
   INITIATED: {
@@ -105,6 +108,10 @@ export const statusColor: Record<ActionStatus, { bg: string; text: string }> = {
     text: 'text-green-600',
   },
   ERROR: {
+    bg: 'bg-red-100',
+    text: 'text-red-600',
+  },
+  ERRORED: {
     bg: 'bg-red-100',
     text: 'text-red-600',
   },
@@ -131,6 +138,14 @@ export const statusColor: Record<ActionStatus, { bg: string; text: string }> = {
   UPLOADED: {
     bg: 'bg-yellow-100',
     text: 'text-yellow-600',
+  },
+  PUBLISHED: {
+    bg: 'bg-green-100',
+    text: 'text-green-600',
+  },
+  PROCESSING: {
+    bg: 'bg-sky-100',
+    text: 'text-sky-600',
   },
 };
 

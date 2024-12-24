@@ -1,0 +1,1029 @@
+[
+  {
+    "id": 1143,
+    "source": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "target": "ef352f93-345d-4c08-99c7-47a3c7638ef5",
+    "relationship": {
+      "to_table": "project",
+      "to_column": "id",
+      "from_table": "reference",
+      "from_column": "projectid"
+    },
+    "from_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}",
+    "to_metadata": "{'id': UUID('ef352f93-345d-4c08-99c7-47a3c7638ef5'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projecttype': 'CLOUD', 'projectstatus': 'STARTED', 'projectstage': 'DATA_SOURCE', 'knowledgebaseid': 'R4DPYGTEVP', 'organizationid': '3f0d758e-84c9-4a3d-b15a-da7a0c2229ba', 'name': 'Poltical Leader Data', 'description': 'TEST', 'isactive': True, 'createdat': '2024-12-17T12:19:37.029Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'chaintype': 'Avalanche', 's3bucketname': 'olticaleaderata-54bb8n', 's3bucketregion': 'us-east-1', 'indexid': 'olticaleaderata-8gaufl-index', 'collectionname': 'bt-collection-test'}"
+  },
+  {
+    "id": 1144,
+    "source": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "target": "ef352f93-345d-4c08-99c7-47a3c7638ef5",
+    "relationship": {
+      "to_table": "project",
+      "to_column": "id",
+      "from_table": "reference",
+      "from_column": "projectid"
+    },
+    "from_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}",
+    "to_metadata": "{'id': UUID('ef352f93-345d-4c08-99c7-47a3c7638ef5'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projecttype': 'CLOUD', 'projectstatus': 'STARTED', 'projectstage': 'DATA_SOURCE', 'knowledgebaseid': 'R4DPYGTEVP', 'organizationid': '3f0d758e-84c9-4a3d-b15a-da7a0c2229ba', 'name': 'Poltical Leader Data', 'description': 'TEST', 'isactive': True, 'createdat': '2024-12-17T12:19:37.029Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'chaintype': 'Avalanche', 's3bucketname': 'olticaleaderata-54bb8n', 's3bucketregion': 'us-east-1', 'indexid': 'olticaleaderata-8gaufl-index', 'collectionname': 'bt-collection-test'}"
+  },
+  {
+    "id": 1145,
+    "source": "b84e9435-e23b-4a84-b9cc-dd9ebb365d42",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('b84e9435-e23b-4a84-b9cc-dd9ebb365d42'), 'stepid': '7e04da7d-1415-4a4a-913e-97eab61f2ee2', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"modi.txt\\\",\\\"contentType\\\":\\\"text/plain\\\",\\\"size\\\":\\\"145 Bytes\\\",\\\"downloadUrl\\\":\\\"https://olticaleaderata-54bb8n.s3.amazonaws.com/modi.txt?AWSAccessKeyId=ASIARHQBNWYSQBURDKLZ&Expires=1735042815&Signature=rkTj8hxQxJ1lddAvdmbgbU9G%2BfI%3D&X-Amzn-Trace-Id=Root%3D1-67616c60-5c86ff506ee12b665065e917%3BParent%3D1fa0e9497ba49564%3BSampled%3D0%3BLineage%3D2%3Ad9d6f71e%3A0&x-amz-security-token=IQoJb3JpZ2luX2VjEH0aCXVzLWVhc3QtMSJGMEQCH0aZvvuZjgM%2B2sgE75g36IbQnGS%2BiXlYCzmPcA4RszYCIQDdjB09%2F6UkZBl0MwpBbL2nHhLiPOrYO7jNkaXp3gkpmyqjAwhFEAAaDDA4NDgyODU5OTg0NSIMK2QN%2FFANGeSrviMYKoADDtXBP7dvsZCBH1BJ1uRLUe9UB6mFVSYWEbEXkW2UslI3yTxH3shujCCVjSCaATw96DPZotyWl7x4rmu5A3HNXyhxpQflnvIs8CGY%2B0bQpbnxVIHhRgRbZgf4LEz9fZy%2FnCrYuw3j24bu3k6nFtUqYayYSPTtCY9Yy0bE6pm7gpiGmnWWu%2FsoIzdp3l36Hae%2BB6nARGzrXs3%2B3owkxk0u56ouuMxMudiZdxyyMAGntpFl8cMmeG0FyFE3mfXk0C9p8lrA8td2NpQt1HT%2FLa7IAwNx%2Bp9dJOnzNzhJOEeYSeEFQvgCiMAbftlxE8PAa3l3ER%2FajmUkWC2qRYw9CA76Wct8ZxWoj6mI3O4pIi1Q79Xr5aMsgRVdzqhX4U%2FTiOvod256Y143JyoDYCcgO6vXsCtL8zbDtPNaJhTyVh5UyPTGMsgUWywK6bgkFm7vo1WDXfNw34D%2B95Y91rwwNpk%2F3%2FUyvv3%2Fm%2BqnyfKIV6khN%2BiYOkIvdO5DRnKPYL7JTq7BMPnYhbsGOp4BgIk%2FzDY%2FrYavobhAeZD06Xw8TweHYQxfQP1Xess%2FUCptxXVGbbUD37hTVx9PQ89C%2BGRRne2Zbnz3a1iM6my84EyKePt6QJnvcN8cRvfGKJLNF4EkdQJXf6qJp5G9GOYW4sE23wFoTkFpMqI%2FIWv4FzQLndphNvPUF1CdifQkT4c3jjVEOtJjkRjnmQmZA7b9RtPq%2FEvl7pVE2TzEelg%3D\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:15.619Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1146,
+    "source": "b84e9435-e23b-4a84-b9cc-dd9ebb365d42",
+    "target": "7e04da7d-1415-4a4a-913e-97eab61f2ee2",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('b84e9435-e23b-4a84-b9cc-dd9ebb365d42'), 'stepid': '7e04da7d-1415-4a4a-913e-97eab61f2ee2', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"modi.txt\\\",\\\"contentType\\\":\\\"text/plain\\\",\\\"size\\\":\\\"145 Bytes\\\",\\\"downloadUrl\\\":\\\"https://olticaleaderata-54bb8n.s3.amazonaws.com/modi.txt?AWSAccessKeyId=ASIARHQBNWYSQBURDKLZ&Expires=1735042815&Signature=rkTj8hxQxJ1lddAvdmbgbU9G%2BfI%3D&X-Amzn-Trace-Id=Root%3D1-67616c60-5c86ff506ee12b665065e917%3BParent%3D1fa0e9497ba49564%3BSampled%3D0%3BLineage%3D2%3Ad9d6f71e%3A0&x-amz-security-token=IQoJb3JpZ2luX2VjEH0aCXVzLWVhc3QtMSJGMEQCH0aZvvuZjgM%2B2sgE75g36IbQnGS%2BiXlYCzmPcA4RszYCIQDdjB09%2F6UkZBl0MwpBbL2nHhLiPOrYO7jNkaXp3gkpmyqjAwhFEAAaDDA4NDgyODU5OTg0NSIMK2QN%2FFANGeSrviMYKoADDtXBP7dvsZCBH1BJ1uRLUe9UB6mFVSYWEbEXkW2UslI3yTxH3shujCCVjSCaATw96DPZotyWl7x4rmu5A3HNXyhxpQflnvIs8CGY%2B0bQpbnxVIHhRgRbZgf4LEz9fZy%2FnCrYuw3j24bu3k6nFtUqYayYSPTtCY9Yy0bE6pm7gpiGmnWWu%2FsoIzdp3l36Hae%2BB6nARGzrXs3%2B3owkxk0u56ouuMxMudiZdxyyMAGntpFl8cMmeG0FyFE3mfXk0C9p8lrA8td2NpQt1HT%2FLa7IAwNx%2Bp9dJOnzNzhJOEeYSeEFQvgCiMAbftlxE8PAa3l3ER%2FajmUkWC2qRYw9CA76Wct8ZxWoj6mI3O4pIi1Q79Xr5aMsgRVdzqhX4U%2FTiOvod256Y143JyoDYCcgO6vXsCtL8zbDtPNaJhTyVh5UyPTGMsgUWywK6bgkFm7vo1WDXfNw34D%2B95Y91rwwNpk%2F3%2FUyvv3%2Fm%2BqnyfKIV6khN%2BiYOkIvdO5DRnKPYL7JTq7BMPnYhbsGOp4BgIk%2FzDY%2FrYavobhAeZD06Xw8TweHYQxfQP1Xess%2FUCptxXVGbbUD37hTVx9PQ89C%2BGRRne2Zbnz3a1iM6my84EyKePt6QJnvcN8cRvfGKJLNF4EkdQJXf6qJp5G9GOYW4sE23wFoTkFpMqI%2FIWv4FzQLndphNvPUF1CdifQkT4c3jjVEOtJjkRjnmQmZA7b9RtPq%2FEvl7pVE2TzEelg%3D\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:15.619Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('7e04da7d-1415-4a4a-913e-97eab61f2ee2'), 'name': 'File upload from frontend', 'description': 'File upload from frontend', 'steptypeid': 'e9298be1-cc47-455a-9e54-60cde965def0', 'status': 'COMPLETED', 'stageid': 'ad874b0c-5d1a-4cd9-af71-19c714b8c042', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.110Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 1}"
+  },
+  {
+    "id": 1147,
+    "source": "337d5b14-384f-44bc-807b-662d676206d9",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('337d5b14-384f-44bc-807b-662d676206d9'), 'stepid': '72fe08ed-a81f-405a-923e-59ba91ce5b66', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:15.641Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1148,
+    "source": "337d5b14-384f-44bc-807b-662d676206d9",
+    "target": "72fe08ed-a81f-405a-923e-59ba91ce5b66",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('337d5b14-384f-44bc-807b-662d676206d9'), 'stepid': '72fe08ed-a81f-405a-923e-59ba91ce5b66', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:15.641Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('72fe08ed-a81f-405a-923e-59ba91ce5b66'), 'name': 'File hashing', 'description': 'File hashing', 'steptypeid': 'd34564b8-f9aa-4ded-a32e-f6fd5bc6545c', 'status': 'COMPLETED', 'stageid': 'ad874b0c-5d1a-4cd9-af71-19c714b8c042', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.205Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 2}"
+  },
+  {
+    "id": 1149,
+    "source": "cee07f68-46b0-4517-bd80-631482c718aa",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('cee07f68-46b0-4517-bd80-631482c718aa'), 'stepid': '9b3b1a7e-c3eb-446a-ad88-96ac131609a1', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"4c41986aa7986d590677bb850f0f80de30020e214d9549b2a969acbeff96e494\\\",\\\"txHash\\\":\\\"0xd7f40c88ffc7b98c0cda2677c2e6bf794c371ee6600a4fc6deb9716792f9e91c\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8676,\\\"blockHash\\\":\\\"0x32a21cd26dc78e24cb02973fd9a957cdc8e3a837d2366282daaefbcb651a2079\\\",\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:20:17.000Z\\\",\\\"blockNumber\\\":37178323,\\\"confirmations\\\":1,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:21.591Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1150,
+    "source": "cee07f68-46b0-4517-bd80-631482c718aa",
+    "target": "9b3b1a7e-c3eb-446a-ad88-96ac131609a1",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('cee07f68-46b0-4517-bd80-631482c718aa'), 'stepid': '9b3b1a7e-c3eb-446a-ad88-96ac131609a1', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"4c41986aa7986d590677bb850f0f80de30020e214d9549b2a969acbeff96e494\\\",\\\"txHash\\\":\\\"0xd7f40c88ffc7b98c0cda2677c2e6bf794c371ee6600a4fc6deb9716792f9e91c\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8676,\\\"blockHash\\\":\\\"0x32a21cd26dc78e24cb02973fd9a957cdc8e3a837d2366282daaefbcb651a2079\\\",\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:20:17.000Z\\\",\\\"blockNumber\\\":37178323,\\\"confirmations\\\":1,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:21.591Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('9b3b1a7e-c3eb-446a-ad88-96ac131609a1'), 'name': 'Store to Blockchain', 'description': 'Store to Blockchain', 'steptypeid': '3dc2bd8e-d62a-41e1-8dbe-a684c24d59a6', 'status': 'COMPLETED', 'stageid': 'ad874b0c-5d1a-4cd9-af71-19c714b8c042', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.203Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 3}"
+  },
+  {
+    "id": 1151,
+    "source": "002e8037-9296-486e-a498-52224a137bfd",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('002e8037-9296-486e-a498-52224a137bfd'), 'stepid': 'f4c93c3c-9421-49fb-b3bf-ab5f02bda5b7', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"modi.txt\\\",\\\"size\\\":\\\"145 Bytes\\\",\\\"etag\\\":\\\"ca5e38f5de211f4d269691bf2e0ed2c3\\\",\\\"contentType\\\":\\\"text/plain\\\",\\\"lastModified\\\":\\\"2024-12-17T12:19:44.000Z\\\",\\\"downloadUrl\\\":\\\"https://olticaleaderata-54bb8n.s3.amazonaws.com/modi.txt?AWSAccessKeyId=ASIARHQBNWYSQBURDKLZ&Expires=1734438921&Signature=Itq7DgchRnEHPDq%2F7YW2Pcn35tU%3D&X-Amzn-Trace-Id=Root%3D1-67616c60-5c86ff506ee12b665065e917%3BParent%3D1fa0e9497ba49564%3BSampled%3D0%3BLineage%3D2%3Ad9d6f71e%3A0&x-amz-security-token=IQoJb3JpZ2luX2VjEH0aCXVzLWVhc3QtMSJGMEQCH0aZvvuZjgM%2B2sgE75g36IbQnGS%2BiXlYCzmPcA4RszYCIQDdjB09%2F6UkZBl0MwpBbL2nHhLiPOrYO7jNkaXp3gkpmyqjAwhFEAAaDDA4NDgyODU5OTg0NSIMK2QN%2FFANGeSrviMYKoADDtXBP7dvsZCBH1BJ1uRLUe9UB6mFVSYWEbEXkW2UslI3yTxH3shujCCVjSCaATw96DPZotyWl7x4rmu5A3HNXyhxpQflnvIs8CGY%2B0bQpbnxVIHhRgRbZgf4LEz9fZy%2FnCrYuw3j24bu3k6nFtUqYayYSPTtCY9Yy0bE6pm7gpiGmnWWu%2FsoIzdp3l36Hae%2BB6nARGzrXs3%2B3owkxk0u56ouuMxMudiZdxyyMAGntpFl8cMmeG0FyFE3mfXk0C9p8lrA8td2NpQt1HT%2FLa7IAwNx%2Bp9dJOnzNzhJOEeYSeEFQvgCiMAbftlxE8PAa3l3ER%2FajmUkWC2qRYw9CA76Wct8ZxWoj6mI3O4pIi1Q79Xr5aMsgRVdzqhX4U%2FTiOvod256Y143JyoDYCcgO6vXsCtL8zbDtPNaJhTyVh5UyPTGMsgUWywK6bgkFm7vo1WDXfNw34D%2B95Y91rwwNpk%2F3%2FUyvv3%2Fm%2BqnyfKIV6khN%2BiYOkIvdO5DRnKPYL7JTq7BMPnYhbsGOp4BgIk%2FzDY%2FrYavobhAeZD06Xw8TweHYQxfQP1Xess%2FUCptxXVGbbUD37hTVx9PQ89C%2BGRRne2Zbnz3a1iM6my84EyKePt6QJnvcN8cRvfGKJLNF4EkdQJXf6qJp5G9GOYW4sE23wFoTkFpMqI%2FIWv4FzQLndphNvPUF1CdifQkT4c3jjVEOtJjkRjnmQmZA7b9RtPq%2FEvl7pVE2TzEelg%3D\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:21.706Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1152,
+    "source": "002e8037-9296-486e-a498-52224a137bfd",
+    "target": "f4c93c3c-9421-49fb-b3bf-ab5f02bda5b7",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('002e8037-9296-486e-a498-52224a137bfd'), 'stepid': 'f4c93c3c-9421-49fb-b3bf-ab5f02bda5b7', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"modi.txt\\\",\\\"size\\\":\\\"145 Bytes\\\",\\\"etag\\\":\\\"ca5e38f5de211f4d269691bf2e0ed2c3\\\",\\\"contentType\\\":\\\"text/plain\\\",\\\"lastModified\\\":\\\"2024-12-17T12:19:44.000Z\\\",\\\"downloadUrl\\\":\\\"https://olticaleaderata-54bb8n.s3.amazonaws.com/modi.txt?AWSAccessKeyId=ASIARHQBNWYSQBURDKLZ&Expires=1734438921&Signature=Itq7DgchRnEHPDq%2F7YW2Pcn35tU%3D&X-Amzn-Trace-Id=Root%3D1-67616c60-5c86ff506ee12b665065e917%3BParent%3D1fa0e9497ba49564%3BSampled%3D0%3BLineage%3D2%3Ad9d6f71e%3A0&x-amz-security-token=IQoJb3JpZ2luX2VjEH0aCXVzLWVhc3QtMSJGMEQCH0aZvvuZjgM%2B2sgE75g36IbQnGS%2BiXlYCzmPcA4RszYCIQDdjB09%2F6UkZBl0MwpBbL2nHhLiPOrYO7jNkaXp3gkpmyqjAwhFEAAaDDA4NDgyODU5OTg0NSIMK2QN%2FFANGeSrviMYKoADDtXBP7dvsZCBH1BJ1uRLUe9UB6mFVSYWEbEXkW2UslI3yTxH3shujCCVjSCaATw96DPZotyWl7x4rmu5A3HNXyhxpQflnvIs8CGY%2B0bQpbnxVIHhRgRbZgf4LEz9fZy%2FnCrYuw3j24bu3k6nFtUqYayYSPTtCY9Yy0bE6pm7gpiGmnWWu%2FsoIzdp3l36Hae%2BB6nARGzrXs3%2B3owkxk0u56ouuMxMudiZdxyyMAGntpFl8cMmeG0FyFE3mfXk0C9p8lrA8td2NpQt1HT%2FLa7IAwNx%2Bp9dJOnzNzhJOEeYSeEFQvgCiMAbftlxE8PAa3l3ER%2FajmUkWC2qRYw9CA76Wct8ZxWoj6mI3O4pIi1Q79Xr5aMsgRVdzqhX4U%2FTiOvod256Y143JyoDYCcgO6vXsCtL8zbDtPNaJhTyVh5UyPTGMsgUWywK6bgkFm7vo1WDXfNw34D%2B95Y91rwwNpk%2F3%2FUyvv3%2Fm%2BqnyfKIV6khN%2BiYOkIvdO5DRnKPYL7JTq7BMPnYhbsGOp4BgIk%2FzDY%2FrYavobhAeZD06Xw8TweHYQxfQP1Xess%2FUCptxXVGbbUD37hTVx9PQ89C%2BGRRne2Zbnz3a1iM6my84EyKePt6QJnvcN8cRvfGKJLNF4EkdQJXf6qJp5G9GOYW4sE23wFoTkFpMqI%2FIWv4FzQLndphNvPUF1CdifQkT4c3jjVEOtJjkRjnmQmZA7b9RtPq%2FEvl7pVE2TzEelg%3D\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:21.706Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('f4c93c3c-9421-49fb-b3bf-ab5f02bda5b7'), 'name': 'Upload to S3', 'description': 'Upload to S3', 'steptypeid': '4570e3ea-7bb9-4268-85e8-55a263de1972', 'status': 'COMPLETED', 'stageid': '07028e71-617f-481b-9bcc-0648bf55e15b', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.241Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 1}"
+  },
+  {
+    "id": 1153,
+    "source": "12f0c7d1-1bc2-4763-a66c-aaada7cb87b1",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('12f0c7d1-1bc2-4763-a66c-aaada7cb87b1'), 'stepid': '14eca740-9471-4861-9d88-8fe0fe031fa4', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"modi.txt\\\",\\\"size\\\":\\\"145 Bytes\\\",\\\"etag\\\":\\\"ca5e38f5de211f4d269691bf2e0ed2c3\\\",\\\"contentType\\\":\\\"text/plain\\\",\\\"lastModified\\\":\\\"2024-12-17T12:19:44.000Z\\\",\\\"downloadUrl\\\":\\\"https://olticaleaderata-54bb8n.s3.amazonaws.com/modi.txt?AWSAccessKeyId=ASIARHQBNWYSQBURDKLZ&Expires=1734438921&Signature=Itq7DgchRnEHPDq%2F7YW2Pcn35tU%3D&X-Amzn-Trace-Id=Root%3D1-67616c60-5c86ff506ee12b665065e917%3BParent%3D1fa0e9497ba49564%3BSampled%3D0%3BLineage%3D2%3Ad9d6f71e%3A0&x-amz-security-token=IQoJb3JpZ2luX2VjEH0aCXVzLWVhc3QtMSJGMEQCH0aZvvuZjgM%2B2sgE75g36IbQnGS%2BiXlYCzmPcA4RszYCIQDdjB09%2F6UkZBl0MwpBbL2nHhLiPOrYO7jNkaXp3gkpmyqjAwhFEAAaDDA4NDgyODU5OTg0NSIMK2QN%2FFANGeSrviMYKoADDtXBP7dvsZCBH1BJ1uRLUe9UB6mFVSYWEbEXkW2UslI3yTxH3shujCCVjSCaATw96DPZotyWl7x4rmu5A3HNXyhxpQflnvIs8CGY%2B0bQpbnxVIHhRgRbZgf4LEz9fZy%2FnCrYuw3j24bu3k6nFtUqYayYSPTtCY9Yy0bE6pm7gpiGmnWWu%2FsoIzdp3l36Hae%2BB6nARGzrXs3%2B3owkxk0u56ouuMxMudiZdxyyMAGntpFl8cMmeG0FyFE3mfXk0C9p8lrA8td2NpQt1HT%2FLa7IAwNx%2Bp9dJOnzNzhJOEeYSeEFQvgCiMAbftlxE8PAa3l3ER%2FajmUkWC2qRYw9CA76Wct8ZxWoj6mI3O4pIi1Q79Xr5aMsgRVdzqhX4U%2FTiOvod256Y143JyoDYCcgO6vXsCtL8zbDtPNaJhTyVh5UyPTGMsgUWywK6bgkFm7vo1WDXfNw34D%2B95Y91rwwNpk%2F3%2FUyvv3%2Fm%2BqnyfKIV6khN%2BiYOkIvdO5DRnKPYL7JTq7BMPnYhbsGOp4BgIk%2FzDY%2FrYavobhAeZD06Xw8TweHYQxfQP1Xess%2FUCptxXVGbbUD37hTVx9PQ89C%2BGRRne2Zbnz3a1iM6my84EyKePt6QJnvcN8cRvfGKJLNF4EkdQJXf6qJp5G9GOYW4sE23wFoTkFpMqI%2FIWv4FzQLndphNvPUF1CdifQkT4c3jjVEOtJjkRjnmQmZA7b9RtPq%2FEvl7pVE2TzEelg%3D\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:21.912Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1154,
+    "source": "12f0c7d1-1bc2-4763-a66c-aaada7cb87b1",
+    "target": "14eca740-9471-4861-9d88-8fe0fe031fa4",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('12f0c7d1-1bc2-4763-a66c-aaada7cb87b1'), 'stepid': '14eca740-9471-4861-9d88-8fe0fe031fa4', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"modi.txt\\\",\\\"size\\\":\\\"145 Bytes\\\",\\\"etag\\\":\\\"ca5e38f5de211f4d269691bf2e0ed2c3\\\",\\\"contentType\\\":\\\"text/plain\\\",\\\"lastModified\\\":\\\"2024-12-17T12:19:44.000Z\\\",\\\"downloadUrl\\\":\\\"https://olticaleaderata-54bb8n.s3.amazonaws.com/modi.txt?AWSAccessKeyId=ASIARHQBNWYSQBURDKLZ&Expires=1734438921&Signature=Itq7DgchRnEHPDq%2F7YW2Pcn35tU%3D&X-Amzn-Trace-Id=Root%3D1-67616c60-5c86ff506ee12b665065e917%3BParent%3D1fa0e9497ba49564%3BSampled%3D0%3BLineage%3D2%3Ad9d6f71e%3A0&x-amz-security-token=IQoJb3JpZ2luX2VjEH0aCXVzLWVhc3QtMSJGMEQCH0aZvvuZjgM%2B2sgE75g36IbQnGS%2BiXlYCzmPcA4RszYCIQDdjB09%2F6UkZBl0MwpBbL2nHhLiPOrYO7jNkaXp3gkpmyqjAwhFEAAaDDA4NDgyODU5OTg0NSIMK2QN%2FFANGeSrviMYKoADDtXBP7dvsZCBH1BJ1uRLUe9UB6mFVSYWEbEXkW2UslI3yTxH3shujCCVjSCaATw96DPZotyWl7x4rmu5A3HNXyhxpQflnvIs8CGY%2B0bQpbnxVIHhRgRbZgf4LEz9fZy%2FnCrYuw3j24bu3k6nFtUqYayYSPTtCY9Yy0bE6pm7gpiGmnWWu%2FsoIzdp3l36Hae%2BB6nARGzrXs3%2B3owkxk0u56ouuMxMudiZdxyyMAGntpFl8cMmeG0FyFE3mfXk0C9p8lrA8td2NpQt1HT%2FLa7IAwNx%2Bp9dJOnzNzhJOEeYSeEFQvgCiMAbftlxE8PAa3l3ER%2FajmUkWC2qRYw9CA76Wct8ZxWoj6mI3O4pIi1Q79Xr5aMsgRVdzqhX4U%2FTiOvod256Y143JyoDYCcgO6vXsCtL8zbDtPNaJhTyVh5UyPTGMsgUWywK6bgkFm7vo1WDXfNw34D%2B95Y91rwwNpk%2F3%2FUyvv3%2Fm%2BqnyfKIV6khN%2BiYOkIvdO5DRnKPYL7JTq7BMPnYhbsGOp4BgIk%2FzDY%2FrYavobhAeZD06Xw8TweHYQxfQP1Xess%2FUCptxXVGbbUD37hTVx9PQ89C%2BGRRne2Zbnz3a1iM6my84EyKePt6QJnvcN8cRvfGKJLNF4EkdQJXf6qJp5G9GOYW4sE23wFoTkFpMqI%2FIWv4FzQLndphNvPUF1CdifQkT4c3jjVEOtJjkRjnmQmZA7b9RtPq%2FEvl7pVE2TzEelg%3D\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:21.912Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('14eca740-9471-4861-9d88-8fe0fe031fa4'), 'name': 'Read file from s3', 'description': 'Read file from s3', 'steptypeid': '10220f72-9891-4bc1-827a-1a54685a75bc', 'status': 'COMPLETED', 'stageid': '35fe6a67-6793-49e7-846b-45c9f3e8e361', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.261Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 1}"
+  },
+  {
+    "id": 1155,
+    "source": "47a4332d-0802-4d18-b98b-fa53c94c3e1d",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('47a4332d-0802-4d18-b98b-fa53c94c3e1d'), 'stepid': 'b5d80a48-7210-4790-97bf-4ed79782bb7f', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:21.919Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1156,
+    "source": "47a4332d-0802-4d18-b98b-fa53c94c3e1d",
+    "target": "b5d80a48-7210-4790-97bf-4ed79782bb7f",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('47a4332d-0802-4d18-b98b-fa53c94c3e1d'), 'stepid': 'b5d80a48-7210-4790-97bf-4ed79782bb7f', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:21.919Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('b5d80a48-7210-4790-97bf-4ed79782bb7f'), 'name': 'Hashing of s3 file', 'description': 'Hashing of s3 file', 'steptypeid': '2271793c-9b7f-467a-964f-b309070d8d6c', 'status': 'COMPLETED', 'stageid': '35fe6a67-6793-49e7-846b-45c9f3e8e361', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.263Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 2}"
+  },
+  {
+    "id": 1157,
+    "source": "3af60df5-496a-4147-a9bc-e5d61b5c3ffb",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('3af60df5-496a-4147-a9bc-e5d61b5c3ffb'), 'stepid': '1930132c-5ba0-4e40-9145-810c88725e6f', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b\\\",\\\"txHash\\\":\\\"0xe3b2b5dd8b39966cae66f09b9330a22253450e45338860b2d3db9f6c6d254db3\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8677,\\\"blockHash\\\":\\\"0x9193deda1fe691fadb20befabd32f81856b894315a399362b20b41fd282980a5\\\",\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:20:22.000Z\\\",\\\"blockNumber\\\":37178325,\\\"confirmations\\\":4,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:31.362Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1158,
+    "source": "3af60df5-496a-4147-a9bc-e5d61b5c3ffb",
+    "target": "1930132c-5ba0-4e40-9145-810c88725e6f",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('3af60df5-496a-4147-a9bc-e5d61b5c3ffb'), 'stepid': '1930132c-5ba0-4e40-9145-810c88725e6f', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b\\\",\\\"txHash\\\":\\\"0xe3b2b5dd8b39966cae66f09b9330a22253450e45338860b2d3db9f6c6d254db3\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8677,\\\"blockHash\\\":\\\"0x9193deda1fe691fadb20befabd32f81856b894315a399362b20b41fd282980a5\\\",\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:20:22.000Z\\\",\\\"blockNumber\\\":37178325,\\\"confirmations\\\":4,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:31.362Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('1930132c-5ba0-4e40-9145-810c88725e6f'), 'name': 'Store to Blockchain', 'description': 'Store to Blockchain', 'steptypeid': '3dc2bd8e-d62a-41e1-8dbe-a684c24d59a6', 'status': 'COMPLETED', 'stageid': '35fe6a67-6793-49e7-846b-45c9f3e8e361', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.263Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 3}"
+  },
+  {
+    "id": 1159,
+    "source": "059aece1-c8d2-4e67-b9e7-5aa491bfc01e",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('059aece1-c8d2-4e67-b9e7-5aa491bfc01e'), 'stepid': 'c4b67e07-77fa-4e05-98b0-8f700ce08d56', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"modi.txt\\\",\\\"number_of_chunks\\\":\\\"1\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:31.608Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1160,
+    "source": "059aece1-c8d2-4e67-b9e7-5aa491bfc01e",
+    "target": "c4b67e07-77fa-4e05-98b0-8f700ce08d56",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('059aece1-c8d2-4e67-b9e7-5aa491bfc01e'), 'stepid': 'c4b67e07-77fa-4e05-98b0-8f700ce08d56', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"modi.txt\\\",\\\"number_of_chunks\\\":\\\"1\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:31.608Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('c4b67e07-77fa-4e05-98b0-8f700ce08d56'), 'name': 'Chunking', 'description': 'Chunking', 'steptypeid': 'e744d0f7-24ba-477b-821f-8df8c8ce2db3', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.302Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 1}"
+  },
+  {
+    "id": 1161,
+    "source": "08df78a1-58d5-4518-bc47-e61f53966491",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('08df78a1-58d5-4518-bc47-e61f53966491'), 'stepid': '8f758ce3-02dd-413c-8c98-b27ad4119be6', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"modi.txt\\\",\\\"number_of_chunks\\\":\\\"1\\\",\\\"vector_dimensions\\\":\\\"1024\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:31.798Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1162,
+    "source": "08df78a1-58d5-4518-bc47-e61f53966491",
+    "target": "8f758ce3-02dd-413c-8c98-b27ad4119be6",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('08df78a1-58d5-4518-bc47-e61f53966491'), 'stepid': '8f758ce3-02dd-413c-8c98-b27ad4119be6', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"modi.txt\\\",\\\"number_of_chunks\\\":\\\"1\\\",\\\"vector_dimensions\\\":\\\"1024\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:31.798Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('8f758ce3-02dd-413c-8c98-b27ad4119be6'), 'name': 'Embedding of chunks', 'description': 'Embedding of chunks', 'steptypeid': '90963687-8eb3-4509-8f27-0b112eca5b71', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.303Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 3}"
+  },
+  {
+    "id": 1163,
+    "source": "7eb016e9-5155-4f1f-9d52-b0025ffef92e",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('7eb016e9-5155-4f1f-9d52-b0025ffef92e'), 'stepid': '01ef309f-fe1f-497f-8d01-63162222d75f', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"modi.txt\\\",\\\"hash\\\":\\\"1101dc8a747895e5d62e171b8ddb8c895ab731f3bf3959b0b25d8f07eda12584\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:31.803Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1164,
+    "source": "7eb016e9-5155-4f1f-9d52-b0025ffef92e",
+    "target": "01ef309f-fe1f-497f-8d01-63162222d75f",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('7eb016e9-5155-4f1f-9d52-b0025ffef92e'), 'stepid': '01ef309f-fe1f-497f-8d01-63162222d75f', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"modi.txt\\\",\\\"hash\\\":\\\"1101dc8a747895e5d62e171b8ddb8c895ab731f3bf3959b0b25d8f07eda12584\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:31.803Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('01ef309f-fe1f-497f-8d01-63162222d75f'), 'name': 'Chunking hash', 'description': 'Chunking hash', 'steptypeid': 'b8928390-14fa-4b9d-8825-b7d783625e6c', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.302Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 2}"
+  },
+  {
+    "id": 1165,
+    "source": "49792e0e-b5cb-4345-9d11-63edcf5ae495",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('49792e0e-b5cb-4345-9d11-63edcf5ae495'), 'stepid': '56f615f4-baae-4b38-8818-7e780aeccf10', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"28e467ad2ab874356af884504b927354ae4a17bc291eacb8754f0aaf5e5fd3b5\\\",\\\"txHash\\\":\\\"0x136c122167fa3394ea0c388edf9e832cac835b1c9bd74581b85ba56f0837cbaa\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8678,\\\"blockHash\\\":\\\"0xc8a388fbb18bc6ae7ac7770171c0662834abcd0fdced3d9eae45911c436fc73a\\\",\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:20:32.000Z\\\",\\\"blockNumber\\\":37178330,\\\"confirmations\\\":1,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:37.337Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1166,
+    "source": "49792e0e-b5cb-4345-9d11-63edcf5ae495",
+    "target": "56f615f4-baae-4b38-8818-7e780aeccf10",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('49792e0e-b5cb-4345-9d11-63edcf5ae495'), 'stepid': '56f615f4-baae-4b38-8818-7e780aeccf10', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"28e467ad2ab874356af884504b927354ae4a17bc291eacb8754f0aaf5e5fd3b5\\\",\\\"txHash\\\":\\\"0x136c122167fa3394ea0c388edf9e832cac835b1c9bd74581b85ba56f0837cbaa\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8678,\\\"blockHash\\\":\\\"0xc8a388fbb18bc6ae7ac7770171c0662834abcd0fdced3d9eae45911c436fc73a\\\",\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:20:32.000Z\\\",\\\"blockNumber\\\":37178330,\\\"confirmations\\\":1,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:37.337Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('56f615f4-baae-4b38-8818-7e780aeccf10'), 'name': 'Store chunk hash to Blockchain', 'description': 'Store chunk hash to Blockchain', 'steptypeid': '12e1da46-7732-48ca-a286-04fd0f3cf211', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.302Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 5}"
+  },
+  {
+    "id": 1167,
+    "source": "a21bcdf4-bd6b-459c-b33c-2441a216355a",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('a21bcdf4-bd6b-459c-b33c-2441a216355a'), 'stepid': '8d3a0aa9-3562-4ba7-9afe-7e09c22ca691', 'status': 'COMPLETED', 'metadata': '{\\\"file_name\\\":\\\"modi.txt\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:37.346Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1168,
+    "source": "a21bcdf4-bd6b-459c-b33c-2441a216355a",
+    "target": "8d3a0aa9-3562-4ba7-9afe-7e09c22ca691",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('a21bcdf4-bd6b-459c-b33c-2441a216355a'), 'stepid': '8d3a0aa9-3562-4ba7-9afe-7e09c22ca691', 'status': 'COMPLETED', 'metadata': '{\\\"file_name\\\":\\\"modi.txt\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:37.346Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('8d3a0aa9-3562-4ba7-9afe-7e09c22ca691'), 'name': 'Reconstruction of data', 'description': 'Reconstruction of data', 'steptypeid': '0e5e8f7a-18ec-4b1d-8c66-0e3cf673cb58', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.304Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 4}"
+  },
+  {
+    "id": 1169,
+    "source": "5709911f-373a-4943-8968-7d0fe7ad8f63",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('5709911f-373a-4943-8968-7d0fe7ad8f63'), 'stepid': 'e54f352a-d599-452f-adb4-39102c54ab51', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:37.358Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1170,
+    "source": "5709911f-373a-4943-8968-7d0fe7ad8f63",
+    "target": "e54f352a-d599-452f-adb4-39102c54ab51",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('5709911f-373a-4943-8968-7d0fe7ad8f63'), 'stepid': 'e54f352a-d599-452f-adb4-39102c54ab51', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:37.358Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('e54f352a-d599-452f-adb4-39102c54ab51'), 'name': 'Hashing of reconstructive data', 'description': 'Hashing of reconstructive data', 'steptypeid': '8bc4d92d-a3f1-46c4-bc2f-19b7e7ad6e35', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.402Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 6}"
+  },
+  {
+    "id": 1171,
+    "source": "faeb3744-ee29-4f78-a408-d6afb8837632",
+    "target": "058b8d46-3c08-4f42-b182-8b59aac11d87",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('faeb3744-ee29-4f78-a408-d6afb8837632'), 'stepid': '62f2cd71-5905-40d2-9bfc-52b85d60bc08', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b\\\",\\\"txHash\\\":\\\"0x431e463903945c048b2e9bf26740310d04c20e3bcf58eb6d101050054c198ce2\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8679,\\\"blockHash\\\":\\\"0x1c63ee44921612315b3f02d798cf677e160da866d2dc858c2b98f434f3602441\\\",\\\"blockNumber\\\":37178331,\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:20:38.000Z\\\",\\\"confirmations\\\":2,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:46.884Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('058b8d46-3c08-4f42-b182-8b59aac11d87'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'modi.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '145 Bytes', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:19:41.467Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1172,
+    "source": "faeb3744-ee29-4f78-a408-d6afb8837632",
+    "target": "62f2cd71-5905-40d2-9bfc-52b85d60bc08",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('faeb3744-ee29-4f78-a408-d6afb8837632'), 'stepid': '62f2cd71-5905-40d2-9bfc-52b85d60bc08', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"94ea9836dc1fab29c8892341755a8ce79c31ca08a19f1e51fe46766f3db42e1b\\\",\\\"txHash\\\":\\\"0x431e463903945c048b2e9bf26740310d04c20e3bcf58eb6d101050054c198ce2\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8679,\\\"blockHash\\\":\\\"0x1c63ee44921612315b3f02d798cf677e160da866d2dc858c2b98f434f3602441\\\",\\\"blockNumber\\\":37178331,\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:20:38.000Z\\\",\\\"confirmations\\\":2,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:20:46.884Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': '058b8d46-3c08-4f42-b182-8b59aac11d87'}",
+    "to_metadata": "{'id': UUID('62f2cd71-5905-40d2-9bfc-52b85d60bc08'), 'name': 'Store recombined file to Blockchain', 'description': 'Store recombined file to Blockchain', 'steptypeid': '2ab93976-9531-49c1-9a36-2e7be6ae8e2c', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.425Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 7}"
+  },
+  {
+    "id": 1173,
+    "source": "b18b9e66-6b91-445c-8b66-20c0cefb8682",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('b18b9e66-6b91-445c-8b66-20c0cefb8682'), 'stepid': '7e04da7d-1415-4a4a-913e-97eab61f2ee2', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"trump.txt\\\",\\\"contentType\\\":\\\"text/plain\\\",\\\"size\\\":\\\"1.12 KB\\\",\\\"downloadUrl\\\":\\\"https://olticaleaderata-54bb8n.s3.amazonaws.com/trump.txt?AWSAccessKeyId=ASIARHQBNWYSYUDEJLCP&Expires=1735043227&Signature=%2FoxD%2FOPgFtiZb5wqvkfZHv7NcYk%3D&X-Amzn-Trace-Id=Root%3D1-67616e12-0997a2f46169ffee5b9a79f2%3BParent%3D7708139bcd880667%3BSampled%3D0%3BLineage%3D2%3Ad9d6f71e%3A0&x-amz-security-token=IQoJb3JpZ2luX2VjEH0aCXVzLWVhc3QtMSJIMEYCIQD7YqA9UoPjsBPR3sS05hbAtg5okl2CA2jdGML%2FADf3sgIhAM7uvS7es2b8R9F4SzuvkKIyQB7wcacjkJhFl5CzZqhHKqMDCEYQABoMMDg0ODI4NTk5ODQ1IgxoEawMqzGT%2F9b4HiMqgAO6NBgxKtj7dScZHRfv0Um4142Wy1kAXZN4R50VtjfLJ2AfiQ7sLPXxwDQh2EduNRZ7VKFJhGiWoZ8Qe2yfoVwHZlS0RExDZH1G%2Bo7WyGuPYFVSMNiPAO1QgLkcizzklQGbDB5h6gustPviCRicI30aA%2BIUD7N%2BwA09Q%2FCuF8X6tyWcd7aCseojRibtiMJpul99lv5Wn4FTkICs8CnzW4pAWp8byA3aabWDhkGgMr1DCzmrWxbdXKIzYe2%2BPcwk2QQqQrlQk7cBgObVUZzqGQu1inLuqrBYEApUiAWGigZNnUG2TkmpeXyzaAYwlEKPGx0f%2BSeNEd9NbptvgtI60C3uzXrhJzalaxxs7YlbdMtVcp9hlpHdgx3BGZm6PrXPsGof5I3%2BfYa%2FyeC0PFmmk%2FXLWM4SxpzaCmD31yo8LynOmPdTgBJeZ0avGJoxb374owjZrZw0Zkq1hMaart8Ap%2FcbGB9MofQJTH6OvkRYRv7LZ%2FLtbIJlud7Q9gvGEGJOOG4wltyFuwY6nAGYk6xMeq5i7xaPvkoghL860tN%2BzdmJ%2BYg4hDq5SvGJ%2F6jXrMsnk6o6URRJuukisrBwNJVYhyPfcP1ZIZKBH%2BUNTqWOrGYuf22K5ALdPg4Ha%2ByBb4DngThxgififyt0EIF%2Fcf6mTiDr15FrPEjpSe1TYzxuEGSdtsUm86v5VfShgfDZhGarCxlXhyNHSQoqz5dwn5hvkWihSdLFXm4%3D\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:08.001Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1174,
+    "source": "b18b9e66-6b91-445c-8b66-20c0cefb8682",
+    "target": "7e04da7d-1415-4a4a-913e-97eab61f2ee2",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('b18b9e66-6b91-445c-8b66-20c0cefb8682'), 'stepid': '7e04da7d-1415-4a4a-913e-97eab61f2ee2', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"trump.txt\\\",\\\"contentType\\\":\\\"text/plain\\\",\\\"size\\\":\\\"1.12 KB\\\",\\\"downloadUrl\\\":\\\"https://olticaleaderata-54bb8n.s3.amazonaws.com/trump.txt?AWSAccessKeyId=ASIARHQBNWYSYUDEJLCP&Expires=1735043227&Signature=%2FoxD%2FOPgFtiZb5wqvkfZHv7NcYk%3D&X-Amzn-Trace-Id=Root%3D1-67616e12-0997a2f46169ffee5b9a79f2%3BParent%3D7708139bcd880667%3BSampled%3D0%3BLineage%3D2%3Ad9d6f71e%3A0&x-amz-security-token=IQoJb3JpZ2luX2VjEH0aCXVzLWVhc3QtMSJIMEYCIQD7YqA9UoPjsBPR3sS05hbAtg5okl2CA2jdGML%2FADf3sgIhAM7uvS7es2b8R9F4SzuvkKIyQB7wcacjkJhFl5CzZqhHKqMDCEYQABoMMDg0ODI4NTk5ODQ1IgxoEawMqzGT%2F9b4HiMqgAO6NBgxKtj7dScZHRfv0Um4142Wy1kAXZN4R50VtjfLJ2AfiQ7sLPXxwDQh2EduNRZ7VKFJhGiWoZ8Qe2yfoVwHZlS0RExDZH1G%2Bo7WyGuPYFVSMNiPAO1QgLkcizzklQGbDB5h6gustPviCRicI30aA%2BIUD7N%2BwA09Q%2FCuF8X6tyWcd7aCseojRibtiMJpul99lv5Wn4FTkICs8CnzW4pAWp8byA3aabWDhkGgMr1DCzmrWxbdXKIzYe2%2BPcwk2QQqQrlQk7cBgObVUZzqGQu1inLuqrBYEApUiAWGigZNnUG2TkmpeXyzaAYwlEKPGx0f%2BSeNEd9NbptvgtI60C3uzXrhJzalaxxs7YlbdMtVcp9hlpHdgx3BGZm6PrXPsGof5I3%2BfYa%2FyeC0PFmmk%2FXLWM4SxpzaCmD31yo8LynOmPdTgBJeZ0avGJoxb374owjZrZw0Zkq1hMaart8Ap%2FcbGB9MofQJTH6OvkRYRv7LZ%2FLtbIJlud7Q9gvGEGJOOG4wltyFuwY6nAGYk6xMeq5i7xaPvkoghL860tN%2BzdmJ%2BYg4hDq5SvGJ%2F6jXrMsnk6o6URRJuukisrBwNJVYhyPfcP1ZIZKBH%2BUNTqWOrGYuf22K5ALdPg4Ha%2ByBb4DngThxgififyt0EIF%2Fcf6mTiDr15FrPEjpSe1TYzxuEGSdtsUm86v5VfShgfDZhGarCxlXhyNHSQoqz5dwn5hvkWihSdLFXm4%3D\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:08.001Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('7e04da7d-1415-4a4a-913e-97eab61f2ee2'), 'name': 'File upload from frontend', 'description': 'File upload from frontend', 'steptypeid': 'e9298be1-cc47-455a-9e54-60cde965def0', 'status': 'COMPLETED', 'stageid': 'ad874b0c-5d1a-4cd9-af71-19c714b8c042', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.110Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 1}"
+  },
+  {
+    "id": 1175,
+    "source": "f0d112c0-edf4-4b6f-92db-42b781f0ac8e",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('f0d112c0-edf4-4b6f-92db-42b781f0ac8e'), 'stepid': '72fe08ed-a81f-405a-923e-59ba91ce5b66', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:08.041Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1176,
+    "source": "f0d112c0-edf4-4b6f-92db-42b781f0ac8e",
+    "target": "72fe08ed-a81f-405a-923e-59ba91ce5b66",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('f0d112c0-edf4-4b6f-92db-42b781f0ac8e'), 'stepid': '72fe08ed-a81f-405a-923e-59ba91ce5b66', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:08.041Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('72fe08ed-a81f-405a-923e-59ba91ce5b66'), 'name': 'File hashing', 'description': 'File hashing', 'steptypeid': 'd34564b8-f9aa-4ded-a32e-f6fd5bc6545c', 'status': 'COMPLETED', 'stageid': 'ad874b0c-5d1a-4cd9-af71-19c714b8c042', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.205Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 2}"
+  },
+  {
+    "id": 1177,
+    "source": "dcd27a98-5163-420b-8052-ff052f3a222a",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('dcd27a98-5163-420b-8052-ff052f3a222a'), 'stepid': '9b3b1a7e-c3eb-446a-ad88-96ac131609a1', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"74e8c479b88bd4db95f230766a28f6bd2aae5c8a3d3e485e6cc8731e09b4112d\\\",\\\"txHash\\\":\\\"0x04b407affa395afeb146b3e7a6d298ea9de5ad72248a9d1d56c96f4b488b5613\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8680,\\\"blockHash\\\":\\\"0x68d0041e97e81a5486339300fc0aca999111f2a17706244329eb17a5deebeca8\\\",\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:27:09.000Z\\\",\\\"blockNumber\\\":37178396,\\\"confirmations\\\":1,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:13.931Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1178,
+    "source": "dcd27a98-5163-420b-8052-ff052f3a222a",
+    "target": "9b3b1a7e-c3eb-446a-ad88-96ac131609a1",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('dcd27a98-5163-420b-8052-ff052f3a222a'), 'stepid': '9b3b1a7e-c3eb-446a-ad88-96ac131609a1', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"74e8c479b88bd4db95f230766a28f6bd2aae5c8a3d3e485e6cc8731e09b4112d\\\",\\\"txHash\\\":\\\"0x04b407affa395afeb146b3e7a6d298ea9de5ad72248a9d1d56c96f4b488b5613\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8680,\\\"blockHash\\\":\\\"0x68d0041e97e81a5486339300fc0aca999111f2a17706244329eb17a5deebeca8\\\",\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:27:09.000Z\\\",\\\"blockNumber\\\":37178396,\\\"confirmations\\\":1,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:13.931Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('9b3b1a7e-c3eb-446a-ad88-96ac131609a1'), 'name': 'Store to Blockchain', 'description': 'Store to Blockchain', 'steptypeid': '3dc2bd8e-d62a-41e1-8dbe-a684c24d59a6', 'status': 'COMPLETED', 'stageid': 'ad874b0c-5d1a-4cd9-af71-19c714b8c042', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.203Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 3}"
+  },
+  {
+    "id": 1179,
+    "source": "de3b9c14-3a95-4a5a-9ffd-47118151926d",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('de3b9c14-3a95-4a5a-9ffd-47118151926d'), 'stepid': 'f4c93c3c-9421-49fb-b3bf-ab5f02bda5b7', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"trump.txt\\\",\\\"size\\\":\\\"1.12 KB\\\",\\\"etag\\\":\\\"79b729bfd335f01d2a6866cba71d03f4\\\",\\\"contentType\\\":\\\"text/plain\\\",\\\"lastModified\\\":\\\"2024-12-17T12:26:58.000Z\\\",\\\"downloadUrl\\\":\\\"https://olticaleaderata-54bb8n.s3.amazonaws.com/trump.txt?AWSAccessKeyId=ASIARHQBNWYSYUDEJLCP&Expires=1734439334&Signature=FHoF%2Fvp7QwrrGR9iCtID7tGsFHc%3D&X-Amzn-Trace-Id=Root%3D1-67616e12-0997a2f46169ffee5b9a79f2%3BParent%3D7708139bcd880667%3BSampled%3D0%3BLineage%3D2%3Ad9d6f71e%3A0&x-amz-security-token=IQoJb3JpZ2luX2VjEH0aCXVzLWVhc3QtMSJIMEYCIQD7YqA9UoPjsBPR3sS05hbAtg5okl2CA2jdGML%2FADf3sgIhAM7uvS7es2b8R9F4SzuvkKIyQB7wcacjkJhFl5CzZqhHKqMDCEYQABoMMDg0ODI4NTk5ODQ1IgxoEawMqzGT%2F9b4HiMqgAO6NBgxKtj7dScZHRfv0Um4142Wy1kAXZN4R50VtjfLJ2AfiQ7sLPXxwDQh2EduNRZ7VKFJhGiWoZ8Qe2yfoVwHZlS0RExDZH1G%2Bo7WyGuPYFVSMNiPAO1QgLkcizzklQGbDB5h6gustPviCRicI30aA%2BIUD7N%2BwA09Q%2FCuF8X6tyWcd7aCseojRibtiMJpul99lv5Wn4FTkICs8CnzW4pAWp8byA3aabWDhkGgMr1DCzmrWxbdXKIzYe2%2BPcwk2QQqQrlQk7cBgObVUZzqGQu1inLuqrBYEApUiAWGigZNnUG2TkmpeXyzaAYwlEKPGx0f%2BSeNEd9NbptvgtI60C3uzXrhJzalaxxs7YlbdMtVcp9hlpHdgx3BGZm6PrXPsGof5I3%2BfYa%2FyeC0PFmmk%2FXLWM4SxpzaCmD31yo8LynOmPdTgBJeZ0avGJoxb374owjZrZw0Zkq1hMaart8Ap%2FcbGB9MofQJTH6OvkRYRv7LZ%2FLtbIJlud7Q9gvGEGJOOG4wltyFuwY6nAGYk6xMeq5i7xaPvkoghL860tN%2BzdmJ%2BYg4hDq5SvGJ%2F6jXrMsnk6o6URRJuukisrBwNJVYhyPfcP1ZIZKBH%2BUNTqWOrGYuf22K5ALdPg4Ha%2ByBb4DngThxgififyt0EIF%2Fcf6mTiDr15FrPEjpSe1TYzxuEGSdtsUm86v5VfShgfDZhGarCxlXhyNHSQoqz5dwn5hvkWihSdLFXm4%3D\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:14.052Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1180,
+    "source": "de3b9c14-3a95-4a5a-9ffd-47118151926d",
+    "target": "f4c93c3c-9421-49fb-b3bf-ab5f02bda5b7",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('de3b9c14-3a95-4a5a-9ffd-47118151926d'), 'stepid': 'f4c93c3c-9421-49fb-b3bf-ab5f02bda5b7', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"trump.txt\\\",\\\"size\\\":\\\"1.12 KB\\\",\\\"etag\\\":\\\"79b729bfd335f01d2a6866cba71d03f4\\\",\\\"contentType\\\":\\\"text/plain\\\",\\\"lastModified\\\":\\\"2024-12-17T12:26:58.000Z\\\",\\\"downloadUrl\\\":\\\"https://olticaleaderata-54bb8n.s3.amazonaws.com/trump.txt?AWSAccessKeyId=ASIARHQBNWYSYUDEJLCP&Expires=1734439334&Signature=FHoF%2Fvp7QwrrGR9iCtID7tGsFHc%3D&X-Amzn-Trace-Id=Root%3D1-67616e12-0997a2f46169ffee5b9a79f2%3BParent%3D7708139bcd880667%3BSampled%3D0%3BLineage%3D2%3Ad9d6f71e%3A0&x-amz-security-token=IQoJb3JpZ2luX2VjEH0aCXVzLWVhc3QtMSJIMEYCIQD7YqA9UoPjsBPR3sS05hbAtg5okl2CA2jdGML%2FADf3sgIhAM7uvS7es2b8R9F4SzuvkKIyQB7wcacjkJhFl5CzZqhHKqMDCEYQABoMMDg0ODI4NTk5ODQ1IgxoEawMqzGT%2F9b4HiMqgAO6NBgxKtj7dScZHRfv0Um4142Wy1kAXZN4R50VtjfLJ2AfiQ7sLPXxwDQh2EduNRZ7VKFJhGiWoZ8Qe2yfoVwHZlS0RExDZH1G%2Bo7WyGuPYFVSMNiPAO1QgLkcizzklQGbDB5h6gustPviCRicI30aA%2BIUD7N%2BwA09Q%2FCuF8X6tyWcd7aCseojRibtiMJpul99lv5Wn4FTkICs8CnzW4pAWp8byA3aabWDhkGgMr1DCzmrWxbdXKIzYe2%2BPcwk2QQqQrlQk7cBgObVUZzqGQu1inLuqrBYEApUiAWGigZNnUG2TkmpeXyzaAYwlEKPGx0f%2BSeNEd9NbptvgtI60C3uzXrhJzalaxxs7YlbdMtVcp9hlpHdgx3BGZm6PrXPsGof5I3%2BfYa%2FyeC0PFmmk%2FXLWM4SxpzaCmD31yo8LynOmPdTgBJeZ0avGJoxb374owjZrZw0Zkq1hMaart8Ap%2FcbGB9MofQJTH6OvkRYRv7LZ%2FLtbIJlud7Q9gvGEGJOOG4wltyFuwY6nAGYk6xMeq5i7xaPvkoghL860tN%2BzdmJ%2BYg4hDq5SvGJ%2F6jXrMsnk6o6URRJuukisrBwNJVYhyPfcP1ZIZKBH%2BUNTqWOrGYuf22K5ALdPg4Ha%2ByBb4DngThxgififyt0EIF%2Fcf6mTiDr15FrPEjpSe1TYzxuEGSdtsUm86v5VfShgfDZhGarCxlXhyNHSQoqz5dwn5hvkWihSdLFXm4%3D\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:14.052Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('f4c93c3c-9421-49fb-b3bf-ab5f02bda5b7'), 'name': 'Upload to S3', 'description': 'Upload to S3', 'steptypeid': '4570e3ea-7bb9-4268-85e8-55a263de1972', 'status': 'COMPLETED', 'stageid': '07028e71-617f-481b-9bcc-0648bf55e15b', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.241Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 1}"
+  },
+  {
+    "id": 1181,
+    "source": "46f3b5ef-c69e-47ce-8417-1d7f04e3b920",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('46f3b5ef-c69e-47ce-8417-1d7f04e3b920'), 'stepid': '14eca740-9471-4861-9d88-8fe0fe031fa4', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"trump.txt\\\",\\\"size\\\":\\\"1.12 KB\\\",\\\"etag\\\":\\\"79b729bfd335f01d2a6866cba71d03f4\\\",\\\"contentType\\\":\\\"text/plain\\\",\\\"lastModified\\\":\\\"2024-12-17T12:26:58.000Z\\\",\\\"downloadUrl\\\":\\\"https://olticaleaderata-54bb8n.s3.amazonaws.com/trump.txt?AWSAccessKeyId=ASIARHQBNWYSYUDEJLCP&Expires=1734439334&Signature=FHoF%2Fvp7QwrrGR9iCtID7tGsFHc%3D&X-Amzn-Trace-Id=Root%3D1-67616e12-0997a2f46169ffee5b9a79f2%3BParent%3D7708139bcd880667%3BSampled%3D0%3BLineage%3D2%3Ad9d6f71e%3A0&x-amz-security-token=IQoJb3JpZ2luX2VjEH0aCXVzLWVhc3QtMSJIMEYCIQD7YqA9UoPjsBPR3sS05hbAtg5okl2CA2jdGML%2FADf3sgIhAM7uvS7es2b8R9F4SzuvkKIyQB7wcacjkJhFl5CzZqhHKqMDCEYQABoMMDg0ODI4NTk5ODQ1IgxoEawMqzGT%2F9b4HiMqgAO6NBgxKtj7dScZHRfv0Um4142Wy1kAXZN4R50VtjfLJ2AfiQ7sLPXxwDQh2EduNRZ7VKFJhGiWoZ8Qe2yfoVwHZlS0RExDZH1G%2Bo7WyGuPYFVSMNiPAO1QgLkcizzklQGbDB5h6gustPviCRicI30aA%2BIUD7N%2BwA09Q%2FCuF8X6tyWcd7aCseojRibtiMJpul99lv5Wn4FTkICs8CnzW4pAWp8byA3aabWDhkGgMr1DCzmrWxbdXKIzYe2%2BPcwk2QQqQrlQk7cBgObVUZzqGQu1inLuqrBYEApUiAWGigZNnUG2TkmpeXyzaAYwlEKPGx0f%2BSeNEd9NbptvgtI60C3uzXrhJzalaxxs7YlbdMtVcp9hlpHdgx3BGZm6PrXPsGof5I3%2BfYa%2FyeC0PFmmk%2FXLWM4SxpzaCmD31yo8LynOmPdTgBJeZ0avGJoxb374owjZrZw0Zkq1hMaart8Ap%2FcbGB9MofQJTH6OvkRYRv7LZ%2FLtbIJlud7Q9gvGEGJOOG4wltyFuwY6nAGYk6xMeq5i7xaPvkoghL860tN%2BzdmJ%2BYg4hDq5SvGJ%2F6jXrMsnk6o6URRJuukisrBwNJVYhyPfcP1ZIZKBH%2BUNTqWOrGYuf22K5ALdPg4Ha%2ByBb4DngThxgififyt0EIF%2Fcf6mTiDr15FrPEjpSe1TYzxuEGSdtsUm86v5VfShgfDZhGarCxlXhyNHSQoqz5dwn5hvkWihSdLFXm4%3D\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:14.242Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1182,
+    "source": "46f3b5ef-c69e-47ce-8417-1d7f04e3b920",
+    "target": "14eca740-9471-4861-9d88-8fe0fe031fa4",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('46f3b5ef-c69e-47ce-8417-1d7f04e3b920'), 'stepid': '14eca740-9471-4861-9d88-8fe0fe031fa4', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"trump.txt\\\",\\\"size\\\":\\\"1.12 KB\\\",\\\"etag\\\":\\\"79b729bfd335f01d2a6866cba71d03f4\\\",\\\"contentType\\\":\\\"text/plain\\\",\\\"lastModified\\\":\\\"2024-12-17T12:26:58.000Z\\\",\\\"downloadUrl\\\":\\\"https://olticaleaderata-54bb8n.s3.amazonaws.com/trump.txt?AWSAccessKeyId=ASIARHQBNWYSYUDEJLCP&Expires=1734439334&Signature=FHoF%2Fvp7QwrrGR9iCtID7tGsFHc%3D&X-Amzn-Trace-Id=Root%3D1-67616e12-0997a2f46169ffee5b9a79f2%3BParent%3D7708139bcd880667%3BSampled%3D0%3BLineage%3D2%3Ad9d6f71e%3A0&x-amz-security-token=IQoJb3JpZ2luX2VjEH0aCXVzLWVhc3QtMSJIMEYCIQD7YqA9UoPjsBPR3sS05hbAtg5okl2CA2jdGML%2FADf3sgIhAM7uvS7es2b8R9F4SzuvkKIyQB7wcacjkJhFl5CzZqhHKqMDCEYQABoMMDg0ODI4NTk5ODQ1IgxoEawMqzGT%2F9b4HiMqgAO6NBgxKtj7dScZHRfv0Um4142Wy1kAXZN4R50VtjfLJ2AfiQ7sLPXxwDQh2EduNRZ7VKFJhGiWoZ8Qe2yfoVwHZlS0RExDZH1G%2Bo7WyGuPYFVSMNiPAO1QgLkcizzklQGbDB5h6gustPviCRicI30aA%2BIUD7N%2BwA09Q%2FCuF8X6tyWcd7aCseojRibtiMJpul99lv5Wn4FTkICs8CnzW4pAWp8byA3aabWDhkGgMr1DCzmrWxbdXKIzYe2%2BPcwk2QQqQrlQk7cBgObVUZzqGQu1inLuqrBYEApUiAWGigZNnUG2TkmpeXyzaAYwlEKPGx0f%2BSeNEd9NbptvgtI60C3uzXrhJzalaxxs7YlbdMtVcp9hlpHdgx3BGZm6PrXPsGof5I3%2BfYa%2FyeC0PFmmk%2FXLWM4SxpzaCmD31yo8LynOmPdTgBJeZ0avGJoxb374owjZrZw0Zkq1hMaart8Ap%2FcbGB9MofQJTH6OvkRYRv7LZ%2FLtbIJlud7Q9gvGEGJOOG4wltyFuwY6nAGYk6xMeq5i7xaPvkoghL860tN%2BzdmJ%2BYg4hDq5SvGJ%2F6jXrMsnk6o6URRJuukisrBwNJVYhyPfcP1ZIZKBH%2BUNTqWOrGYuf22K5ALdPg4Ha%2ByBb4DngThxgififyt0EIF%2Fcf6mTiDr15FrPEjpSe1TYzxuEGSdtsUm86v5VfShgfDZhGarCxlXhyNHSQoqz5dwn5hvkWihSdLFXm4%3D\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:14.242Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('14eca740-9471-4861-9d88-8fe0fe031fa4'), 'name': 'Read file from s3', 'description': 'Read file from s3', 'steptypeid': '10220f72-9891-4bc1-827a-1a54685a75bc', 'status': 'COMPLETED', 'stageid': '35fe6a67-6793-49e7-846b-45c9f3e8e361', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.261Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 1}"
+  },
+  {
+    "id": 1183,
+    "source": "3de2aa96-e67b-4c1c-bbf9-bb1c9ce2d285",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('3de2aa96-e67b-4c1c-bbf9-bb1c9ce2d285'), 'stepid': 'b5d80a48-7210-4790-97bf-4ed79782bb7f', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:14.246Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1184,
+    "source": "3de2aa96-e67b-4c1c-bbf9-bb1c9ce2d285",
+    "target": "b5d80a48-7210-4790-97bf-4ed79782bb7f",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('3de2aa96-e67b-4c1c-bbf9-bb1c9ce2d285'), 'stepid': 'b5d80a48-7210-4790-97bf-4ed79782bb7f', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:14.246Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('b5d80a48-7210-4790-97bf-4ed79782bb7f'), 'name': 'Hashing of s3 file', 'description': 'Hashing of s3 file', 'steptypeid': '2271793c-9b7f-467a-964f-b309070d8d6c', 'status': 'COMPLETED', 'stageid': '35fe6a67-6793-49e7-846b-45c9f3e8e361', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.263Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 2}"
+  },
+  {
+    "id": 1185,
+    "source": "d107fee8-76dc-4733-8bce-1b03cfa71cec",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('d107fee8-76dc-4733-8bce-1b03cfa71cec'), 'stepid': '1930132c-5ba0-4e40-9145-810c88725e6f', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922\\\",\\\"txHash\\\":\\\"0x2964af493e9b1d2ea91b4efa902a878400041f59bb547ab49d43e911626b2c6b\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8681,\\\"blockHash\\\":\\\"0x87697e946b3109e44cf810fd75cb7a6b9cfd96b03697ace00f914870179847da\\\",\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:27:15.000Z\\\",\\\"blockNumber\\\":37178397,\\\"confirmations\\\":2,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:19.589Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1186,
+    "source": "d107fee8-76dc-4733-8bce-1b03cfa71cec",
+    "target": "1930132c-5ba0-4e40-9145-810c88725e6f",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('d107fee8-76dc-4733-8bce-1b03cfa71cec'), 'stepid': '1930132c-5ba0-4e40-9145-810c88725e6f', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922\\\",\\\"txHash\\\":\\\"0x2964af493e9b1d2ea91b4efa902a878400041f59bb547ab49d43e911626b2c6b\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8681,\\\"blockHash\\\":\\\"0x87697e946b3109e44cf810fd75cb7a6b9cfd96b03697ace00f914870179847da\\\",\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:27:15.000Z\\\",\\\"blockNumber\\\":37178397,\\\"confirmations\\\":2,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:19.589Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('1930132c-5ba0-4e40-9145-810c88725e6f'), 'name': 'Store to Blockchain', 'description': 'Store to Blockchain', 'steptypeid': '3dc2bd8e-d62a-41e1-8dbe-a684c24d59a6', 'status': 'COMPLETED', 'stageid': '35fe6a67-6793-49e7-846b-45c9f3e8e361', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.263Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 3}"
+  },
+  {
+    "id": 1187,
+    "source": "1e1e851e-2e2d-4d75-8262-d6a57a51c7da",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('1e1e851e-2e2d-4d75-8262-d6a57a51c7da'), 'stepid': 'c4b67e07-77fa-4e05-98b0-8f700ce08d56', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"trump.txt\\\",\\\"number_of_chunks\\\":\\\"5\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:19.804Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1188,
+    "source": "1e1e851e-2e2d-4d75-8262-d6a57a51c7da",
+    "target": "c4b67e07-77fa-4e05-98b0-8f700ce08d56",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('1e1e851e-2e2d-4d75-8262-d6a57a51c7da'), 'stepid': 'c4b67e07-77fa-4e05-98b0-8f700ce08d56', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"trump.txt\\\",\\\"number_of_chunks\\\":\\\"5\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:19.804Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('c4b67e07-77fa-4e05-98b0-8f700ce08d56'), 'name': 'Chunking', 'description': 'Chunking', 'steptypeid': 'e744d0f7-24ba-477b-821f-8df8c8ce2db3', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.302Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 1}"
+  },
+  {
+    "id": 1189,
+    "source": "9bbd19c6-00a2-441a-b5c3-1ca1a716d161",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('9bbd19c6-00a2-441a-b5c3-1ca1a716d161'), 'stepid': '8f758ce3-02dd-413c-8c98-b27ad4119be6', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"trump.txt\\\",\\\"number_of_chunks\\\":\\\"5\\\",\\\"vector_dimensions\\\":\\\"1024\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:20.025Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1190,
+    "source": "9bbd19c6-00a2-441a-b5c3-1ca1a716d161",
+    "target": "8f758ce3-02dd-413c-8c98-b27ad4119be6",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('9bbd19c6-00a2-441a-b5c3-1ca1a716d161'), 'stepid': '8f758ce3-02dd-413c-8c98-b27ad4119be6', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"trump.txt\\\",\\\"number_of_chunks\\\":\\\"5\\\",\\\"vector_dimensions\\\":\\\"1024\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:20.025Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('8f758ce3-02dd-413c-8c98-b27ad4119be6'), 'name': 'Embedding of chunks', 'description': 'Embedding of chunks', 'steptypeid': '90963687-8eb3-4509-8f27-0b112eca5b71', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.303Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 3}"
+  },
+  {
+    "id": 1191,
+    "source": "88b564bc-f7c0-4658-9e16-6a575ec2a8f7",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('88b564bc-f7c0-4658-9e16-6a575ec2a8f7'), 'stepid': '01ef309f-fe1f-497f-8d01-63162222d75f', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"trump.txt\\\",\\\"hash\\\":\\\"5c67183eeed1aa30444f88ccf71b6397d42ca2c8a3f38404dfaabf92170f80c2\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:20.044Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1192,
+    "source": "88b564bc-f7c0-4658-9e16-6a575ec2a8f7",
+    "target": "01ef309f-fe1f-497f-8d01-63162222d75f",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('88b564bc-f7c0-4658-9e16-6a575ec2a8f7'), 'stepid': '01ef309f-fe1f-497f-8d01-63162222d75f', 'status': 'COMPLETED', 'metadata': '{\\\"fileName\\\":\\\"trump.txt\\\",\\\"hash\\\":\\\"5c67183eeed1aa30444f88ccf71b6397d42ca2c8a3f38404dfaabf92170f80c2\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:20.044Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('01ef309f-fe1f-497f-8d01-63162222d75f'), 'name': 'Chunking hash', 'description': 'Chunking hash', 'steptypeid': 'b8928390-14fa-4b9d-8825-b7d783625e6c', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.302Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 2}"
+  },
+  {
+    "id": 1193,
+    "source": "a924fce9-dae7-405b-8df0-43082087d307",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('a924fce9-dae7-405b-8df0-43082087d307'), 'stepid': '56f615f4-baae-4b38-8818-7e780aeccf10', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"ca9af2b4541c1731f5888cf948f5c5052a1f00db9fe281c8bb1e8df0a4de2dad\\\",\\\"txHash\\\":\\\"0xf4658a143f183e24987c8573c61e1e78f03f4880e02f22b1967a8e58ff14390f\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040131000040131004\\\",\\\"nonce\\\":8682,\\\"blockHash\\\":\\\"0x9882fbb62c415ebf50134e0993abc9d5f1ec60660e09e9291b9f315756cc6e44\\\",\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:27:20.000Z\\\",\\\"blockNumber\\\":37178399,\\\"confirmations\\\":2,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:25.539Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1194,
+    "source": "a924fce9-dae7-405b-8df0-43082087d307",
+    "target": "56f615f4-baae-4b38-8818-7e780aeccf10",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('a924fce9-dae7-405b-8df0-43082087d307'), 'stepid': '56f615f4-baae-4b38-8818-7e780aeccf10', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"ca9af2b4541c1731f5888cf948f5c5052a1f00db9fe281c8bb1e8df0a4de2dad\\\",\\\"txHash\\\":\\\"0xf4658a143f183e24987c8573c61e1e78f03f4880e02f22b1967a8e58ff14390f\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040131000040131004\\\",\\\"nonce\\\":8682,\\\"blockHash\\\":\\\"0x9882fbb62c415ebf50134e0993abc9d5f1ec60660e09e9291b9f315756cc6e44\\\",\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:27:20.000Z\\\",\\\"blockNumber\\\":37178399,\\\"confirmations\\\":2,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:25.539Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('56f615f4-baae-4b38-8818-7e780aeccf10'), 'name': 'Store chunk hash to Blockchain', 'description': 'Store chunk hash to Blockchain', 'steptypeid': '12e1da46-7732-48ca-a286-04fd0f3cf211', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.302Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 5}"
+  },
+  {
+    "id": 1195,
+    "source": "14a4017b-a6dd-4e92-a8f5-c61c9058088e",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('14a4017b-a6dd-4e92-a8f5-c61c9058088e'), 'stepid': '8d3a0aa9-3562-4ba7-9afe-7e09c22ca691', 'status': 'COMPLETED', 'metadata': '{\\\"file_name\\\":\\\"trump.txt\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:25.543Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1196,
+    "source": "14a4017b-a6dd-4e92-a8f5-c61c9058088e",
+    "target": "8d3a0aa9-3562-4ba7-9afe-7e09c22ca691",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('14a4017b-a6dd-4e92-a8f5-c61c9058088e'), 'stepid': '8d3a0aa9-3562-4ba7-9afe-7e09c22ca691', 'status': 'COMPLETED', 'metadata': '{\\\"file_name\\\":\\\"trump.txt\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:25.543Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('8d3a0aa9-3562-4ba7-9afe-7e09c22ca691'), 'name': 'Reconstruction of data', 'description': 'Reconstruction of data', 'steptypeid': '0e5e8f7a-18ec-4b1d-8c66-0e3cf673cb58', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.304Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 4}"
+  },
+  {
+    "id": 1197,
+    "source": "b6dbdfc1-aba7-4741-903d-d6fac926cfbc",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('b6dbdfc1-aba7-4741-903d-d6fac926cfbc'), 'stepid': 'e54f352a-d599-452f-adb4-39102c54ab51', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:25.546Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1198,
+    "source": "b6dbdfc1-aba7-4741-903d-d6fac926cfbc",
+    "target": "e54f352a-d599-452f-adb4-39102c54ab51",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('b6dbdfc1-aba7-4741-903d-d6fac926cfbc'), 'stepid': 'e54f352a-d599-452f-adb4-39102c54ab51', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:25.546Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('e54f352a-d599-452f-adb4-39102c54ab51'), 'name': 'Hashing of reconstructive data', 'description': 'Hashing of reconstructive data', 'steptypeid': '8bc4d92d-a3f1-46c4-bc2f-19b7e7ad6e35', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.402Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 6}"
+  },
+  {
+    "id": 1199,
+    "source": "6a07b3bd-ab0f-4a71-8e8f-6caae29e80c0",
+    "target": "d972780d-651b-485a-a3f7-cd29767ef191",
+    "relationship": {
+      "to_table": "reference",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "refid"
+    },
+    "from_metadata": "{'id': UUID('6a07b3bd-ab0f-4a71-8e8f-6caae29e80c0'), 'stepid': '62f2cd71-5905-40d2-9bfc-52b85d60bc08', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922\\\",\\\"txHash\\\":\\\"0x60c26c57eccabdcc873f7145355ad4a1c485532912f70ae07e2b39dfe81d5c25\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8683,\\\"blockHash\\\":\\\"0x524209afabb2f515c7385676d1a60076900bbeb8ab1325d467bdf0221a70aedc\\\",\\\"blockNumber\\\":37178401,\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:27:26.000Z\\\",\\\"confirmations\\\":1,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:30.918Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('d972780d-651b-485a-a3f7-cd29767ef191'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'name': 'trump.txt', 'reftype': 'DOCUMENT', 'url': '', 'size': '1.12 KB', 'depth': 0, 'ingested': False, 'isdeleted': False, 'isactive': True, 'createdat': '2024-12-17T12:26:55.880Z', 'datasourceid': None, 'ingestionjobid': None, 'status': 'COMPLETED', 'referencestage': 'PUBLISHED', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'isaddedbyadmin': True, 'hash': '3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922', 'contenttype': 'text/plain', 'errreason': None}"
+  },
+  {
+    "id": 1200,
+    "source": "6a07b3bd-ab0f-4a71-8e8f-6caae29e80c0",
+    "target": "62f2cd71-5905-40d2-9bfc-52b85d60bc08",
+    "relationship": {
+      "to_table": "step",
+      "to_column": "id",
+      "from_table": "stepdetail",
+      "from_column": "stepid"
+    },
+    "from_metadata": "{'id': UUID('6a07b3bd-ab0f-4a71-8e8f-6caae29e80c0'), 'stepid': '62f2cd71-5905-40d2-9bfc-52b85d60bc08', 'status': 'COMPLETED', 'metadata': '{\\\"hash\\\":\\\"3a13a4fc25a38da02173780ce38089aaca549e2050f9d3b4f8fb483e6cf74922\\\",\\\"txHash\\\":\\\"0x60c26c57eccabdcc873f7145355ad4a1c485532912f70ae07e2b39dfe81d5c25\\\",\\\"chainId\\\":43113,\\\"chainType\\\":\\\"Avalanche\\\",\\\"status\\\":\\\"SUCCESS\\\",\\\"gasFee\\\":\\\"0.000040155000040155004\\\",\\\"nonce\\\":8683,\\\"blockHash\\\":\\\"0x524209afabb2f515c7385676d1a60076900bbeb8ab1325d467bdf0221a70aedc\\\",\\\"blockNumber\\\":37178401,\\\"type\\\":2,\\\"timestamp\\\":\\\"2024-12-17T12:27:26.000Z\\\",\\\"confirmations\\\":1,\\\"message\\\":\\\"Transaction successful!\\\",\\\"from\\\":\\\"0xDDdd7743CB0F4427483F10Fc8a9A912c87B06Ae7\\\",\\\"to\\\":\\\"0x7b72b77b930656591D0281DEC0532cA6a4a55AB4\\\"}', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:27:30.918Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'refid': 'd972780d-651b-485a-a3f7-cd29767ef191'}",
+    "to_metadata": "{'id': UUID('62f2cd71-5905-40d2-9bfc-52b85d60bc08'), 'name': 'Store recombined file to Blockchain', 'description': 'Store recombined file to Blockchain', 'steptypeid': '2ab93976-9531-49c1-9a36-2e7be6ae8e2c', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.425Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 7}"
+  },
+  {
+    "id": 1201,
+    "source": "ad874b0c-5d1a-4cd9-af71-19c714b8c042",
+    "target": "ef352f93-345d-4c08-99c7-47a3c7638ef5",
+    "relationship": {
+      "to_table": "project",
+      "to_column": "id",
+      "from_table": "stage",
+      "from_column": "projectid"
+    },
+    "from_metadata": "{'id': UUID('ad874b0c-5d1a-4cd9-af71-19c714b8c042'), 'name': 'Data Source', 'description': 'Data Source', 'stagetypeid': '94df226e-573f-43cd-8b72-b04d2d4c3862', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 1, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.100Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}",
+    "to_metadata": "{'id': UUID('ef352f93-345d-4c08-99c7-47a3c7638ef5'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projecttype': 'CLOUD', 'projectstatus': 'STARTED', 'projectstage': 'DATA_SOURCE', 'knowledgebaseid': 'R4DPYGTEVP', 'organizationid': '3f0d758e-84c9-4a3d-b15a-da7a0c2229ba', 'name': 'Poltical Leader Data', 'description': 'TEST', 'isactive': True, 'createdat': '2024-12-17T12:19:37.029Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'chaintype': 'Avalanche', 's3bucketname': 'olticaleaderata-54bb8n', 's3bucketregion': 'us-east-1', 'indexid': 'olticaleaderata-8gaufl-index', 'collectionname': 'bt-collection-test'}"
+  },
+  {
+    "id": 1202,
+    "source": "07028e71-617f-481b-9bcc-0648bf55e15b",
+    "target": "ef352f93-345d-4c08-99c7-47a3c7638ef5",
+    "relationship": {
+      "to_table": "project",
+      "to_column": "id",
+      "from_table": "stage",
+      "from_column": "projectid"
+    },
+    "from_metadata": "{'id': UUID('07028e71-617f-481b-9bcc-0648bf55e15b'), 'name': 'Data Ingestion', 'description': 'Data Ingestion', 'stagetypeid': '43a468c8-1f22-4024-968c-8779184fbd23', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 2, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.228Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}",
+    "to_metadata": "{'id': UUID('ef352f93-345d-4c08-99c7-47a3c7638ef5'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projecttype': 'CLOUD', 'projectstatus': 'STARTED', 'projectstage': 'DATA_SOURCE', 'knowledgebaseid': 'R4DPYGTEVP', 'organizationid': '3f0d758e-84c9-4a3d-b15a-da7a0c2229ba', 'name': 'Poltical Leader Data', 'description': 'TEST', 'isactive': True, 'createdat': '2024-12-17T12:19:37.029Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'chaintype': 'Avalanche', 's3bucketname': 'olticaleaderata-54bb8n', 's3bucketregion': 'us-east-1', 'indexid': 'olticaleaderata-8gaufl-index', 'collectionname': 'bt-collection-test'}"
+  },
+  {
+    "id": 1203,
+    "source": "35fe6a67-6793-49e7-846b-45c9f3e8e361",
+    "target": "ef352f93-345d-4c08-99c7-47a3c7638ef5",
+    "relationship": {
+      "to_table": "project",
+      "to_column": "id",
+      "from_table": "stage",
+      "from_column": "projectid"
+    },
+    "from_metadata": "{'id': UUID('35fe6a67-6793-49e7-846b-45c9f3e8e361'), 'name': 'Data Storage', 'description': 'Data Storage', 'stagetypeid': '47ff626b-7257-46ef-b5d6-9de6fab5d7dc', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 3, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.247Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}",
+    "to_metadata": "{'id': UUID('ef352f93-345d-4c08-99c7-47a3c7638ef5'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projecttype': 'CLOUD', 'projectstatus': 'STARTED', 'projectstage': 'DATA_SOURCE', 'knowledgebaseid': 'R4DPYGTEVP', 'organizationid': '3f0d758e-84c9-4a3d-b15a-da7a0c2229ba', 'name': 'Poltical Leader Data', 'description': 'TEST', 'isactive': True, 'createdat': '2024-12-17T12:19:37.029Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'chaintype': 'Avalanche', 's3bucketname': 'olticaleaderata-54bb8n', 's3bucketregion': 'us-east-1', 'indexid': 'olticaleaderata-8gaufl-index', 'collectionname': 'bt-collection-test'}"
+  },
+  {
+    "id": 1204,
+    "source": "3fb98e79-6ad3-4b1d-bc6f-a28aae89520f",
+    "target": "ef352f93-345d-4c08-99c7-47a3c7638ef5",
+    "relationship": {
+      "to_table": "project",
+      "to_column": "id",
+      "from_table": "stage",
+      "from_column": "projectid"
+    },
+    "from_metadata": "{'id': UUID('3fb98e79-6ad3-4b1d-bc6f-a28aae89520f'), 'name': 'Data Preparation', 'description': 'Data Preparation', 'stagetypeid': '4f91d25b-bb68-452d-8a53-1bfc20cd9223', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 4, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.285Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}",
+    "to_metadata": "{'id': UUID('ef352f93-345d-4c08-99c7-47a3c7638ef5'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projecttype': 'CLOUD', 'projectstatus': 'STARTED', 'projectstage': 'DATA_SOURCE', 'knowledgebaseid': 'R4DPYGTEVP', 'organizationid': '3f0d758e-84c9-4a3d-b15a-da7a0c2229ba', 'name': 'Poltical Leader Data', 'description': 'TEST', 'isactive': True, 'createdat': '2024-12-17T12:19:37.029Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'chaintype': 'Avalanche', 's3bucketname': 'olticaleaderata-54bb8n', 's3bucketregion': 'us-east-1', 'indexid': 'olticaleaderata-8gaufl-index', 'collectionname': 'bt-collection-test'}"
+  },
+  {
+    "id": 1205,
+    "source": "58e5c512-137b-4ba7-addd-3f9cef7c5b59",
+    "target": "ef352f93-345d-4c08-99c7-47a3c7638ef5",
+    "relationship": {
+      "to_table": "project",
+      "to_column": "id",
+      "from_table": "stage",
+      "from_column": "projectid"
+    },
+    "from_metadata": "{'id': UUID('58e5c512-137b-4ba7-addd-3f9cef7c5b59'), 'name': 'RAG Ingestion', 'description': 'RAG Ingestion', 'stagetypeid': '6b37c7ba-a522-4d11-a637-61ec17582eca', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 5, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.441Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}",
+    "to_metadata": "{'id': UUID('ef352f93-345d-4c08-99c7-47a3c7638ef5'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projecttype': 'CLOUD', 'projectstatus': 'STARTED', 'projectstage': 'DATA_SOURCE', 'knowledgebaseid': 'R4DPYGTEVP', 'organizationid': '3f0d758e-84c9-4a3d-b15a-da7a0c2229ba', 'name': 'Poltical Leader Data', 'description': 'TEST', 'isactive': True, 'createdat': '2024-12-17T12:19:37.029Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'chaintype': 'Avalanche', 's3bucketname': 'olticaleaderata-54bb8n', 's3bucketregion': 'us-east-1', 'indexid': 'olticaleaderata-8gaufl-index', 'collectionname': 'bt-collection-test'}"
+  },
+  {
+    "id": 1206,
+    "source": "b74760ed-b9bc-4b9b-98da-e9e66a56797e",
+    "target": "ef352f93-345d-4c08-99c7-47a3c7638ef5",
+    "relationship": {
+      "to_table": "project",
+      "to_column": "id",
+      "from_table": "stage",
+      "from_column": "projectid"
+    },
+    "from_metadata": "{'id': UUID('b74760ed-b9bc-4b9b-98da-e9e66a56797e'), 'name': 'Published', 'description': 'Published', 'stagetypeid': 'c8642b55-b3cc-4caa-bbe9-8f33ad15cf8d', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 6, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.453Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}",
+    "to_metadata": "{'id': UUID('ef352f93-345d-4c08-99c7-47a3c7638ef5'), 'tenantid': 'a65fde88-c67e-4fee-b72e-f599e1a6d78a', 'projecttype': 'CLOUD', 'projectstatus': 'STARTED', 'projectstage': 'DATA_SOURCE', 'knowledgebaseid': 'R4DPYGTEVP', 'organizationid': '3f0d758e-84c9-4a3d-b15a-da7a0c2229ba', 'name': 'Poltical Leader Data', 'description': 'TEST', 'isactive': True, 'createdat': '2024-12-17T12:19:37.029Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'chaintype': 'Avalanche', 's3bucketname': 'olticaleaderata-54bb8n', 's3bucketregion': 'us-east-1', 'indexid': 'olticaleaderata-8gaufl-index', 'collectionname': 'bt-collection-test'}"
+  },
+  {
+    "id": 1207,
+    "source": "7e04da7d-1415-4a4a-913e-97eab61f2ee2",
+    "target": "ad874b0c-5d1a-4cd9-af71-19c714b8c042",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('7e04da7d-1415-4a4a-913e-97eab61f2ee2'), 'name': 'File upload from frontend', 'description': 'File upload from frontend', 'steptypeid': 'e9298be1-cc47-455a-9e54-60cde965def0', 'status': 'COMPLETED', 'stageid': 'ad874b0c-5d1a-4cd9-af71-19c714b8c042', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.110Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 1}",
+    "to_metadata": "{'id': UUID('ad874b0c-5d1a-4cd9-af71-19c714b8c042'), 'name': 'Data Source', 'description': 'Data Source', 'stagetypeid': '94df226e-573f-43cd-8b72-b04d2d4c3862', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 1, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.100Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1208,
+    "source": "9b3b1a7e-c3eb-446a-ad88-96ac131609a1",
+    "target": "ad874b0c-5d1a-4cd9-af71-19c714b8c042",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('9b3b1a7e-c3eb-446a-ad88-96ac131609a1'), 'name': 'Store to Blockchain', 'description': 'Store to Blockchain', 'steptypeid': '3dc2bd8e-d62a-41e1-8dbe-a684c24d59a6', 'status': 'COMPLETED', 'stageid': 'ad874b0c-5d1a-4cd9-af71-19c714b8c042', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.203Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 3}",
+    "to_metadata": "{'id': UUID('ad874b0c-5d1a-4cd9-af71-19c714b8c042'), 'name': 'Data Source', 'description': 'Data Source', 'stagetypeid': '94df226e-573f-43cd-8b72-b04d2d4c3862', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 1, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.100Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1209,
+    "source": "72fe08ed-a81f-405a-923e-59ba91ce5b66",
+    "target": "ad874b0c-5d1a-4cd9-af71-19c714b8c042",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('72fe08ed-a81f-405a-923e-59ba91ce5b66'), 'name': 'File hashing', 'description': 'File hashing', 'steptypeid': 'd34564b8-f9aa-4ded-a32e-f6fd5bc6545c', 'status': 'COMPLETED', 'stageid': 'ad874b0c-5d1a-4cd9-af71-19c714b8c042', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.205Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 2}",
+    "to_metadata": "{'id': UUID('ad874b0c-5d1a-4cd9-af71-19c714b8c042'), 'name': 'Data Source', 'description': 'Data Source', 'stagetypeid': '94df226e-573f-43cd-8b72-b04d2d4c3862', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 1, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.100Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1210,
+    "source": "f4c93c3c-9421-49fb-b3bf-ab5f02bda5b7",
+    "target": "07028e71-617f-481b-9bcc-0648bf55e15b",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('f4c93c3c-9421-49fb-b3bf-ab5f02bda5b7'), 'name': 'Upload to S3', 'description': 'Upload to S3', 'steptypeid': '4570e3ea-7bb9-4268-85e8-55a263de1972', 'status': 'COMPLETED', 'stageid': '07028e71-617f-481b-9bcc-0648bf55e15b', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.241Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 1}",
+    "to_metadata": "{'id': UUID('07028e71-617f-481b-9bcc-0648bf55e15b'), 'name': 'Data Ingestion', 'description': 'Data Ingestion', 'stagetypeid': '43a468c8-1f22-4024-968c-8779184fbd23', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 2, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.228Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1211,
+    "source": "14eca740-9471-4861-9d88-8fe0fe031fa4",
+    "target": "35fe6a67-6793-49e7-846b-45c9f3e8e361",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('14eca740-9471-4861-9d88-8fe0fe031fa4'), 'name': 'Read file from s3', 'description': 'Read file from s3', 'steptypeid': '10220f72-9891-4bc1-827a-1a54685a75bc', 'status': 'COMPLETED', 'stageid': '35fe6a67-6793-49e7-846b-45c9f3e8e361', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.261Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 1}",
+    "to_metadata": "{'id': UUID('35fe6a67-6793-49e7-846b-45c9f3e8e361'), 'name': 'Data Storage', 'description': 'Data Storage', 'stagetypeid': '47ff626b-7257-46ef-b5d6-9de6fab5d7dc', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 3, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.247Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1212,
+    "source": "b5d80a48-7210-4790-97bf-4ed79782bb7f",
+    "target": "35fe6a67-6793-49e7-846b-45c9f3e8e361",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('b5d80a48-7210-4790-97bf-4ed79782bb7f'), 'name': 'Hashing of s3 file', 'description': 'Hashing of s3 file', 'steptypeid': '2271793c-9b7f-467a-964f-b309070d8d6c', 'status': 'COMPLETED', 'stageid': '35fe6a67-6793-49e7-846b-45c9f3e8e361', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.263Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 2}",
+    "to_metadata": "{'id': UUID('35fe6a67-6793-49e7-846b-45c9f3e8e361'), 'name': 'Data Storage', 'description': 'Data Storage', 'stagetypeid': '47ff626b-7257-46ef-b5d6-9de6fab5d7dc', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 3, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.247Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1213,
+    "source": "1930132c-5ba0-4e40-9145-810c88725e6f",
+    "target": "35fe6a67-6793-49e7-846b-45c9f3e8e361",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('1930132c-5ba0-4e40-9145-810c88725e6f'), 'name': 'Store to Blockchain', 'description': 'Store to Blockchain', 'steptypeid': '3dc2bd8e-d62a-41e1-8dbe-a684c24d59a6', 'status': 'COMPLETED', 'stageid': '35fe6a67-6793-49e7-846b-45c9f3e8e361', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.263Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 3}",
+    "to_metadata": "{'id': UUID('35fe6a67-6793-49e7-846b-45c9f3e8e361'), 'name': 'Data Storage', 'description': 'Data Storage', 'stagetypeid': '47ff626b-7257-46ef-b5d6-9de6fab5d7dc', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 3, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.247Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1214,
+    "source": "c4b67e07-77fa-4e05-98b0-8f700ce08d56",
+    "target": "3fb98e79-6ad3-4b1d-bc6f-a28aae89520f",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('c4b67e07-77fa-4e05-98b0-8f700ce08d56'), 'name': 'Chunking', 'description': 'Chunking', 'steptypeid': 'e744d0f7-24ba-477b-821f-8df8c8ce2db3', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.302Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 1}",
+    "to_metadata": "{'id': UUID('3fb98e79-6ad3-4b1d-bc6f-a28aae89520f'), 'name': 'Data Preparation', 'description': 'Data Preparation', 'stagetypeid': '4f91d25b-bb68-452d-8a53-1bfc20cd9223', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 4, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.285Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1215,
+    "source": "56f615f4-baae-4b38-8818-7e780aeccf10",
+    "target": "3fb98e79-6ad3-4b1d-bc6f-a28aae89520f",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('56f615f4-baae-4b38-8818-7e780aeccf10'), 'name': 'Store chunk hash to Blockchain', 'description': 'Store chunk hash to Blockchain', 'steptypeid': '12e1da46-7732-48ca-a286-04fd0f3cf211', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.302Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 5}",
+    "to_metadata": "{'id': UUID('3fb98e79-6ad3-4b1d-bc6f-a28aae89520f'), 'name': 'Data Preparation', 'description': 'Data Preparation', 'stagetypeid': '4f91d25b-bb68-452d-8a53-1bfc20cd9223', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 4, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.285Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1216,
+    "source": "01ef309f-fe1f-497f-8d01-63162222d75f",
+    "target": "3fb98e79-6ad3-4b1d-bc6f-a28aae89520f",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('01ef309f-fe1f-497f-8d01-63162222d75f'), 'name': 'Chunking hash', 'description': 'Chunking hash', 'steptypeid': 'b8928390-14fa-4b9d-8825-b7d783625e6c', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.302Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 2}",
+    "to_metadata": "{'id': UUID('3fb98e79-6ad3-4b1d-bc6f-a28aae89520f'), 'name': 'Data Preparation', 'description': 'Data Preparation', 'stagetypeid': '4f91d25b-bb68-452d-8a53-1bfc20cd9223', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 4, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.285Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1217,
+    "source": "8f758ce3-02dd-413c-8c98-b27ad4119be6",
+    "target": "3fb98e79-6ad3-4b1d-bc6f-a28aae89520f",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('8f758ce3-02dd-413c-8c98-b27ad4119be6'), 'name': 'Embedding of chunks', 'description': 'Embedding of chunks', 'steptypeid': '90963687-8eb3-4509-8f27-0b112eca5b71', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.303Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 3}",
+    "to_metadata": "{'id': UUID('3fb98e79-6ad3-4b1d-bc6f-a28aae89520f'), 'name': 'Data Preparation', 'description': 'Data Preparation', 'stagetypeid': '4f91d25b-bb68-452d-8a53-1bfc20cd9223', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 4, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.285Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1218,
+    "source": "8d3a0aa9-3562-4ba7-9afe-7e09c22ca691",
+    "target": "3fb98e79-6ad3-4b1d-bc6f-a28aae89520f",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('8d3a0aa9-3562-4ba7-9afe-7e09c22ca691'), 'name': 'Reconstruction of data', 'description': 'Reconstruction of data', 'steptypeid': '0e5e8f7a-18ec-4b1d-8c66-0e3cf673cb58', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.304Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 4}",
+    "to_metadata": "{'id': UUID('3fb98e79-6ad3-4b1d-bc6f-a28aae89520f'), 'name': 'Data Preparation', 'description': 'Data Preparation', 'stagetypeid': '4f91d25b-bb68-452d-8a53-1bfc20cd9223', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 4, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.285Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1219,
+    "source": "e54f352a-d599-452f-adb4-39102c54ab51",
+    "target": "3fb98e79-6ad3-4b1d-bc6f-a28aae89520f",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('e54f352a-d599-452f-adb4-39102c54ab51'), 'name': 'Hashing of reconstructive data', 'description': 'Hashing of reconstructive data', 'steptypeid': '8bc4d92d-a3f1-46c4-bc2f-19b7e7ad6e35', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.402Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 6}",
+    "to_metadata": "{'id': UUID('3fb98e79-6ad3-4b1d-bc6f-a28aae89520f'), 'name': 'Data Preparation', 'description': 'Data Preparation', 'stagetypeid': '4f91d25b-bb68-452d-8a53-1bfc20cd9223', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 4, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.285Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1220,
+    "source": "62f2cd71-5905-40d2-9bfc-52b85d60bc08",
+    "target": "3fb98e79-6ad3-4b1d-bc6f-a28aae89520f",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('62f2cd71-5905-40d2-9bfc-52b85d60bc08'), 'name': 'Store recombined file to Blockchain', 'description': 'Store recombined file to Blockchain', 'steptypeid': '2ab93976-9531-49c1-9a36-2e7be6ae8e2c', 'status': 'COMPLETED', 'stageid': '3fb98e79-6ad3-4b1d-bc6f-a28aae89520f', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.425Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 7}",
+    "to_metadata": "{'id': UUID('3fb98e79-6ad3-4b1d-bc6f-a28aae89520f'), 'name': 'Data Preparation', 'description': 'Data Preparation', 'stagetypeid': '4f91d25b-bb68-452d-8a53-1bfc20cd9223', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 4, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.285Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  },
+  {
+    "id": 1221,
+    "source": "5d05609b-82eb-480d-818c-cb4812a4e35b",
+    "target": "58e5c512-137b-4ba7-addd-3f9cef7c5b59",
+    "relationship": {
+      "to_table": "stage",
+      "to_column": "id",
+      "from_table": "step",
+      "from_column": "stageid"
+    },
+    "from_metadata": "{'id': UUID('5d05609b-82eb-480d-818c-cb4812a4e35b'), 'name': 'Writing to open search', 'description': 'Writing to open search', 'steptypeid': 'c16953b1-ac09-47aa-aa91-5c2adbe38429', 'status': 'COMPLETED', 'stageid': '58e5c512-137b-4ba7-addd-3f9cef7c5b59', 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.447Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d', 'stepsequence': 1}",
+    "to_metadata": "{'id': UUID('58e5c512-137b-4ba7-addd-3f9cef7c5b59'), 'name': 'RAG Ingestion', 'description': 'RAG Ingestion', 'stagetypeid': '6b37c7ba-a522-4d11-a637-61ec17582eca', 'status': 'COMPLETED', 'projectid': 'ef352f93-345d-4c08-99c7-47a3c7638ef5', 'stagesequence': 5, 'isactive': True, 'isdeleted': False, 'createdat': '2024-12-17T12:19:41.441Z', 'createdby': '96ee46bc-de92-45b8-833d-769317ec2e0d'}"
+  }
+]

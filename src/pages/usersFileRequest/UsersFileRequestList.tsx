@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 import {
   FETCH_REFERENCES_BY_PROJECT_ID,
-  UPDATE_PROJECT_STATUS_BY_ADMIN,
+  UPDATE_USERS_REF_STATUS_BY_ADMIN,
 } from '@/apollo/schemas/projectSchemas';
 import { DataTable } from '@/components/common/dataTable';
 import Pagination from '@/components/common/pagination';
@@ -109,8 +109,9 @@ export const UserSFileRequestList: React.FC = () => {
   // const { showLoader, hideLoader } = useLoader();
   const [status, setStatus] = useState('UPLOADED');
   const idToken = localStorage.getItem('idToken');
-  const [updateReferenceStatusByAdminMutation, { loading: updating }] =
-    useMutation(UPDATE_PROJECT_STATUS_BY_ADMIN);
+  const [updateReferenceStatusMutation, { loading: updating }] = useMutation(
+    UPDATE_USERS_REF_STATUS_BY_ADMIN,
+  );
   const { showLoader, hideLoader } = useLoader();
   const { data, refetch, loading } = useQuery(FETCH_REFERENCES_BY_PROJECT_ID, {
     variables: {
@@ -155,10 +156,11 @@ export const UserSFileRequestList: React.FC = () => {
   const onActionMenuClick = (dataSet: any, action: string) => {
     // if (action === 'approved') {
     // console.log('Approve', dataSet);
-    updateReferenceStatusByAdminMutation({
+    updateReferenceStatusMutation({
       variables: {
         fileId: dataSet?.id,
         status: action,
+        refType: data.refType,
       },
     }).then((res) => {
       if (res.data?.UpdateReferenceStatusByAdmin?.status === '200') {

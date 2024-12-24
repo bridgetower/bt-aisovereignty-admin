@@ -160,10 +160,8 @@ export const FETCH_PROJECT_BY_ID = gql`
   }
 `;
 export const UPDATE_PROJECT_STATUS = gql`
-  mutation Mymutation($projectId: String!, $status: String!, $id: String!) {
-    UpdateProjectStatus(
-      input: { projectId: $projectId, files: [{ id: $id, status: $status }] }
-    ) {
+  mutation Mymutation($projectId: String!, $files: [FileStatusInput]!) {
+    UpdateProjectStatus(input: { projectId: $projectId, files: $files }) {
       data {
         createdat
         createdby
@@ -182,10 +180,8 @@ export const UPDATE_PROJECT_STATUS = gql`
   }
 `;
 export const UPDATE_PROJECT_STATUS_BY_ADMIN = gql`
-  mutation MyMutation($fileId: String!, $status: String!) {
-    UpdateReferenceStatusByAdmin(
-      input: { files: { id: $fileId, status: $status } }
-    ) {
+  mutation MyMutation($files: [UpdateRefFileInput]!) {
+    UpdateReferenceStatusByAdmin(input: { files: $files }) {
       data {
         createdat
         datasourceid
@@ -198,6 +194,27 @@ export const UPDATE_PROJECT_STATUS_BY_ADMIN = gql`
         reftype
         size
         url
+      }
+      error
+      status
+    }
+  }
+`;
+export const UPDATE_USERS_REF_STATUS_BY_ADMIN = gql`
+  mutation MyMutation($files: [UpdateRefFileInput]!) {
+    UpdateRefStatus(input: { files: $files }) {
+      data {
+        createdat
+        datasourceid
+        depth
+        id
+        ingested
+        name
+        reftype
+        status
+        url
+        referencestage
+        projectid
       }
       error
       status
@@ -227,6 +244,7 @@ export const ADD_FILE_TO_PROJECT = gql`
         urls {
           key
           url
+          id
         }
       }
     }
@@ -323,6 +341,24 @@ export const FETCH_STAGE_BY_REFID = gql`
             stepsequence
           }
         }
+      }
+      error
+      status
+    }
+  }
+`;
+export const DELETE_DOC_REFERENCE = gql`
+  mutation Mymutation($refId: String!, $refType: String!) {
+    DeleteRefToKnowledgeBase(input: { refId: $refId, refType: $refType }) {
+      data {
+        createdat
+        depth
+        id
+        ingested
+        name
+        reftype
+        size
+        url
       }
       error
       status

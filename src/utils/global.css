@@ -111,13 +111,17 @@
   }
 }
 
-/* @layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
+@layer base {
+  /* * {
+    @apply border-border font-firaSans;
+  } */
+  /* body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+  } */
+}
+
+@layer components {
+  .bt-container {
+    @apply w-full p-4;
   }
-} */
+}

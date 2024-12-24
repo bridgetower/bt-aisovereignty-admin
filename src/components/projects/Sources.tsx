@@ -1,4 +1,4 @@
-import { FileText, Globe, Loader } from 'lucide-react';
+import { FileText, Globe, Loader, RefreshCcw, Trash2 } from 'lucide-react';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import {
@@ -11,6 +11,7 @@ import { ActionStatus, IReference, statusColor } from '@/types/ProjectData';
 
 import { ISteperData, Stepper } from '../common/Stepper';
 import { Badge } from '../ui/badge';
+import { Button } from '../ui/button';
 import {
   Table,
   TableBody,
@@ -25,6 +26,7 @@ interface SourceLinkProps {
   activeIndex: number;
   onOpen: (refId: string) => void;
   stepperData: ISteperData[];
+  handleRemove: (ref: IReference) => void;
 }
 
 export const Sources: React.FC<SourceLinkProps> = ({
@@ -32,7 +34,10 @@ export const Sources: React.FC<SourceLinkProps> = ({
   activeIndex,
   onOpen,
   stepperData,
+  handleRemove,
 }) => {
+  console.log('sourceArray', sourceArray);
+
   const [openItems, setOpenItems] = useState<string>('');
   // const activeItemRef = useRef<HTMLDivElement>(null);
   // const containerRef = useRef<HTMLDivElement>(null);
@@ -56,8 +61,10 @@ export const Sources: React.FC<SourceLinkProps> = ({
     if (activeIndex >= 0 && activeIndex < sourceArray.length) {
       setOpenItems(`source${activeIndex}`);
       const refId = sourceArray[activeIndex].id;
-
-      onOpen(refId);
+      const sourcestatus = sourceArray.find((s) => s.id === refId)?.status;
+      if (sourcestatus !== 'PENDINF') {
+        onOpen(refId);
+      }
       // Scroll to active item after a small delay to ensure accordion is open
       // setTimeout(() => {
       //   if (activeItemRef.current && containerRef.current) {
@@ -118,7 +125,9 @@ export const Sources: React.FC<SourceLinkProps> = ({
             <AccordionTrigger
               onClick={() => {
                 handleReset();
-                onOpen(source.id);
+                if (source.status !== 'PENDING') {
+                  onOpen(source.id);
+                }
               }}
               className={`
                 text-[#1890FF] hover:no-underline px-4 transition-all duration-300
@@ -144,7 +153,7 @@ export const Sources: React.FC<SourceLinkProps> = ({
                     `}
                   />
                 )}
-                <div className="grid grid-cols-3 gap-2 ">
+                <div className=" ">
                   <div>{source.name}</div>
                 </div>
               </span>
@@ -157,6 +166,7 @@ export const Sources: React.FC<SourceLinkProps> = ({
                     <TableHead>Name</TableHead>
                     <TableHead>Size</TableHead>
                     <TableHead>Status</TableHead>
+                    <TableHead>Action</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -165,29 +175,53 @@ export const Sources: React.FC<SourceLinkProps> = ({
                     <TableCell>{source.size}</TableCell>
                     <TableCell>
                       <Badge
-                        className={`text-sm ${statusColor[source.status.toUpperCase() as ActionStatus].text + ' ' + statusColor[source.status.toUpperCase() as ActionStatus].bg} hover:${statusColor[source.status.toUpperCase() as ActionStatus].bg}`}
+                        className={`text-sm ${statusColor[source?.status?.toUpperCase() as ActionStatus].text + ' ' + statusColor[source?.status?.toUpperCase() as ActionStatus].bg} hover:${statusColor[source?.status?.toUpperCase() as ActionStatus].bg}`}
                       >
                         {source.status.toUpperCase()}
                       </Badge>
                     </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-1">
+                        <Button
+                          variant={'ghost'}
+                          size={'icon'}
+                          onClick={() => handleRemove(source)}
+                        >
+                          <Trash2 size={20} className="text-red-500" />
+                        </Button>
+                        <Button
+                          title="Refresh"
+                          variant={'ghost'}
+                          size={'icon'}
+                          onClick={() => onOpen(source.id)}
+                        >
+                          <RefreshCcw
+                            size={20}
+                            className={`text-[#1890FF] ${source?.status?.toUpperCase() !== 'PENDING' && memoizedStepperData.length === 0 ? 'animate-spin' : ''}`}
+                          />
+                        </Button>
+                      </div>
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
-              <div>
-                {memoizedStepperData.length ? (
-                  <Stepper
-                    steps={memoizedStepperData}
-                    renderContent={() => null}
-                    animationDuration={0.5}
-                    className="bg-card rounded-2xl"
-                    onStepClick={() => null}
-                  />
-                ) : (
-                  <div className="flex justify-center">
-                    <Loader size={24} className="animate-spin" />
-                  </div>
-                )}
-              </div>
+              {source?.status?.toUpperCase() !== 'PENDING' ? (
+                <div>
+                  {memoizedStepperData.length ? (
+                    <Stepper
+                      steps={memoizedStepperData}
+                      renderContent={() => null}
+                      animationDuration={0.5}
+                      className="bg-card rounded-2xl"
+                      onStepClick={() => null}
+                    />
+                  ) : (
+                    <div className="flex justify-center">
+                      <Loader size={24} className="animate-spin" />
+                    </div>
+                  )}
+                </div>
+              ) : null}
             </AccordionContent>
           </AccordionItem>
         ))}

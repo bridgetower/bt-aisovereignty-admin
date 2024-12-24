@@ -14,14 +14,17 @@ import Dropzone, { useDropzone } from 'react-dropzone';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
+import { useLoader } from '@/context/LoaderProvider';
 import { IFileContent, useProject } from '@/context/ProjectProvider';
 import {
   IProjectAttributes,
+  IReference,
   ProjectStageEnum,
   ProjectStageLabel,
   stepData,
 } from '@/types/ProjectData';
 
+import { ConfirmationDialog } from '../common/confirmationDialog';
 import { SidepanelSkeleton } from '../common/SidepanelSkeleton';
 import { ISteperData } from '../common/Stepper';
 import { Button } from '../ui/button';
@@ -87,11 +90,11 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
   const [stepperData, setStepperData] = useState<ISteperData[]>([]);
   // const [hashData, setHashData] = useState<any[]>([]);
   const [project, setProject] = useState<IProjectAttributes | null>(null);
-  const memoizedStepperData = React.useMemo(() => stepperData, [stepperData]);
+
   const [saving, setSaving] = useState(false);
   const [docPage, setDocPage] = useState(1);
   // const [totalPages, setTotalPages] = useState({ refs: 1, hash: 1 });
-  // const { showLoader, hideLoader } = useLoader();
+  const { showLoader, hideLoader } = useLoader();
   const [loadingProject, setLoadingProject] = useState(true);
   const [base64Files, setBase64Files] = useState<IFileContent[]>([]);
   const [refType, setRefType] = useState('DOCUMENT');
@@ -101,12 +104,21 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
   const [urlErrors, setUrlErrors] = useState<any>(null);
   const [webUrlsList, setWebUrlsList] = useState<any[]>([]);
   const [refStageDetails, setRefStageDetails] = useState<any[]>([]);
+  const memoizedStepperData = React.useMemo(
+    () => refStageDetails,
+    [refStageDetails],
+  );
+  const [openRemoveRefConfirmation, setOpenRemoveRefConfirmation] =
+    useState(false);
+  const [selectedRefToRemove, setSelectedRefToRemove] =
+    useState<IReference | null>(null);
   const {
     getProjectDetails,
     refetchProjects,
     updateReferenceStatusByAdminMutation,
     addFileToProject,
     getStagebyRefId,
+    deleteDocReference,
   } = useProject();
   useEffect(() => {
     // topRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -137,11 +149,12 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
   useEffect(() => {
     if (base64Files.length > 0) {
       const newFiles = base64Files.map((file, i) => ({
-        id: (file.fileName || 'refdoc') + i,
+        id: file.fileName || 'refdoc',
         name: file.fileName,
         doctype: 'File',
         updatedon: new Date().toDateString(),
         status: 'PENDING',
+        size: formatFileSize(Number(file.fileSize) || 0),
       }));
 
       setFilesData((prevFiles: any) =>
@@ -223,7 +236,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
 
   const getStageDetailByRef = (refId: string) => {
     console.log(refId, 'deifh3i');
-
+    setRefStageDetails([]);
     getStagebyRefId({ refId: refId })
       .then((res: any) => {
         if (res.data?.GetStepsByRefId?.data) {
@@ -372,6 +385,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
                 if (fileData.name === element.key) {
                   return {
                     ...fileData,
+                    id: element.id,
                     status: 'UPLOADED',
                   };
                 }
@@ -399,6 +413,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
                   if (fileData.name === element.key) {
                     return {
                       ...fileData,
+                      id: element.id,
                       status: 'Error',
                     };
                   }
@@ -411,24 +426,26 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
                   if (fileData.name === element.key) {
                     return {
                       ...fileData,
+                      id: element.id,
                       status: 'PROCESSING',
                     };
                   }
                   return fileData;
                 });
                 setFilesData(tempFileData1);
-                const filRefId =
-                  res.data?.AddFileToProjectByAdmin?.data?.refs?.find(
-                    (ref: any) => ref.name === element.key,
-                  )?.id;
-                await updateReferenceStatusByAdminMutation({
-                  fileId: filRefId || '',
+                const uploadedFiles = respData.map((file: IReference) => ({
+                  id: file.id,
                   status: 'UPLOADED',
-                });
+                }));
+
+                await updateReferenceStatusByAdminMutation(uploadedFiles);
+                setRefStageDetails([]);
+                getStageDetailByRef(element.id);
               }
             }
             setSaving(false);
             refetchProjects();
+            setRefUrls([]);
             toast.success('Project updated successfully!');
           } else {
             setSaving(false);
@@ -459,32 +476,63 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
       setFilesData((prevFiles: any) =>
         prevFiles.filter((file: any) => file.name !== dataSet.name),
       );
+      // if (!dataSet.isLocal) {
+      //   removeDocs(dataSet.id, dataSet.reftype);
+      // }
     }
   };
-  // const removeDocs = (refId: string) => {
-  //   if (!saving) {
-  //     setSaving(true);
-  //     // showLoader();
-  //     deleteDocReference(refId)
-  //       .then((res: any) => {
-  //         if (res.data?.DeleteRefToKnowledgeBase?.status === 200) {
-  //           refetchProjects();
-  //           getProjectDetailsById();
-  //           toast.success('Reference doc removed!');
-  //         }
-  //       })
-  //       .catch((error: any) => {
-  //         toast.error(error?.message || 'Failed to remove!');
-  //       })
-  //       .finally(() => {
-  //         setSaving(false);
-  //         hideLoader();
-  //       });
-  //   }
-  // };
-  // const paginationChangeHandler = (page: number) => {
-  //   setDocPage(page);
-  // };
+  const removeDocsHandler = (ref: IReference) => {
+    setOpenRemoveRefConfirmation(true);
+    setSelectedRefToRemove(ref);
+  };
+  const onConfirmRemoveRef = () => {
+    if (!selectedRefToRemove) {
+      return;
+    }
+    if (selectedRefToRemove.status === 'PENDING') {
+      console.log(filesData, base64Files);
+
+      setFilesData((prevFiles: any) =>
+        prevFiles.filter((file: any) => file.name !== selectedRefToRemove.name),
+      );
+      setBase64Files((prevFiles: any) =>
+        prevFiles.filter(
+          (file: any) => file.fileName !== selectedRefToRemove.name,
+        ),
+      );
+
+      setOpenRemoveRefConfirmation(false);
+    } else {
+      removeDocs(selectedRefToRemove?.id, selectedRefToRemove?.reftype);
+    }
+  };
+  const removeDocs = (refId: string, refType: string) => {
+    if (!saving) {
+      setSaving(true);
+      showLoader();
+      deleteDocReference(refId, refType)
+        .then((res: any) => {
+          if (res.data?.DeleteRefToKnowledgeBase?.status === 200) {
+            setRefStageDetails([]);
+            setOpenRemoveRefConfirmation(false);
+            refetchProjects();
+            getProjectDetailsById();
+            toast.success('Reference doc removed!');
+          }
+        })
+        .catch((error: any) => {
+          toast.error(error?.message || 'Failed to remove!');
+        })
+        .finally(() => {
+          setSaving(false);
+          hideLoader();
+        });
+    }
+  };
+
+  const paginationChangeHandler = (page: number) => {
+    setDocPage(page);
+  };
   const getHashedFile = async (data: any) => {
     const metadata = JSON.stringify(data);
     const hash = CryptoJS.SHA256(metadata).toString(CryptoJS.enc.Hex);
@@ -548,12 +596,20 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
   };
   return (
     <div className="px-6 ">
+      <ConfirmationDialog
+        description="Are you sure you want to delete reference"
+        onCancel={() => {
+          setOpenRemoveRefConfirmation(false);
+        }}
+        onConfirm={onConfirmRemoveRef}
+        open={openRemoveRefConfirmation}
+      />
       {!loadingProject && project ? (
         <>
           <div className="flex justify-between">
             <div className="text-sm text-foreground">
-              <span className="font-bold ">Project State:</span>{' '}
-              {ProjectStageLabel[project.projectstage as ProjectStageEnum]}
+              <span className="font-bold ">Project Status:</span>{' '}
+              {project.projectstatus}
             </div>
             <div className="flex items-center gap-4">
               <Edit3
@@ -695,7 +751,8 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
                         sourceArray={memoizedFilesData}
                         activeIndex={0}
                         onOpen={getStageDetailByRef}
-                        stepperData={refStageDetails}
+                        stepperData={memoizedStepperData}
+                        handleRemove={removeDocsHandler}
                       />
                     </div>
                   </section>
@@ -713,7 +770,7 @@ const ProjectDetails: React.FC<{ id: string }> = (props) => {
             </TabsContent>
           </Tabs>
           <div className="flex justify-end py-4">
-            {base64Files.find((e) => e.isLocal) ? (
+            {[...base64Files, ...refUrls].find((e) => e.isLocal) ? (
               <Button
                 disabled={
                   saving || (urlErrors && Object.keys(urlErrors).length > 0)

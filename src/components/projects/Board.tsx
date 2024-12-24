@@ -5,8 +5,7 @@ import { useProject } from '@/context/ProjectProvider';
 import {
   getProjectStageEnumValue,
   IProjectAttributes,
-  ProjectStageEnum,
-  ProjectStageLabel,
+  ProjectStatusEnum,
 } from '../../types/ProjectData';
 import { SkeletonCard } from '../common/SkeletonCard';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
@@ -14,14 +13,14 @@ import { ProjectCard } from './Card';
 import { ProjectListView } from './ProjectListView';
 
 type GroupedCardsType = {
-  DATA_SOURCE: IProjectAttributes[];
-  DATA_INGESTION: IProjectAttributes[];
-  DATA_STORAGE: IProjectAttributes[];
-  DATA_PREPARATION: IProjectAttributes[];
-  RAG_INGESTION: IProjectAttributes[];
+  STARTED: IProjectAttributes[];
+  PAUSED: IProjectAttributes[];
+  CANCELLED: IProjectAttributes[];
+  ACTIVE: IProjectAttributes[];
+  // RAG_INGESTION: IProjectAttributes[];
   // VERSIONING: IProjectAttributes[];
   // RAG: IProjectAttributes[];
-  PUBLISHED: IProjectAttributes[];
+  // PUBLISHED: IProjectAttributes[];
 };
 
 const Board: React.FC = () => {
@@ -59,46 +58,48 @@ const Board: React.FC = () => {
 
   const getInitialSelection = (gropedData: GroupedCardsType) => {
     if (
-      gropedData.DATA_SOURCE.length > 0 &&
+      gropedData.STARTED.length > 0 &&
       (activeCard === 0 || activeCard === null)
     ) {
       setActiveCard(0);
-      return { data: gropedData.DATA_SOURCE, index: 0 };
+      return { data: gropedData.STARTED, index: 0 };
     } else if (
-      gropedData.DATA_INGESTION.length > 0 &&
+      gropedData.ACTIVE.length > 0 &&
       (activeCard === 1 || activeCard === null)
     ) {
       setActiveCard(1);
-      return { data: gropedData.DATA_INGESTION, index: 1 };
+      return { data: gropedData.ACTIVE, index: 1 };
     } else if (
-      gropedData.DATA_STORAGE.length > 0 &&
+      gropedData.PAUSED.length > 0 &&
       (activeCard === 2 || activeCard === null)
     ) {
       setActiveCard(2);
-      return { data: gropedData.DATA_STORAGE, index: 2 };
+      return { data: gropedData.PAUSED, index: 2 };
     } else if (
-      gropedData.DATA_PREPARATION.length > 0 &&
+      gropedData.CANCELLED.length > 0 &&
       (activeCard === 3 || activeCard === null)
     ) {
       setActiveCard(3);
-      return { data: gropedData.DATA_PREPARATION, index: 3 };
-    } else if (
-      gropedData.RAG_INGESTION.length > 0 &&
-      (activeCard === 4 || activeCard === null)
-    ) {
-      setActiveCard(4);
-      return { data: gropedData.RAG_INGESTION, index: 4 };
-      // } else if (gropedData.VERSIONING.length > 0) {
-      //   return gropedData.VERSIONING;
-      // } else if (gropedData.RAG.length > 0) {
-      //   return gropedData.RAG;
-    } else if (
-      gropedData.PUBLISHED.length > 0 &&
-      (activeCard === 5 || activeCard === null)
-    ) {
-      setActiveCard(5);
-      return { data: gropedData.PUBLISHED, index: 5 };
-    } else {
+      return { data: gropedData.CANCELLED, index: 3 };
+    }
+    // else if (
+    //   gropedData.RAG_INGESTION.length > 0 &&
+    //   (activeCard === 4 || activeCard === null)
+    // ) {
+    //   setActiveCard(4);
+    //   return { data: gropedData.RAG_INGESTION, index: 4 };
+    //   // } else if (gropedData.VERSIONING.length > 0) {
+    //   //   return gropedData.VERSIONING;
+    //   // } else if (gropedData.RAG.length > 0) {
+    //   //   return gropedData.RAG;
+    // } else if (
+    //   gropedData.PUBLISHED.length > 0 &&
+    //   (activeCard === 5 || activeCard === null)
+    // ) {
+    //   setActiveCard(5);
+    //   return { data: gropedData.PUBLISHED, index: 5 };
+    // }
+    else {
       setActiveCard(null);
       return { data: [], index: 0 };
     }
@@ -125,31 +126,31 @@ const Board: React.FC = () => {
     //   });
 
     return {
-      [ProjectStageEnum.DATA_SOURCE]: projects.filter(
+      [ProjectStatusEnum.STARTED]: projects.filter(
         (card) =>
-          card.projectstage ===
-          getProjectStageEnumValue(ProjectStageEnum.DATA_SOURCE),
+          card.projectstatus ===
+          getProjectStageEnumValue(ProjectStatusEnum.STARTED),
       ),
-      [ProjectStageEnum.DATA_INGESTION]: projects.filter(
+      [ProjectStatusEnum.ACTIVE]: projects.filter(
         (card) =>
-          card.projectstage ===
-          getProjectStageEnumValue(ProjectStageEnum.DATA_INGESTION),
+          card.projectstatus ===
+          getProjectStageEnumValue(ProjectStatusEnum.ACTIVE),
       ),
-      [ProjectStageEnum.DATA_STORAGE]: projects.filter(
+      [ProjectStatusEnum.PAUSED]: projects.filter(
         (card) =>
-          card.projectstage ===
-          getProjectStageEnumValue(ProjectStageEnum.DATA_STORAGE),
+          card.projectstatus ===
+          getProjectStageEnumValue(ProjectStatusEnum.PAUSED),
       ),
-      [ProjectStageEnum.DATA_PREPARATION]: projects.filter(
+      [ProjectStatusEnum.CANCELLED]: projects.filter(
         (card) =>
-          card.projectstage ===
-          getProjectStageEnumValue(ProjectStageEnum.DATA_PREPARATION),
+          card.projectstatus ===
+          getProjectStageEnumValue(ProjectStatusEnum.CANCELLED),
       ),
-      [ProjectStageEnum.RAG_INGESTION]: projects.filter(
-        (card) =>
-          card.projectstage ===
-          getProjectStageEnumValue(ProjectStageEnum.RAG_INGESTION),
-      ),
+      // [ProjectStageEnum.RAG_INGESTION]: projects.filter(
+      //   (card) =>
+      //     card.projectstage ===
+      //     getProjectStageEnumValue(ProjectStageEnum.RAG_INGESTION),
+      // ),
       // [ProjectStageEnum.VERSIONING]: projects.filter(
       //   (card) =>
       //     card.projectstage ===
@@ -159,20 +160,23 @@ const Board: React.FC = () => {
       //   (card) =>
       //     card.projectstage === getProjectStageEnumValue(ProjectStageEnum.RAG),
       // ),
-      [ProjectStageEnum.PUBLISHED]: projects.filter(
-        (card) =>
-          card.projectstage ===
-          getProjectStageEnumValue(ProjectStageEnum.PUBLISHED),
-      ),
+      // [ProjectStageEnum.PUBLISHED]: projects.filter(
+      //   (card) =>
+      //     card.projectstage ===
+      //     getProjectStageEnumValue(ProjectStageEnum.PUBLISHED),
+      // ),
     };
   };
   return (
     <>
       <div>
         <div className="uppercase text-md text-[#486581] py-4">
-          Projects states
+          Projects status
         </div>
-        <ScrollArea className=" w-full rounded-md">
+        <ScrollArea
+          className=" rounded-md"
+          style={{ width: 'calc(100vw - 250px)' }}
+        >
           {groupedCards ? (
             <div className="flex pb-4  gap-4">
               {/* Render Columns here using groupedCards */}
@@ -180,7 +184,7 @@ const Board: React.FC = () => {
                 <ProjectCard
                   key={i}
                   data={cardData}
-                  title={ProjectStageLabel[stage as ProjectStageEnum]}
+                  title={ProjectStatusEnum[stage as ProjectStatusEnum]}
                   isSelectd={selectedProject.index === i}
                   onClick={() =>
                     setSelectedProject({ data: cardData, index: i })
@@ -194,9 +198,7 @@ const Board: React.FC = () => {
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
         {/*  Project details table starts */}
-        <div className="uppercase text-md text-[#486581] py-4">
-          Projects states
-        </div>
+        <div className="uppercase text-md text-[#486581] py-4">Projects</div>
         <div className="bg-card p-4 rounded-md">
           <ProjectListView
             projects={selectedProject.data}

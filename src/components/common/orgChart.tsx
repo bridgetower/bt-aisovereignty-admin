@@ -30,7 +30,7 @@ const OrgChartComponent: React.FC = () => {
         .compactMarginPair((d: any) => 80)
         // .layout('left') // This changes the layout to expand left to right
         .buttonContent(({ node }: any) => {
-          return `<div style="border-radius:3px;padding:0 3px;margin:auto auto;background-color:#000; border: 1px solid lightgray; font-weight:600;font-size:14px"> <span >${
+          return `<div style="border-radius:3px;padding:0 3px;margin:auto auto;background-color:#000;color:#fff; border: 1px solid lightgray; font-weight:600;font-size:14px"> <span >${
             node.children ? `-` : `+`
           }</span>`;
         })
